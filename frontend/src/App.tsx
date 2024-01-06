@@ -12,7 +12,7 @@ function App() {
 
   }, [])
   return (
-    <div>hello world</div>
+    <div className='h-[150%]'>hello world</div>
   );
 }
 

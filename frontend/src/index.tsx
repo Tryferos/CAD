@@ -14,6 +14,7 @@ import TeamsIndex from "./Teams";
 import TournamentIndex from "./Tournaments/TournamentIndex";
 import Team from "./Teams/Team";
 import Tournament from "./Tournaments/Tournament";
+import TournamentLayout from "./Layout/TournamentLayout";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -22,11 +23,13 @@ const router = createBrowserRouter(
             <Route path="/" element={<App />} />
             <Route path="/tournaments">
                 <Route index element={<TournamentIndex />} />
-                <Route path=":tourid">
-                    <Route index element={<Tournament />} />
-                    <Route path="teams">
-                        <Route index element={<TeamsIndex />} />
-                        <Route path=":teamid" element={<Team />} />
+                <Route element={<TournamentLayout />}>
+                    <Route path=":tourid">
+                        <Route index element={<Tournament />} />
+                        <Route path="teams">
+                            <Route index element={<TeamsIndex />} />
+                            <Route path=":teamid" element={<Team />} />
+                        </Route>
                     </Route>
                 </Route>
             </Route>

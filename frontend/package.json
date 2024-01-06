@@ -9,6 +9,7 @@
     "@tryferos/search": "^1.2.9",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
+    "framer-motion": "^10.17.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "6.4",
