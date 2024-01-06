@@ -1,7 +1,7 @@
 package io.github.mixaniki.entity;
 
+import io.github.mixaniki.entity.type.PlayerPositionType;
 import io.github.mixaniki.entity.validation.groups.PlayerValidationGroups;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -35,14 +35,16 @@ public class Player {
     private int height; // height in cm
     @Column(name = "nationality")
     private String nationality;
-    @Nullable
-    @Column(name = "logo_path", length = 1024)
+    @Column(name = "logo_path", length = 1024, nullable = true)
     private String logo;
-
     @NotNull
-    @ManyToOne //(targetEntity = PlayerPosition.class)
-    @JoinColumn(name = "position_code", referencedColumnName = "id")
-    private PlayerPosition playerPosition;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "PlayerPositionType")
+    private PlayerPositionType positionType;
+
+//    @ManyToOne
+//    @JoinColumn(name = "position_code", referencedColumnName = "id")
+//    private PlayerPosition playerPosition;
 
 
 
