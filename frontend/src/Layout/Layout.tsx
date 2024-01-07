@@ -8,7 +8,7 @@ export default function Layout() {
     return (
         <div className="w-[100vw] h-[100vh] flex">
             <NavigationBar />
-            <main className="ml-[15%] w-[85%]">
+            <main className="ml-[clamp(200px,15%,250px)]  w-[85%] overflow-y-auto scrollbar">
                 <Outlet />
             </main>
         </div>

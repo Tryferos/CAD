@@ -11,6 +11,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.scrollbar::-webkit-scrollbar {
+  height:4px;
+  width: 12px;
+  background-color: transparent;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgb(100, 116, 139);
+  border: 2px white solid;
+  border-radius: 4px;
+}
+
 @font-face {
   font-family: Cubano;
   src: url('../public/Cubano.ttf');
