@@ -25,7 +25,7 @@ export default function TournamentLayout() {
 
 function Layout({section, tourid}: {section: SectionType;tourid: string}) {
     return (
-        <nav className="fixed shadow-[0px_4px_2px_0px_rgba(0,0,0,0.1)] top-0 flex-1 mobile:w-[100vw] w-[calc(100vw-clamp(200px,15%,250px)-32px)] h-[75px] bg-gradient-to-r from-slate-100 to-white flex justify-between">
+        <nav className="fixed z-[999999999999] shadow-[0px_4px_2px_0px_rgba(0,0,0,0.1)] top-0 flex-1 mobile:w-[100vw] w-[calc(100vw-clamp(200px,15%,250px)-0px)] h-[75px] bg-gradient-to-r from-slate-100 to-white flex justify-between">
             <ul className="flex items-center basis-[120%] h-full px-5 mobile:gap-x-5 mobile:px-2 gap-x-10 text-slate-600 font-medium *:cursor-pointer *:text-lg *:underline-offset-[16px] *:decoration-sec *:decoration-4">
                 {
                     sections.map((item, i) => {

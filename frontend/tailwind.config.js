@@ -29,6 +29,9 @@ module.exports = {
                 mobile: { max: "768px" },
                 wireless: { max: "1024px" },
             },
+            backgroundImage: {
+                "basketball": "url('./../public/basketball-bg.jpg')",
+            },
         },
     },
     plugins: [],

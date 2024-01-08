@@ -1,12 +1,13 @@
 import React from "react";
 import { UpcomingMatch } from "./Matches";
+import { Team } from "../Teams";
 
 type Standings = {
-    teams: Array<Team>;
+    teams: Array<StandingsTeam>;
     name: string;
 }
 
-export type Team = {
+export type StandingsTeam = {
     team_id: string;
     team_name: string;
     logo_path: string;
@@ -29,7 +30,7 @@ type Quarter = {
     quarter_score_against: number;
 }
 
-function getGame(): Game {
+export function getRandomGame(): Game {
     return {
         game_id: '1',
         quarter: new Array(4).fill(1).map((item, i) => ({
@@ -40,6 +41,20 @@ function getGame(): Game {
     }
 }
 
+export function calculateGame(team: Team){
+    const gamesWon = team.games.filter((game, i) =>
+    game.quarter.reduce((p, c, i) => p + c.quarter_score, 0) > game.quarter.reduce((p, c, i) => p + c.quarter_score_against, 0)).length;
+const totalGames = team.games.length;
+const gamesLost = totalGames - gamesWon;
+const points = (gamesWon * 2) + (gamesLost * 1);
+return {
+    gamesWon: gamesWon,
+    gamesLost: gamesLost,
+    totalGames: totalGames,
+    points: points,
+}
+}
+
 export default function Standings() {
     const standings: Standings = {
         name: 'Τουρνουά Ευρώπης',
@@ -47,7 +62,7 @@ export default function Standings() {
             ...['PAOK', 'ARIS', 'AEK', 'PROMITHEAS', 'OLYMPIACOS', 'PANATHINAIKOS', 'LARISA', 'MAROUSI', 'LAVRIO', 'APOLLON P.', 'KOLOSSOS RODOU',
                 'PERISTERI'].map((item, i) => (
                     {
-                        games: [...new Array(10).fill(1).map(item => getGame())],
+                        games: [...new Array(10).fill(1).map(item => getRandomGame())],
                         team_name: item,
                         team_id: `${i + 1}`,
                         logo_path: '/paok.png'

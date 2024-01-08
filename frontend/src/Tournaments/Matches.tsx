@@ -1,5 +1,5 @@
 import React from "react";
-import { Team } from "./Standings";
+import { StandingsTeam } from "./Standings";
 
 export default function Matches(){
     return (
@@ -7,7 +7,7 @@ export default function Matches(){
     )
 }
 
-type MatchTeam = Pick<Team, 'team_id' | 'team_name' | 'logo_path'>
+type MatchTeam = Pick<StandingsTeam, 'team_id' | 'team_name' | 'logo_path'>
 
 type Match = {
     home_team: MatchTeam,
