@@ -21,14 +21,14 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Null(groups = PlayerValidationGroups.Create.class)
-    @Column(name = "player_id")
+    @Column(name = "id")
     private Long id;
     @NotNull
-    @Column(name = "player_first_name", length = 30)
-    private String first_name;
+    @Column(name = "first_name", length = 30)
+    private String firstName;
     @NotNull
-    @Column(name = "player_last_name", length = 30)
-    private String last_name;
+    @Column(name = "last_name", length = 30)
+    private String lastName;
     @Min(value = 0)
     @Max(value = 270)
     @Column(name = "height")
@@ -39,7 +39,7 @@ public class Player {
     private String logo;
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "PlayerPositionType")
+    @Column(name = "position_type")
     private PlayerPositionType positionType;
 
 //    @ManyToOne

@@ -34,14 +34,14 @@ public class PlayerServiceImpl implements PlayerService{
     }
 
     @Override
-    public List<Player> getAll() throws NotFoundException {
+    public List<Player> getAll() {
         return (List<Player>) playerRepository.findAll();
     }
 
     @Override
     @Transactional
     @Validated(value = {PlayerValidationGroups.Create.class, Default.class} )
-    public Player create(@Valid @NotNull Player player) throws NotFoundException {
+    public Player create(@Valid @NotNull Player player) {
 
         return playerRepository.save(player);
     }
@@ -57,14 +57,13 @@ public class PlayerServiceImpl implements PlayerService{
     }
 
     @Override
-    public String delete(Long id) throws NotFoundException {
+    public void delete(Long id) throws NotFoundException {
         Optional<Player> optionalPlayer = playerRepository.findById(id);
         if(optionalPlayer.isEmpty()){
             throw new NotFoundException("The player you want to delete with id "+ id +" does not exist");
         }
 
         playerRepository.delete(optionalPlayer.get());
-        return "Player with id "+ id +" removed successfully";
     }
 
 }
