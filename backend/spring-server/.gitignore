@@ -36,3 +36,6 @@ docker-compose.yml
 README.md
 Dockerfile
 src/resources/application.properties
+src/main/resources/application.properties
+
+
