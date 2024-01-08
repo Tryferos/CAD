@@ -26,7 +26,7 @@ const router = createBrowserRouter(
                 <Route index element={<TournamentIndex />} />
                 <Route element={<TournamentLayout />}>
                     <Route path=":tourid">
-                        <Route index element={<Tournament />} />
+                        <Route index element={<Standings/>} />
                         <Route path="teams">
                             <Route index element={<TeamsIndex />} />
                             <Route path=":teamid" element={<Team />} />

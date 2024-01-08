@@ -8,7 +8,7 @@ export default function Layout() {
     return (
         <div className="w-[100vw] h-[100vh] flex">
             <NavigationBar />
-            <main className="ml-[clamp(200px,15%,250px)]  w-[85%] overflow-y-auto scrollbar">
+            <main className="ml-[clamp(200px,15%,250px)] mobile:ml-[0%] mobile:w-[100%]  w-[85%] overflow-y-auto scrollbar">
                 <Outlet />
             </main>
         </div>
@@ -17,7 +17,7 @@ export default function Layout() {
 
 function NavigationBar() {
     return (
-        <nav className="w-[15%] min-w-[200px] max-w-[250px] bg-gradient-to-r from-slate-300 to-slate-100 flex fixed flex-col gap-y-10 h-full text-slate-800 font-wotfard">
+        <nav className="w-[15%] mobile:hidden min-w-[200px] max-w-[250px] bg-gradient-to-r from-slate-300 to-slate-100 flex fixed flex-col gap-y-10 h-full text-slate-800 font-wotfard">
             <section className="px-4">
                 <div className="h-[75px] flex items-center justify-center">
                     <p className="font-cubano text-2xl  text-sec">BasketStats</p>

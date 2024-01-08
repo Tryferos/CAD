@@ -25,12 +25,12 @@ export default function TournamentLayout() {
 
 function Layout({section, tourid}: {section: SectionType;tourid: string}) {
     return (
-        <nav className="fixed shadow-[0px_4px_2px_0px_rgba(0,0,0,0.1)] top-0 flex-1 w-[calc(100vw-clamp(200px,15%,250px)-32px)] h-[75px] bg-gradient-to-r from-slate-100 to-white flex justify-between">
-            <ul className="flex items-center basis-[120%] h-full px-5 gap-x-10 text-slate-600 font-medium *:cursor-pointer *:text-lg *:underline-offset-[16px] *:decoration-sec *:decoration-4">
+        <nav className="fixed shadow-[0px_4px_2px_0px_rgba(0,0,0,0.1)] top-0 flex-1 mobile:w-[100vw] w-[calc(100vw-clamp(200px,15%,250px)-32px)] h-[75px] bg-gradient-to-r from-slate-100 to-white flex justify-between">
+            <ul className="flex items-center basis-[120%] h-full px-5 mobile:gap-x-5 mobile:px-2 gap-x-10 text-slate-600 font-medium *:cursor-pointer *:text-lg *:underline-offset-[16px] *:decoration-sec *:decoration-4">
                 {
                     sections.map((item, i) => {
                         return (
-                            <li key={i} className={`hover:underline ${section==item && 'underline text-lg font-semibold'}`}>
+                            <li key={i} className={`hover:underline ${section==item && 'underline text-lg mobile:text-base font-semibold'}`}>
                                 <a href={`/tournaments/${tourid}/${item.en.toLocaleLowerCase()}`}>{item.gr}</a>
                             </li>
                         )
