@@ -1,6 +1,5 @@
 package io.github.mixaniki.domain.model.service;
 
-import io.github.mixaniki.Repository.PlayerPositionRepository;
 import io.github.mixaniki.Repository.PlayerRepository;
 import io.github.mixaniki.entity.Player;
 import io.github.mixaniki.entity.validation.groups.PlayerValidationGroups;
@@ -9,6 +8,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.groups.Default;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -19,11 +19,9 @@ import java.util.Optional;
 public class PlayerServiceImpl implements PlayerService{
 
     private final PlayerRepository playerRepository;
-    private final PlayerPositionRepository playerPositionRepository;
-
-    public PlayerServiceImpl(PlayerRepository playerRepository, PlayerPositionRepository playerPositionRepository) {
+    @Autowired
+    public PlayerServiceImpl(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
-        this.playerPositionRepository = playerPositionRepository;
     }
 
     @Override
@@ -37,18 +35,14 @@ public class PlayerServiceImpl implements PlayerService{
     }
 
     @Override
-    public List<Player> getAll() throws NotFoundException {
+    public List<Player> getAll() {
         return (List<Player>) playerRepository.findAll();
     }
 
     @Override
     @Transactional
     @Validated(value = {PlayerValidationGroups.Create.class, Default.class} )
-    public Player create(@Valid @NotNull Player player) throws NotFoundException {
-        if(!playerPositionRepository.existsById(player.getPlayerPosition().getId())){
-
-            throw new NotFoundException("position code "+ player.getPlayerPosition().getId() +" does not exist");
-        }
+    public Player create(@Valid @NotNull Player player) {
 
         return playerRepository.save(player);
     }
@@ -60,22 +54,17 @@ public class PlayerServiceImpl implements PlayerService{
             throw new NotFoundException("Player with such id does not exist");
         }
 
-        if (!playerPositionRepository.existsById(player.getPlayerPosition().getId())){
-            throw new NotFoundException("The given position code does not exist");
-        }
-
         return playerRepository.save(player);
     }
 
     @Override
-    public String delete(Long id) throws NotFoundException {
+    public void delete(Long id) throws NotFoundException {
         Optional<Player> optionalPlayer = playerRepository.findById(id);
         if(optionalPlayer.isEmpty()){
             throw new NotFoundException("The player you want to delete with id "+ id +" does not exist");
         }
 
         playerRepository.delete(optionalPlayer.get());
-        return "Player with id "+ id +" removed successfully";
     }
 
 }
