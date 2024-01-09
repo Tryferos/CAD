@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Outlet, useParams, useResolvedPath } from "react-router-dom";
 
 type SectionType = {
@@ -31,7 +32,7 @@ function Layout({ section, tourid }: { section: SectionType; tourid: string }) {
                     sections.map((item, i) => {
                         return (
                             <li key={i} className={`hover:underline ${section == item && 'underline text-lg mobile:text-base font-semibold'}`}>
-                                <a href={`/tournaments/${tourid}/${item.en.toLocaleLowerCase()}`}>{item.gr}</a>
+                                <Link to={`/tournaments/${tourid}/${item.en.toLocaleLowerCase()}`}>{item.gr}</Link>
                             </li>
                         )
                     })

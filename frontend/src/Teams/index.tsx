@@ -31,7 +31,6 @@ export enum Position {
     SF = 'Short Forward',
     PF = 'Power Forward',
     C = 'Center'
-
 }
 
 const stadiums = ['Palataki', 'Nikos Galis', 'Karaïskakis', 'Peristeri Arena', 'OPAP Arena', 'OAKA', 'Alkazar', 'Marousi Arena', 'Lavrio Arena', 'Pavlos Giannakopoulos', 'Rodou Arena', 'Peristeri Arena'];
@@ -96,7 +95,7 @@ const players: Player[] = firstnames.map((item, i) => ({
     position_type: Object.values(Position)[Math.floor(Math.random() * Object.values(Position).length)],
 }))
 
-const teams: Team[] = names.map((item, i) => ({
+export const teams: Team[] = names.map((item, i) => ({
     city_name: cities[i], coach_name: coaches[i], logo_path: '/paok.png',
     players: [...players.slice(i * 5, i * 5 + 5)],
     short_name: short_names[i], stadium_name: stadiums[i], team_id: `${i + 1}`, team_name: item,

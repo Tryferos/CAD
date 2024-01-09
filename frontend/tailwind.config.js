@@ -18,8 +18,12 @@ module.exports = {
             boxShadow: {
                 shadowSec:
                     "inset 0 0 1em rgba(217,119,6,0.4), 0 0 1em rgba(217,119,6,0.4);",
+                shadowRed:
+                    "inset 0 0 1em rgba(220,38,38,0.4), 0 0 1em rgba(220,38,38,0.4);",
                 shadowSecHover:
                     "inset 0 0 0 rgba(217,119,6,0.4), 0 0 1.5em rgba(217,119,6,0.7);",
+                shadowRedHover:
+                    "inset 0 0 0 rgba(220,38,38,0.4), 0 0 1.5em rgba(220,38,38,0.7);",
                 box: "-0.2em 0.2em 1em rgba(0,0,0,0.2)",
             },
             screens: {
@@ -31,6 +35,9 @@ module.exports = {
             },
             backgroundImage: {
                 "basketball": "url('./../public/basketball-bg.jpg')",
+                "basketball-player": "url('./../public/basketball-player-bg.jpg')",
+                "basketball-team": "url('./../public/basketball-team-bg.jpg')",
+                "basketball-league": "url('./../public/basketball-league-bg.jpg')",
             },
         },
     },

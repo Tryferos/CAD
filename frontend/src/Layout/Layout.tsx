@@ -1,7 +1,7 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import React, { Fragment, useState } from 'react';
 import { SearchElement } from "@tryferos/search";
-import { BasketballIcon, SearchIcon } from "../icons";
+import { BasketballIcon, LogoutIcon, SearchIcon, UserIcon } from "../icons";
 import { motion, AnimatePresence } from 'framer-motion'
 import { PopupType, Wrapper, usePopup, useUser } from "./Wrapper";
 import PopupElement from "../Popup/PopupElement";
@@ -27,15 +27,34 @@ export default function Layout() {
 function NavigationBar() {
     return (
         <nav className="w-[15%] mobile:hidden min-w-[200px] max-w-[250px] bg-gradient-to-r from-slate-300 to-slate-100 flex fixed flex-col gap-y-10 h-full text-slate-800 font-wotfard">
-            <section className="px-4">
+            <section className="px-4 z-[200000]">
                 <div className="h-[75px] flex items-center justify-center">
                     <p className="font-cubano text-2xl  text-sec">BasketStats</p>
                 </div>
-                <SearchElement
-                    sections={[]}
-                >
-                    <SearchBar />
-                </SearchElement>
+                <div className="z-[20000000]">
+                    <SearchElement
+                        sections={[
+                            {
+                                items: [{
+                                    content: 'Super League, ΝΒΑ',
+                                    title: 'PAOK',
+                                    href: ''
+                                }],
+                                title: 'Ομάδες',
+                            },
+                            {
+                                items: [{
+                                    content: '',
+                                    title: 'Διοργάνωση 1',
+                                    href: ''
+                                }],
+                                title: 'Διοργανώσεις',
+                            },
+                        ]}
+                    >
+                        <SearchBar />
+                    </SearchElement>
+                </div>
             </section>
             <section className="flex flex-col gap-y-4 pb-2">
                 <HeaderText text={'Διοργανώσεις'} href={'/tournaments'} />
@@ -106,20 +125,22 @@ function Logging() {
     const { user, handleLogIn, handleLogOut } = useUser();
     const { popup, handlePopup } = usePopup();
 
-
-
-
     return (
         <section className="flex absolute bottom-20 w-full justify-center font-medium font-sans flex-col items-center gap-y-5">
             <div className="flex flex-col text-center gap-y-2 w-full"><p className="font-semibold border-b-[1px] border-b-gray-300 pb-4 w-full mb-4">{user?.username ?? 'Guest'}</p>
-                {
-                    user &&
-                    <p className="font-medium">{user.role}</p>
-                }
             </div>
             {
+                user &&
+                <Link to={'/admin'}
+                    className="flex transition-all duration-150 gap-x-2 items-center outline shadow-shadowSec text-sm outline-[2px] rounded font-semibold text-sec cursor-pointer outline-sec hover:bg-sec hover:text-white hover:shadow-shadowSecHover px-4 py-2" >
+                    <UserIcon /><p>Λογαριασμός</p>
+                </Link>
+
+            }
+            {
                 user ?
-                    <input type='button' onClick={() => handleLogOut()} value='Αποσύνδεση' className="outline shadow-shadowSec text-sm outline-[2px] rounded font-semibold text-sec cursor-pointer outline-sec hover:bg-sec hover:text-white hover:shadow-shadowSecHover px-4 py-2" />
+                    <div onClick={() => handleLogOut()}
+                        className="flex gap-x-2 transition-all duration-150 items-center outline shadow-shadowRed text-sm outline-[2px] rounded font-semibold text-red-600 cursor-pointer outline-red-600 hover:bg-red-600 hover:text-white hover:shadow-shadowRedHover px-4 py-2"><LogoutIcon /><p>Αποσύνδεση</p></div>
                     :
                     <input type='button' onClick={() => handlePopup(PopupType.login, 'Σύνδεση')} value='Συνδέσου' className="outline shadow-shadowSec text-sm outline-[2px] rounded font-semibold text-sec cursor-pointer outline-sec hover:bg-sec hover:text-white hover:shadow-shadowSecHover px-4 py-2" />
             }
@@ -144,7 +165,7 @@ function HeaderText({ text, href }: { text: string, href?: string }) {
 
 function SearchBar() {
     return (
-        <div className="w-full h-[25px] justify-between px-2 text-slate-600 transition-all hover:text-slate-900 flex items-center py-5 bg-gradient-to-r from-slate-300 via-slate-300 to-slate-200 rounded-md cursor-pointer">
+        <div className="w-full z-[200000] h-[25px] justify-between px-2 text-slate-600 transition-all hover:text-slate-900 flex items-center py-5 bg-gradient-to-r from-slate-300 via-slate-300 to-slate-200 rounded-md cursor-pointer">
             <p className="font-sans px-2 font-medium text-sm">Αναζήτηση...</p>
             <SearchIcon />
         </div>

@@ -18,11 +18,14 @@ import TournamentLayout from "./Layout/TournamentLayout";
 import Standings from "./Tournaments/Standings";
 import Matches from "./Tournaments/Matches";
 import { Wrapper } from "./Layout/Wrapper";
+import Admin from "./Admin/Admin";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<Layout />}>
             <Route index element={<App />} />
+            <Route path="admin" element={<Admin />} />
+            <Route path="/teams/:teamid" element={<Team />} />
             <Route path="tournaments">
                 <Route index element={<TournamentIndex />} />
                 <Route element={<TournamentLayout />}>
@@ -30,7 +33,6 @@ const router = createBrowserRouter(
                         <Route index element={<Standings />} />
                         <Route path="teams">
                             <Route index element={<TeamsIndex />} />
-                            <Route path=":teamid" element={<Team />} />
                         </Route>
                         <Route path="standings" element={<Standings />} />
                         <Route path="matches" element={<Matches />} />
