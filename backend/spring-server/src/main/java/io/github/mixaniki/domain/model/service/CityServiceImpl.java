@@ -16,7 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CityServiceImpl implements ObjectService<City>{
+@Validated
+public class CityServiceImpl implements ObjectService<City, Long>{
     private final CityRepository cityRepository;
 
     @Autowired
@@ -54,6 +55,7 @@ public class CityServiceImpl implements ObjectService<City>{
 
     @Override
     @Transactional
+    @Validated(value = {ValidationGroups.Update.class, Default.class})
     public City update(@Valid @NotNull City city) throws NotFoundException {
         if(!cityRepository.existsById(city.getId())){
             throw new NotFoundException("City with such id does not exist");
@@ -63,7 +65,7 @@ public class CityServiceImpl implements ObjectService<City>{
     }
 
     @Override
-    public String delete(Long id) throws NotFoundException {
+    public void delete(Long id) throws NotFoundException {
 
         Optional<City> optionalCity = cityRepository.findById(id);
 
@@ -72,6 +74,5 @@ public class CityServiceImpl implements ObjectService<City>{
         }
 
         cityRepository.delete(optionalCity.get());
-        return "City with id "+ id +" removed successfully";
     }
 }

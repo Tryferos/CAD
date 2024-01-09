@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
-public interface PlayerService {
+public interface PlayerService extends ObjectService<Player, Long>{
 
     /**
      * Creates player with provided values.
@@ -47,7 +47,7 @@ public interface PlayerService {
     Player update(@Valid @NotNull Player player) throws NotFoundException;
 
     /**
-     * Deleted a player
+     * Deletes a player
      *
      * @param id     The id of the player to delete permanently
      * @throws NotFoundException  In case a player with the provided id does not exist

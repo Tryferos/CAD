@@ -10,16 +10,17 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
-public interface TeamService {
-    @Validated(value = {ValidationGroups.Create.class, Default.class} )
-    Team create(@Valid @NotNull Team team) throws NotFoundException;
+    public interface TeamService extends ObjectService<Team, Long>{
 
-    Team getById(Long id) throws NotFoundException;
+        @Validated(value = {ValidationGroups.Create.class, Default.class} )
+        Team create(@Valid @NotNull Team team) throws NotFoundException;
 
-    List<Team> getAll() throws NotFoundException;
+        Team getById(Long id) throws NotFoundException;
 
-    Team update(@Valid @NotNull Team team) throws NotFoundException;
+        List<Team> getAll() throws NotFoundException;
 
-    String  delete(Long id) throws NotFoundException;
+        Team update(@Valid @NotNull Team team) throws NotFoundException;
+
+        void  delete(Long id) throws NotFoundException;
 
 }

@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public interface ChampionshipService {
+public interface ChampionshipService extends ObjectService<Championship, Long>{
 
     /**
      * Creates a championship with provided values
@@ -50,6 +50,6 @@ public interface ChampionshipService {
      * @param id  The id of the championship to delete permanently
      * @throws NotFoundException In case the championship with the provided id does not exist
      */
-    void  delete(Long id) throws NotFoundException;
+    void delete(Long id) throws NotFoundException;
 
 }

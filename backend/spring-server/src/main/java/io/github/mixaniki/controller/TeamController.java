@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/api")
 public class TeamController {
 
 
-    private final ObjectService<Team> teamService;
+    private final ObjectService<Team, Long> teamService;
 
     @Autowired
-    public TeamController(ObjectService<Team> teamService) {
+    public TeamController(ObjectService<Team, Long> teamService) {
         this.teamService = teamService;
     }
 
@@ -28,6 +29,7 @@ public class TeamController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(teamService.create(team));
     }
+
     @GetMapping(value = "/teams/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> getTeamById(@PathVariable("id") Long id) throws NotFoundException {
         return ResponseEntity.ok(teamService.getById(id));

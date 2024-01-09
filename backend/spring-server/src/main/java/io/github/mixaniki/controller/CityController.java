@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/api")
 public class CityController {
-    private final ObjectService<City> cityService;
+    private final ObjectService<City, Long> cityService;
 
     @Autowired
-    public CityController(ObjectService<City> cityService){this.cityService = cityService; }
+    public CityController(ObjectService<City, Long> cityService){this.cityService = cityService; }
 
 
     @PostMapping(value = "/city/add", produces = MediaType.APPLICATION_JSON_VALUE)

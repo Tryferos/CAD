@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TeamServiceImpl implements ObjectService<Team>{
+@Validated
+public class TeamServiceImpl implements ObjectService<Team, Long>{
     private final TeamRepository teamRepository;
 
     public TeamServiceImpl(TeamRepository teamRepository) {
@@ -46,6 +47,7 @@ public class TeamServiceImpl implements ObjectService<Team>{
 
     @Override
     @Transactional
+    @Validated(value = {ValidationGroups.Update.class, Default.class})
     public Team update(@Valid @NotNull Team team) throws NotFoundException {
         if(!teamRepository.existsById(team.getId())){
             throw new NotFoundException("Team with such id does not exist");
@@ -55,13 +57,12 @@ public class TeamServiceImpl implements ObjectService<Team>{
     }
 
     @Override
-    public String delete(Long id) throws NotFoundException {
+    public void delete(Long id) throws NotFoundException {
         Optional<Team> optionalTeam = teamRepository.findById(id);
         if(optionalTeam.isEmpty()){
             throw new NotFoundException("The team you want to delete with id "+ id +" does not exist");
         }
 
         teamRepository.delete(optionalTeam.get());
-        return "Team with id "+ id +" removed successfully";
     }
 }

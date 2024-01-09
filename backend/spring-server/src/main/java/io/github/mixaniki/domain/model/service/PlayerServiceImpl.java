@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Validated
 public class PlayerServiceImpl implements PlayerService{
 
     private final PlayerRepository playerRepository;
@@ -55,6 +56,7 @@ public class PlayerServiceImpl implements PlayerService{
 
     @Override
     @Transactional
+    @Validated(value = {ValidationGroups.Update.class, Default.class})
     public Player update(@Valid @NotNull Player player) throws NotFoundException {
         if(!playerRepository.existsById(player.getId())){
             throw new NotFoundException("Player with such id does not exist");
