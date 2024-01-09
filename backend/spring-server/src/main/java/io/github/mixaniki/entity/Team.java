@@ -2,10 +2,8 @@ package io.github.mixaniki.entity;
 
 
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
@@ -23,20 +21,21 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Null(groups = ValidationGroups.Create.class)
+    @NotNull(groups = ValidationGroups.Update.class)
     @Column(name = "id")
     private Long id;
-    @NotNull
+    @NotBlank
     @Column(name = "team_name", length = 30)
-    private String team_name;
-    @NotNull
+    private String teamName;
+    @NotBlank
     @Column(name = "short_name", length = 30)
-    private String short_name;
+    private String shortName;
     @Column(name = "stadium_name")
-    private String stadium_name;
-    @Column(name = "logo_path")
-    private String logo_path;
+    private String stadiumName;
+    @Column(name = "logo_path", length = 1024, nullable = true)
+    private String logo;
     @Column(name = "coach_name")
-    private String coach_name;
+    private String coachName;
 
     @NotNull
     @ManyToOne

@@ -2,6 +2,7 @@ package io.github.mixaniki.entity;
 
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
@@ -18,10 +19,11 @@ public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Null(groups = ValidationGroups.Create.class)
+    @NotNull(groups = ValidationGroups.Update.class)
     @Column(name = "id")
     private Long id;
-    @NotNull
+    @NotBlank
     @Column(name = "city_name", length = 30, nullable = false)
-    private String city_name;
+    private String cityName;
 
 }
