@@ -3,6 +3,8 @@ package io.github.mixaniki.controller;
 import io.github.mixaniki.domain.model.service.ObjectService;
 import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.exception.model.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ public class TeamController {
 
     private final ObjectService<Team> teamService;
 
+    @Autowired
     public TeamController(ObjectService<Team> teamService) {
         this.teamService = teamService;
     }
@@ -23,7 +26,7 @@ public class TeamController {
     @PostMapping(value = "/teams/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> createTeam(@RequestBody Team team) throws NotFoundException {
 
-        return ResponseEntity.ok(teamService.create(team));
+        return ResponseEntity.status(HttpStatus.CREATED).body(teamService.create(team));
     }
     @GetMapping(value = "/teams/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> getTeamById(@PathVariable("id") Long id) throws NotFoundException {
@@ -42,7 +45,8 @@ public class TeamController {
     }
     @DeleteMapping(value = "/teams/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteTeam(@PathVariable("id") Long id) throws NotFoundException{
-        return ResponseEntity.ok(teamService.delete(id));
+        teamService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 

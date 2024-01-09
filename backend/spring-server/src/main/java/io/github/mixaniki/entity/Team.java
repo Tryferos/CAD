@@ -39,7 +39,7 @@ public class Team {
     private String coach_name;
 
     @NotNull
-    @ManyToOne //(targetEntity = PlayerPosition.class)
+    @ManyToOne
     @JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
     private City city;
 

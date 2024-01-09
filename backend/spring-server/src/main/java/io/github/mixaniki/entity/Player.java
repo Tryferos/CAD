@@ -42,12 +42,11 @@ public class Player {
     @Column(name = "position_type")
     private PlayerPositionType positionType;
 
-//    @ManyToOne
-//    @JoinColumn(name = "position_code", referencedColumnName = "id")
-//    private PlayerPosition playerPosition;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "team_id", referencedColumnName = "id", nullable = false)
+    private Team team;
 
 
-
-//    private Long playerPosition;
 
 }

@@ -2,6 +2,7 @@ package io.github.mixaniki.domain.model.service;
 
 import io.github.mixaniki.Repository.PlayerRepository;
 import io.github.mixaniki.entity.Player;
+import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.entity.validation.groups.PlayerValidationGroups;
 import io.github.mixaniki.exception.model.NotFoundException;
 import jakarta.transaction.Transactional;
@@ -37,6 +38,11 @@ public class PlayerServiceImpl implements PlayerService{
     @Override
     public List<Player> getAll() {
         return (List<Player>) playerRepository.findAll();
+    }
+
+
+    public List<Player> getByTeam(Team team) {
+        return playerRepository.findByTeam(team);
     }
 
     @Override

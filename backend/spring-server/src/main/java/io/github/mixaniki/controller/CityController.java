@@ -3,6 +3,8 @@ package io.github.mixaniki.controller;
 import io.github.mixaniki.domain.model.service.ObjectService;
 import io.github.mixaniki.entity.City;
 import io.github.mixaniki.exception.model.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +15,13 @@ import java.util.List;
 public class CityController {
     private final ObjectService<City> cityService;
 
+    @Autowired
     public CityController(ObjectService<City> cityService){this.cityService = cityService; }
 
 
     @PostMapping(value = "/city/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<City> createCity(@RequestBody City city) throws NotFoundException {
-
-        return ResponseEntity.ok(cityService.create(city));
+        return ResponseEntity.status(HttpStatus.CREATED).body(cityService.create(city));
     }
     @GetMapping(value = "/city/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<City> getCityById(@PathVariable("id") Long id) throws NotFoundException {
@@ -38,7 +40,8 @@ public class CityController {
     }
     @DeleteMapping(value = "/city/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteCity(@PathVariable("id") Long id) throws NotFoundException{
-        return ResponseEntity.ok(cityService.delete(id));
+        cityService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 
