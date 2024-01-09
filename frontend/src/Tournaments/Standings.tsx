@@ -41,18 +41,18 @@ export function getRandomGame(): Game {
     }
 }
 
-export function calculateGame(team: Team){
+export function calculateGame(team: Team) {
     const gamesWon = team.games.filter((game, i) =>
-    game.quarter.reduce((p, c, i) => p + c.quarter_score, 0) > game.quarter.reduce((p, c, i) => p + c.quarter_score_against, 0)).length;
-const totalGames = team.games.length;
-const gamesLost = totalGames - gamesWon;
-const points = (gamesWon * 2) + (gamesLost * 1);
-return {
-    gamesWon: gamesWon,
-    gamesLost: gamesLost,
-    totalGames: totalGames,
-    points: points,
-}
+        game.quarter.reduce((p, c, i) => p + c.quarter_score, 0) > game.quarter.reduce((p, c, i) => p + c.quarter_score_against, 0)).length;
+    const totalGames = team.games.length;
+    const gamesLost = totalGames - gamesWon;
+    const points = (gamesWon * 2) + (gamesLost * 1);
+    return {
+        gamesWon: gamesWon,
+        gamesLost: gamesLost,
+        totalGames: totalGames,
+        points: points,
+    }
 }
 
 export default function Standings() {
@@ -113,7 +113,7 @@ export default function Standings() {
                 {
                     standings.teams.sort((a, b) => b.points - a.points).map((team, i) => {
                         return (
-                            <li key={i} className="flex justify-between cursor-pointer hover:scale-[1.01] hover:shadow-[0px_4px_8px_0px_rgba(0,0,0,0.2)] last:pb-4 last:border-b-[1px] last:border-b-slate-300">
+                            <li key={i} className="flex justify-between duration-[50ms] transition-[transform] cursor-pointer hover:scale-[1.01] hover:shadow-[0px_4px_8px_0px_rgba(0,0,0,0.2)] last:pb-4 last:border-b-[1px] last:border-b-slate-300">
                                 <div className="flex gap-x-4 items-center">
                                     <div className={`size-6 shrink-0 rounded-md flex items-center justify-center ${i >= 6 ? 'bg-sec' : 'bg-amber-500'} text-white`}>
                                         <p>{i + 1}</p>
@@ -128,7 +128,7 @@ export default function Standings() {
                                         <p>{team.gamesLost}</p>
                                         <p>{team.points}</p>
                                     </ul>
-                                    <ul className="flex w-[25%] group [&>*:nth-child(n+4)]:wireless:hidden [&>*:nth-child(n+3)]:rounded-r">
+                                    <ul className="flex w-[25%]  group [&>*:nth-child(n+4)]:wireless:hidden [&>*:nth-child(n+3)]:wireless:rounded-r">
                                         {team.games.slice(0, 5).map((item, index) => {
                                             return (
                                                 <li key={index} className={`text-white font-wotfard-md px-1 first:rounded-l last:rounded-r 

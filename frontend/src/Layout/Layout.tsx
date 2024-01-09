@@ -1,17 +1,26 @@
 import { Outlet } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { SearchElement } from "@tryferos/search";
 import { BasketballIcon, SearchIcon } from "../icons";
 import { motion, AnimatePresence } from 'framer-motion'
+import { PopupType, Wrapper, usePopup, useUser } from "./Wrapper";
+import PopupElement from "../Popup/PopupElement";
+import { PopupItem } from "../Popup/PopupItem";
+import { Login } from "../Popup/Login";
 
 export default function Layout() {
     return (
-        <div className="w-[100vw] h-[100vh] flex">
-            <NavigationBar />
-            <main className="ml-[clamp(200px,15%,250px)] mobile:ml-[0%] mobile:w-[100%]  w-[85%] overflow-y-auto scrollbar">
-                <Outlet />
-            </main>
-        </div>
+        <Wrapper>
+            <div className="w-[100vw] h-[100vh] flex">
+                <NavigationBar />
+                <main className="ml-[clamp(200px,15%,250px)] mobile:ml-[0%] mobile:w-[100%]  w-[85%] overflow-y-auto scrollbar">
+                    <Outlet />
+                </main>
+                <PopupElement>
+                    <PopupItem popup={PopupType.login} element={<Login />} />
+                </PopupElement>
+            </div>
+        </Wrapper>
     );
 }
 
@@ -48,7 +57,7 @@ function NavigationBar() {
                                     animate={{ opacity: 1 }}
                                     initial={{ opacity: 0 }}
                                     transition={{ duration: 0.2, delay: 0.2 * i + 0.2 }}
-                                    className="font-sans hover:scale-[1.01]  flex data-[selected=true]:shadow-box hover:shadow-box items-center data-[selected=true]:bg-slate-300
+                                    className="font-sans hover:scale-[1.01] data-[selected=true]:outline outline-1 outline-slate-300  flex data-[selected=true]:shadow-box hover:shadow-box items-center data-[selected=true]:bg-slate-300
                                     px-2 truncate gap-x-2 flex-1 hover:bg-slate-300 rounded-md justify-between font-medium text-sm text-slate-600 hover:text-slate-900 cursor-pointer transition-all">
                                     <img src={'/basketball.svg'} width={20} height={20} className="basis-[10%]" />
                                     <p className="font-semibold text-start basis-[120%]">{item.name}</p>
@@ -87,8 +96,37 @@ function NavigationBar() {
                     }
                 </ul>
             </section>
+            <Logging />
         </nav>
     )
+}
+
+function Logging() {
+
+    const { user, handleLogIn, handleLogOut } = useUser();
+    const { popup, handlePopup } = usePopup();
+
+
+
+
+    return (
+        <section className="flex absolute bottom-20 w-full justify-center font-medium font-sans flex-col items-center gap-y-5">
+            <div className="flex flex-col text-center gap-y-2 w-full"><p className="font-semibold border-b-[1px] border-b-gray-300 pb-4 w-full mb-4">{user?.username ?? 'Guest'}</p>
+                {
+                    user &&
+                    <p className="font-medium">{user.role}</p>
+                }
+            </div>
+            {
+                user ?
+                    <input type='button' onClick={() => handleLogOut()} value='Αποσύνδεση' className="outline shadow-shadowSec text-sm outline-[2px] rounded font-semibold text-sec cursor-pointer outline-sec hover:bg-sec hover:text-white hover:shadow-shadowSecHover px-4 py-2" />
+                    :
+                    <input type='button' onClick={() => handlePopup(PopupType.login, 'Σύνδεση')} value='Συνδέσου' className="outline shadow-shadowSec text-sm outline-[2px] rounded font-semibold text-sec cursor-pointer outline-sec hover:bg-sec hover:text-white hover:shadow-shadowSecHover px-4 py-2" />
+            }
+
+        </section>
+    )
+
 }
 
 function HeaderText({ text, href }: { text: string, href?: string }) {

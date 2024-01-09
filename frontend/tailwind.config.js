@@ -17,10 +17,10 @@ module.exports = {
             },
             boxShadow: {
                 shadowSec:
-                    "inset 0 0 1em rgba(108,99,255,0.4), 0 0 1em rgba(108,99,255,0.4);",
+                    "inset 0 0 1em rgba(217,119,6,0.4), 0 0 1em rgba(217,119,6,0.4);",
                 shadowSecHover:
-                    "inset 0 0 0 rgba(108,99,255,0.4), 0 0 1.5em rgba(108,99,255,0.7);",
-                box: "-0.2em 0.2em 1em rgba(217,119,6,0.7)",
+                    "inset 0 0 0 rgba(217,119,6,0.4), 0 0 1.5em rgba(217,119,6,0.7);",
+                box: "-0.2em 0.2em 1em rgba(0,0,0,0.2)",
             },
             screens: {
                 tablet: { min: "768px", max: "1024px" },

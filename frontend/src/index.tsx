@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
 import ReactDOM from "react-dom/client";
 import "./App.css";
 import App from "./App";
@@ -17,6 +17,7 @@ import Tournament from "./Tournaments/Tournament";
 import TournamentLayout from "./Layout/TournamentLayout";
 import Standings from "./Tournaments/Standings";
 import Matches from "./Tournaments/Matches";
+import { Wrapper } from "./Layout/Wrapper";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -26,13 +27,13 @@ const router = createBrowserRouter(
                 <Route index element={<TournamentIndex />} />
                 <Route element={<TournamentLayout />}>
                     <Route path=":tourid">
-                        <Route index element={<Standings/>} />
+                        <Route index element={<Standings />} />
                         <Route path="teams">
                             <Route index element={<TeamsIndex />} />
                             <Route path=":teamid" element={<Team />} />
                         </Route>
-                        <Route path="standings" element={<Standings/>}/>
-                        <Route path="matches" element={<Matches/>}/>
+                        <Route path="standings" element={<Standings />} />
+                        <Route path="matches" element={<Matches />} />
                     </Route>
                 </Route>
             </Route>
