@@ -14,10 +14,11 @@ public interface ObjectService<T, P> {
     @Validated(value = {ValidationGroups.Create.class, Default.class} )
     T create(@Valid @NotNull T object) throws NotFoundException;
 
-    T getById(P id) throws NotFoundException;
+    T getById( P id) throws NotFoundException;
 
     List<T> getAll() throws NotFoundException;
 
+    @Validated(value = {ValidationGroups.Update.class, Default.class} )
     T update(@Valid @NotNull T object) throws NotFoundException;
 
     void  delete(P id) throws NotFoundException;

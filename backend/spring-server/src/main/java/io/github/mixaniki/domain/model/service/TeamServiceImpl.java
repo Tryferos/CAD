@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @Validated
-public class TeamServiceImpl implements ObjectService<Team, Long>{
+public class TeamServiceImpl implements TeamService{
     private final TeamRepository teamRepository;
 
     public TeamServiceImpl(TeamRepository teamRepository) {

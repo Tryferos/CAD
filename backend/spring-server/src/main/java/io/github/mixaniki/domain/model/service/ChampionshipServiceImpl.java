@@ -33,7 +33,7 @@ public class ChampionshipServiceImpl implements ChampionshipService {
     }
 
     @Override
-    public Championship getById(@NotNull Long id) throws NotFoundException {
+    public Championship getById(Long id) throws NotFoundException {
         Optional<Championship> championshipOptional = championshipRepository.findById(id);
         if(championshipOptional.isEmpty()){
             throw new NotFoundException("The championship with id "+ id +" does not exist");

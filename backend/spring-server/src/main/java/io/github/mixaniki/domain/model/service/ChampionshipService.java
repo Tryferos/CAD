@@ -24,7 +24,7 @@ public interface ChampionshipService extends ObjectService<Championship, Long>{
      * @return      The championship with the provided id
      * @throws NotFoundException    In case a championship with the provided id does not exist
      */
-    Championship getById(@NotNull Long id) throws NotFoundException;
+    Championship getById(Long id) throws NotFoundException;
 
 
     /**

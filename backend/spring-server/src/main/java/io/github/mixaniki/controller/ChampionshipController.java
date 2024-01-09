@@ -1,6 +1,6 @@
 package io.github.mixaniki.controller;
 
-import io.github.mixaniki.domain.model.service.ChampionshipServiceImpl;
+import io.github.mixaniki.domain.model.service.ChampionshipService;
 import io.github.mixaniki.entity.Championship;
 import io.github.mixaniki.exception.model.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import java.util.List;
 @RequestMapping(value = "/api")
 public class ChampionshipController {
 
-    private final ChampionshipServiceImpl championshipService;
+    private final ChampionshipService championshipService;
 
     @Autowired
-    public ChampionshipController(ChampionshipServiceImpl championshipService) {
+    public ChampionshipController(ChampionshipService championshipService) {
         this.championshipService = championshipService;
     }
 

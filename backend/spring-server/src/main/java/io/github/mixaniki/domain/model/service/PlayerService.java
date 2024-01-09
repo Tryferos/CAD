@@ -1,6 +1,7 @@
 package io.github.mixaniki.domain.model.service;
 
 import io.github.mixaniki.entity.Player;
+import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import io.github.mixaniki.exception.model.NotFoundException;
 import jakarta.validation.Valid;
@@ -53,5 +54,13 @@ public interface PlayerService extends ObjectService<Player, Long>{
      * @throws NotFoundException  In case a player with the provided id does not exist
      */
     void  delete(Long id) throws NotFoundException;
+
+    /**
+     * Retrieves all players by team
+     *
+     * @param team  The team that contains the players to retrieve
+     * @return      The list of players who participate in the team
+     */
+    List<Player> getByTeam(Team team);
 
 }
