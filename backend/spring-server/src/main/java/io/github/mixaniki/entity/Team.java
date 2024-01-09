@@ -1,7 +1,7 @@
 package io.github.mixaniki.entity;
 
 
-import io.github.mixaniki.entity.validation.groups.PlayerValidationGroups;
+import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -22,7 +22,7 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Null(groups = PlayerValidationGroups.Create.class)
+    @Null(groups = ValidationGroups.Create.class)
     @Column(name = "id")
     private Long id;
     @NotNull

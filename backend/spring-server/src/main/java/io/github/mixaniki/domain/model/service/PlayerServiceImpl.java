@@ -3,7 +3,7 @@ package io.github.mixaniki.domain.model.service;
 import io.github.mixaniki.Repository.PlayerRepository;
 import io.github.mixaniki.entity.Player;
 import io.github.mixaniki.entity.Team;
-import io.github.mixaniki.entity.validation.groups.PlayerValidationGroups;
+import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import io.github.mixaniki.exception.model.NotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -47,7 +47,7 @@ public class PlayerServiceImpl implements PlayerService{
 
     @Override
     @Transactional
-    @Validated(value = {PlayerValidationGroups.Create.class, Default.class} )
+    @Validated(value = {ValidationGroups.Create.class, Default.class} )
     public Player create(@Valid @NotNull Player player) {
 
         return playerRepository.save(player);

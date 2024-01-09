@@ -1,7 +1,7 @@
 package io.github.mixaniki.domain.model.service;
 
 import io.github.mixaniki.entity.Team;
-import io.github.mixaniki.entity.validation.groups.ObjectValidationGroups;
+import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import io.github.mixaniki.exception.model.NotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 
 public interface TeamService {
-    @Validated(value = {ObjectValidationGroups.Create.class, Default.class} )
+    @Validated(value = {ValidationGroups.Create.class, Default.class} )
     Team create(@Valid @NotNull Team team) throws NotFoundException;
 
     Team getById(Long id) throws NotFoundException;

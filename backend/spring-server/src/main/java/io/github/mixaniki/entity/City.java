@@ -1,6 +1,6 @@
 package io.github.mixaniki.entity;
 
-import io.github.mixaniki.entity.validation.groups.PlayerValidationGroups;
+import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
@@ -17,7 +17,7 @@ public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Null(groups = PlayerValidationGroups.Create.class)
+    @Null(groups = ValidationGroups.Create.class)
     @Column(name = "id")
     private Long id;
     @NotNull

@@ -1,7 +1,7 @@
 package io.github.mixaniki.domain.model.service;
 
 import io.github.mixaniki.entity.Player;
-import io.github.mixaniki.entity.validation.groups.PlayerValidationGroups;
+import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import io.github.mixaniki.exception.model.NotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +18,7 @@ public interface PlayerService {
      * @param player    The player to create
      * @return          The created/saved player
      */
-    @Validated(value = {PlayerValidationGroups.Create.class, Default.class} )
+    @Validated(value = {ValidationGroups.Create.class, Default.class} )
     Player create(@Valid @NotNull Player player);
 
     /**

@@ -2,7 +2,7 @@ package io.github.mixaniki.domain.model.service;
 
 import io.github.mixaniki.Repository.CityRepository;
 import io.github.mixaniki.entity.City;
-import io.github.mixaniki.entity.validation.groups.ObjectValidationGroups;
+import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import io.github.mixaniki.exception.model.NotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -47,7 +47,7 @@ public class CityServiceImpl implements ObjectService<City>{
 
     @Override
     @Transactional
-    @Validated(value = {ObjectValidationGroups.Create.class, Default.class} )
+    @Validated(value = {ValidationGroups.Create.class, Default.class} )
     public City create(@Valid @NotNull City city) throws NotFoundException {
         return cityRepository.save(city);
     }

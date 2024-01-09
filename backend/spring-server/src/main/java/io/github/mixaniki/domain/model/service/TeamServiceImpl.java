@@ -2,7 +2,7 @@ package io.github.mixaniki.domain.model.service;
 
 import io.github.mixaniki.Repository.TeamRepository;
 import io.github.mixaniki.entity.Team;
-import io.github.mixaniki.entity.validation.groups.ObjectValidationGroups;
+import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import io.github.mixaniki.exception.model.NotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -39,7 +39,7 @@ public class TeamServiceImpl implements ObjectService<Team>{
 
     @Override
     @Transactional
-    @Validated(value = {ObjectValidationGroups.Create.class, Default.class} )
+    @Validated(value = {ValidationGroups.Create.class, Default.class} )
     public Team create(@Valid @NotNull Team team) throws NotFoundException {
         return teamRepository.save(team);
     }
