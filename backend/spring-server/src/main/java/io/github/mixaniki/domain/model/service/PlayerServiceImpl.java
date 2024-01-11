@@ -1,6 +1,7 @@
 package io.github.mixaniki.domain.model.service;
 
 import io.github.mixaniki.Repository.PlayerRepository;
+import io.github.mixaniki.Repository.TeamRepository;
 import io.github.mixaniki.entity.Player;
 import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
@@ -21,9 +22,12 @@ import java.util.Optional;
 public class PlayerServiceImpl implements PlayerService{
 
     private final PlayerRepository playerRepository;
+    private final TeamRepository teamRepository;
+
     @Autowired
-    public PlayerServiceImpl(PlayerRepository playerRepository) {
+    public PlayerServiceImpl(PlayerRepository playerRepository, TeamRepository teamRepository) {
         this.playerRepository = playerRepository;
+        this.teamRepository = teamRepository;
     }
 
     @Override
@@ -49,7 +53,10 @@ public class PlayerServiceImpl implements PlayerService{
     @Override
     @Transactional
     @Validated(value = {ValidationGroups.Create.class, Default.class} )
-    public Player create(@Valid @NotNull Player player) {
+    public Player create(@Valid @NotNull Player player) throws NotFoundException{
+        if(!teamRepository.existsById(player.getTeam().getId())){
+            throw new NotFoundException("Team with id "+ player.getTeam().getId() +" does not exist");
+        }
 
         return playerRepository.save(player);
     }
@@ -59,7 +66,11 @@ public class PlayerServiceImpl implements PlayerService{
     @Validated(value = {ValidationGroups.Update.class, Default.class})
     public Player update(@Valid @NotNull Player player) throws NotFoundException {
         if(!playerRepository.existsById(player.getId())){
-            throw new NotFoundException("Player with such id does not exist");
+            throw new NotFoundException("Player with id "+ player.getId() +" does not exist");
+        }
+
+        if(!teamRepository.existsById(player.getTeam().getId())){
+            throw new NotFoundException("Team with id "+ player.getTeam().getId() +" does not exist");
         }
 
         return playerRepository.save(player);

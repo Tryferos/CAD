@@ -20,7 +20,7 @@ public interface PlayerService extends ObjectService<Player, Long>{
      * @return          The created/saved player
      */
     @Validated(value = {ValidationGroups.Create.class, Default.class} )
-    Player create(@Valid @NotNull Player player);
+    Player create(@Valid @NotNull Player player) throws NotFoundException;
 
     /**
      * Retrieves player by id.

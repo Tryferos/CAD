@@ -30,7 +30,7 @@ public class PlayerController {
     // ResponseEntity.ok( ... )                  when successfully return happens with entity content response - corresponds to; (HttpStatus.OK) - response status code is 200
 
     @PostMapping(value = "/players/add", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Player> createPlayer(@RequestBody Player player) {
+    public ResponseEntity<Player> createPlayer(@RequestBody Player player) throws NotFoundException{
 
         return ResponseEntity.status(HttpStatus.CREATED).body(playerService.create(player));
     }
