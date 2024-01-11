@@ -11,7 +11,7 @@ import { Login } from "../Popup/Login";
 export default function Layout() {
     return (
         <Wrapper>
-            <div className="w-[100vw] h-[100vh] flex">
+            <div className="w-[100vw] h-[100vh] flex z-[999]">
                 <NavigationBar />
                 <main className="ml-[clamp(200px,15%,250px)] mobile:ml-[0%] mobile:w-[100%]  w-[85%] overflow-y-auto scrollbar">
                     <Outlet />
@@ -31,30 +31,29 @@ function NavigationBar() {
                 <div className="h-[75px] flex items-center justify-center">
                     <p className="font-cubano text-2xl  text-sec">BasketStats</p>
                 </div>
-                <div className="z-[20000000]">
-                    <SearchElement
-                        sections={[
-                            {
-                                items: [{
-                                    content: 'Super League, ΝΒΑ',
-                                    title: 'PAOK',
-                                    href: ''
-                                }],
-                                title: 'Ομάδες',
-                            },
-                            {
-                                items: [{
-                                    content: '',
-                                    title: 'Διοργάνωση 1',
-                                    href: ''
-                                }],
-                                title: 'Διοργανώσεις',
-                            },
-                        ]}
-                    >
-                        <SearchBar />
-                    </SearchElement>
-                </div>
+                <SearchElement
+                    shadow={false}
+                    sections={[
+                        {
+                            items: [{
+                                content: 'Super League, ΝΒΑ',
+                                title: 'PAOK',
+                                href: ''
+                            }],
+                            title: 'Ομάδες',
+                        },
+                        {
+                            items: [{
+                                content: '',
+                                title: 'Διοργάνωση 1',
+                                href: ''
+                            }],
+                            title: 'Διοργανώσεις',
+                        },
+                    ]}
+                >
+                    <SearchBar />
+                </SearchElement>
             </section>
             <section className="flex flex-col gap-y-4 pb-2">
                 <HeaderText text={'Διοργανώσεις'} href={'/tournaments'} />
@@ -165,7 +164,7 @@ function HeaderText({ text, href }: { text: string, href?: string }) {
 
 function SearchBar() {
     return (
-        <div className="w-full z-[200000] h-[25px] justify-between px-2 text-slate-600 transition-all hover:text-slate-900 flex items-center py-5 bg-gradient-to-r from-slate-300 via-slate-300 to-slate-200 rounded-md cursor-pointer">
+        <div className="w-full h-[25px] justify-between px-2 text-slate-600 transition-all hover:text-slate-900 flex items-center py-5 bg-gradient-to-r from-slate-300 via-slate-300 to-slate-200 rounded-md cursor-pointer">
             <p className="font-sans px-2 font-medium text-sm">Αναζήτηση...</p>
             <SearchIcon />
         </div>

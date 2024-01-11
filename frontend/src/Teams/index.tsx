@@ -111,7 +111,7 @@ export default function TeamsIndex() {
                 {
                     teams.map((team, i) => {
                         return (
-                            <li key={i} className="relative min-w-[400px] min-h-[400px] rounded-md">
+                            <li key={i} className="relative  -z-50 min-w-[400px] min-h-[400px] rounded-md">
                                 <div className="w-full h-[50%] max-h-[400px] min-h-[400px] bg-white relative rounded-md">
                                     <div className="size-[98%] brightness-50 z-[150] absolute top-[1%] left-[1%] bg-basketball bg-cover bg-no-repeat blur-[2px] bg-center rounded-md"></div>
                                     <div className="w-full z-[100] h-full absolute top-0 left-0 bg-basketball bg-cover bg-no-repeat blur-[0px] bg-center rounded-md"></div>
