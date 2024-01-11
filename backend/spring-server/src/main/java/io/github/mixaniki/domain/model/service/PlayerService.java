@@ -18,6 +18,7 @@ public interface PlayerService extends ObjectService<Player, Long>{
      *
      * @param player    The player to create
      * @return          The created/saved player
+     * @throws NotFoundException In case a player with the provided team_id does not exist
      */
     @Validated(value = {ValidationGroups.Create.class, Default.class} )
     Player create(@Valid @NotNull Player player) throws NotFoundException;
@@ -52,6 +53,7 @@ public interface PlayerService extends ObjectService<Player, Long>{
      *
      * @param id     The id of the player to delete permanently
      * @throws NotFoundException  In case a player with the provided id does not exist
+     * @throws NotFoundException  In case a player with the provided team_id does not exist
      */
     void  delete(Long id) throws NotFoundException;
 

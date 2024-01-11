@@ -1,5 +1,6 @@
 package io.github.mixaniki.entity;
 
+import io.github.mixaniki.entity.annotation.LowercaseConverter;
 import io.github.mixaniki.entity.type.PlayerPositionType;
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import jakarta.persistence.*;
@@ -25,9 +26,11 @@ public class Player {
     @Column(name = "id")
     private Long id;
     @NotNull
+    @Convert(converter = LowercaseConverter.class)
     @Column(name = "first_name", length = 30)
     private String firstName;
     @NotNull
+    @Convert(converter = LowercaseConverter.class)
     @Column(name = "last_name", length = 30)
     private String lastName;
     @Min(value = 0)
@@ -35,6 +38,7 @@ public class Player {
     @Column(name = "height")
     private int height; // height in cm
     @Column(name = "nationality")
+    @Convert(converter = LowercaseConverter.class)
     private String nationality;
     @Column(name = "logo_path", length = 1024, nullable = true)
     private String logo;

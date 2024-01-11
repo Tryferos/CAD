@@ -1,5 +1,6 @@
 package io.github.mixaniki.entity;
 
+import io.github.mixaniki.entity.annotation.LowercaseConverter;
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -23,6 +24,7 @@ public class Championship {
     @Column(name = "id", nullable = false)
     private Long id;
     @NotBlank
+    @Convert(converter = LowercaseConverter.class)
     @Column(name = "name", unique = true)
     private String name;
 
