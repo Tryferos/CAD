@@ -46,6 +46,7 @@ public class CityServiceImpl implements ObjectService<City, Long>{
 
     @Override
     @Transactional
+    @Validated(value = {ValidationGroups.Update.class, Default.class})
     public City update(@Valid @NotNull City city) throws NotFoundException {
         if(!cityRepository.existsById(city.getId())){
             throw new NotFoundException("City with such id does not exist");

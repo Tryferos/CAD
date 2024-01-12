@@ -9,7 +9,6 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
-
 /**
  *
  * @param <T>
@@ -47,6 +46,7 @@ public interface ObjectService<T, P> {
      * @return
      * @throws NotFoundException
      */
+    @Validated(value = {ValidationGroups.Update.class, Default.class} )
     T update(@Valid @NotNull T object) throws NotFoundException;
 
     /**

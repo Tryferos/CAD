@@ -47,6 +47,7 @@ public class TeamServiceImpl implements TeamService{
 
     @Override
     @Transactional
+    @Validated(value = {ValidationGroups.Update.class, Default.class})
     public Team update(@Valid @NotNull Team team) throws NotFoundException {
         if(!teamRepository.existsById(team.getId())){
             throw new NotFoundException("Team with such id does not exist");

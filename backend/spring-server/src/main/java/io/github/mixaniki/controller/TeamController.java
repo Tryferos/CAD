@@ -1,6 +1,5 @@
 package io.github.mixaniki.controller;
 
-import io.github.mixaniki.domain.model.service.ObjectService;
 import io.github.mixaniki.domain.model.service.TeamService;
 import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.exception.model.NotFoundException;
@@ -13,10 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+
+@RequestMapping(value = "/api")
 public class TeamController {
-
-
     private final TeamService teamService;
 
     @Autowired
@@ -24,12 +22,12 @@ public class TeamController {
         this.teamService = teamService;
     }
 
-
     @PostMapping(value = "/teams/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> createTeam(@RequestBody Team team) throws NotFoundException {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(teamService.create(team));
     }
+
     @GetMapping(value = "/teams/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> getTeamById(@PathVariable("id") Long id) throws NotFoundException {
         return ResponseEntity.ok(teamService.getById(id));

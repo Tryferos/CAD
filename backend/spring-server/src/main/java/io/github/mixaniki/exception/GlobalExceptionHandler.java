@@ -34,7 +34,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 
     /**
-     * Handles exception usually thrown cause of unique constraint violation (from database)
+     * Handles exception usually thrown cause of unique constraint violation (from database) but not only
      *
      * @param ex  The occurred exception
      * @return    Returns appropriate response status code and exception message
@@ -42,8 +42,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Object> handle(DataIntegrityViolationException ex) {
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorBody("The championship name possibly is not unique. Unique constraint violation: " + ex.getMessage()));
-//        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorBody("Unique constraint violation: " + ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorBody(ex.getMessage()));
     }
 
     @ExceptionHandler(value = { ConstraintViolationException.class })
@@ -60,6 +59,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorBody(errorMessage));
     }
 
-    public record ErrorBody(String message){};
+    public record ErrorBody(String message){}
 
 }

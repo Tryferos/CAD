@@ -13,14 +13,16 @@ import java.util.List;
 
 public interface PlayerService extends ObjectService<Player, Long> {
 
+
     /**
      * Creates player with provided values.
      *
      * @param player    The player to create
      * @return          The created/saved player
+     * @throws NotFoundException In case a player with the provided team_id does not exist
      */
     @Validated(value = {ValidationGroups.Create.class, Default.class} )
-    Player create(@Valid @NotNull Player player);
+    Player create(@Valid @NotNull Player player) throws NotFoundException;
 
     /**
      * Retrieves player by id.
@@ -32,11 +34,10 @@ public interface PlayerService extends ObjectService<Player, Long> {
     Player getById(Long id) throws NotFoundException;
 
     /**
-     * Retrieves all players from one team
+     * Retrieves all players by team
      *
-     * @param team
-     * @return A list of players
-     * @throws NotFoundException
+     * @param team  The team that contains the players to retrieve
+     * @return      The list of players who participate in the team
      */
     List<Player> getByTeam(Team team) throws NotFoundException;
 
@@ -61,6 +62,7 @@ public interface PlayerService extends ObjectService<Player, Long> {
      *
      * @param id     The id of the player to delete permanently
      * @throws NotFoundException  In case a player with the provided id does not exist
+     * @throws NotFoundException  In case a player with the provided team_id does not exist
      */
     void delete(Long id) throws NotFoundException;
 

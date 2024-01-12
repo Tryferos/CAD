@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/api")
 public class CityController {
     private final ObjectService<City, Long> cityService;
 
@@ -19,11 +20,11 @@ public class CityController {
     public CityController(ObjectService<City, Long> cityService){this.cityService = cityService; }
 
 
-    @PostMapping(value = "/city/add", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/cities/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<City> createCity(@RequestBody City city) throws NotFoundException {
         return ResponseEntity.status(HttpStatus.CREATED).body(cityService.create(city));
     }
-    @GetMapping(value = "/city/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/cities/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<City> getCityById(@PathVariable("id") Long id) throws NotFoundException {
         return ResponseEntity.ok(cityService.getById(id));
     }
@@ -33,12 +34,12 @@ public class CityController {
         return ResponseEntity.ok(cityService.getAll());
     }
 
-    @PutMapping(value = "/city/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/cities/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> updateCity(@PathVariable("id") Long id, @RequestBody City cityToUpdate) throws NotFoundException{
         cityToUpdate.setId(id);
         return ResponseEntity.ok(cityService.update(cityToUpdate));
     }
-    @DeleteMapping(value = "/city/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/cities/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteCity(@PathVariable("id") Long id) throws NotFoundException{
         cityService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

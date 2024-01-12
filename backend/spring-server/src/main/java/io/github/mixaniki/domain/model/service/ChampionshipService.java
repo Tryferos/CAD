@@ -2,13 +2,12 @@ package io.github.mixaniki.domain.model.service;
 
 import io.github.mixaniki.entity.Championship;
 import io.github.mixaniki.exception.model.NotFoundException;
-import io.github.mixaniki.exception.model.ValidationException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public interface ChampionshipService {
+public interface ChampionshipService extends ObjectService<Championship, Long>{
 
     /**
      * Creates a championship with provided values
@@ -25,7 +24,7 @@ public interface ChampionshipService {
      * @return      The championship with the provided id
      * @throws NotFoundException    In case a championship with the provided id does not exist
      */
-    Championship getById(@NotNull Long id) throws NotFoundException;
+    Championship getById(Long id) throws NotFoundException;
 
 
     /**
@@ -41,7 +40,6 @@ public interface ChampionshipService {
      * @param championship The championship to update
      * @return             The updated championship
      * @throws NotFoundException In case the championship to be updated does not exist
-     * @throws ValidationException In case the new name of the championship to be updated already exists
      */
     Championship update(@Valid @NotNull Championship championship) throws NotFoundException;
 
@@ -50,6 +48,6 @@ public interface ChampionshipService {
      * @param id  The id of the championship to delete permanently
      * @throws NotFoundException In case the championship with the provided id does not exist
      */
-    void  delete(Long id) throws NotFoundException;
+    void delete(Long id) throws NotFoundException;
 
 }

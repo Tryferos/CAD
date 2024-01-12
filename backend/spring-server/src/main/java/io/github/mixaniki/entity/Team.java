@@ -1,11 +1,10 @@
 package io.github.mixaniki.entity;
 
 
+import io.github.mixaniki.entity.annotation.LowercaseConverter;
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
@@ -25,16 +24,20 @@ public class Team {
     @Null(groups = ValidationGroups.Create.class)
     @Column(name = "team_id")
     private Long id;
-    @NotNull
+    @NotBlank
+    @Convert(converter = LowercaseConverter.class)
     @Column(name = "team_name", length = 30)
     private String teamName;
-    @NotNull
+    @NotBlank
+    @Convert(converter = LowercaseConverter.class)
     @Column(name = "short_name", length = 30)
     private String shortName;
+    @Convert(converter = LowercaseConverter.class)
     @Column(name = "stadium_name")
     private String stadiumName;
-    @Column(name = "logo_path")
+    @Column(name = "logo_path", length = 1024)
     private String logoPath;
+    @Convert(converter = LowercaseConverter.class)
     @Column(name = "coach_name")
     private String coachName;
 

@@ -3,7 +3,6 @@ package io.github.mixaniki.controller;
 import io.github.mixaniki.domain.model.service.PlayerService;
 import io.github.mixaniki.domain.model.service.PlayerServiceImpl;
 import io.github.mixaniki.domain.model.service.TeamService;
-import io.github.mixaniki.domain.model.service.TeamServiceImpl;
 import io.github.mixaniki.entity.Player;
 import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.exception.model.NotFoundException;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/api")
 public class PlayerController {
 
     private final PlayerService playerService;
@@ -23,6 +23,7 @@ public class PlayerController {
 
     @Autowired
     public PlayerController(PlayerServiceImpl playerService, TeamService teamService) {
+
         this.playerService = playerService;
         this.teamService = teamService;
     }
@@ -31,7 +32,7 @@ public class PlayerController {
     // ResponseEntity.ok( ... )                  when successfully return happens with entity content response - corresponds to; (HttpStatus.OK) - response status code is 200
 
     @PostMapping(value = "/players/add", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Player> createPlayer(@RequestBody Player player) throws NotFoundException {
+    public ResponseEntity<Player> createPlayer(@RequestBody Player player) throws NotFoundException{
 
         return ResponseEntity.status(HttpStatus.CREATED).body(playerService.create(player));
     }
@@ -50,7 +51,7 @@ public class PlayerController {
     }
 
     @GetMapping(value = "/players", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Player>> getAllPlayers() throws NotFoundException {
+    public ResponseEntity<List<Player>> getAllPlayers() {
         return ResponseEntity.ok(playerService.getAll());
     }
 
