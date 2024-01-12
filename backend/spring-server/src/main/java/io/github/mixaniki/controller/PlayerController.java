@@ -1,6 +1,8 @@
 package io.github.mixaniki.controller;
 
+import io.github.mixaniki.domain.model.service.PlayerService;
 import io.github.mixaniki.domain.model.service.PlayerServiceImpl;
+import io.github.mixaniki.domain.model.service.TeamService;
 import io.github.mixaniki.domain.model.service.TeamServiceImpl;
 import io.github.mixaniki.entity.Player;
 import io.github.mixaniki.entity.Team;
@@ -16,11 +18,11 @@ import java.util.List;
 @RestController
 public class PlayerController {
 
-    private final PlayerServiceImpl playerService;
-    private final TeamServiceImpl teamService;
+    private final PlayerService playerService;
+    private final TeamService teamService;
 
     @Autowired
-    public PlayerController(PlayerServiceImpl playerService, TeamServiceImpl teamService) {
+    public PlayerController(PlayerServiceImpl playerService, TeamService teamService) {
         this.playerService = playerService;
         this.teamService = teamService;
     }

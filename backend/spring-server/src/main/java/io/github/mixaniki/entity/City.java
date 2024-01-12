@@ -12,16 +12,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "City")
+@Table(name = "Cities")
 public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Null(groups = ValidationGroups.Create.class)
-    @Column(name = "id")
+    @Column(name = "city_id")
     private Long id;
     @NotNull
     @Column(name = "city_name", length = 30, nullable = false)
-    private String city_name;
+    private String cityName;
 
 }

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Validated
 public class PlayerServiceImpl implements PlayerService{
 
     private final PlayerRepository playerRepository;
@@ -41,7 +42,7 @@ public class PlayerServiceImpl implements PlayerService{
     }
 
 
-    public List<Player> getByTeam(Team team) {
+    public List<Player> getByTeam(Team team) throws NotFoundException {
         return playerRepository.findByTeam(team);
     }
 

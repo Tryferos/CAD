@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "championships")
+@Table(name = "Championships")
 public class Championship {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Null(groups = ValidationGroups.Create.class)
     @NotNull(groups = ValidationGroups.Update.class)
-    @Column(name = "id", nullable = false)
+    @Column(name = "championship_id", nullable = false)
     private Long id;
     @NotBlank
     @Column(name = "name", unique = true)

@@ -9,15 +9,50 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
-public interface ObjectService<T> {
+
+/**
+ *
+ * @param <T>
+ * @param <P>
+ */
+public interface ObjectService<T, P> {
+
+    /**
+     *
+     * @param object
+     * @return
+     * @throws NotFoundException
+     */
     @Validated(value = {ValidationGroups.Create.class, Default.class} )
     T create(@Valid @NotNull T object) throws NotFoundException;
 
-    T getById(Long id) throws NotFoundException;
+    /**
+     *
+     * @param id
+     * @return
+     * @throws NotFoundException
+     */
+    T getById(P id) throws NotFoundException;
 
+    /**
+     *
+     * @return
+     * @throws NotFoundException
+     */
     List<T> getAll() throws NotFoundException;
 
+    /**
+     *
+     * @param object
+     * @return
+     * @throws NotFoundException
+     */
     T update(@Valid @NotNull T object) throws NotFoundException;
 
-    String  delete(Long id) throws NotFoundException;
+    /**
+     *
+     * @param id
+     * @throws NotFoundException
+     */
+    void delete(P id) throws NotFoundException;
 }

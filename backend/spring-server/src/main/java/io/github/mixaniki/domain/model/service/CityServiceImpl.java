@@ -16,7 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CityServiceImpl implements ObjectService<City>{
+@Validated
+public class CityServiceImpl implements ObjectService<City, Long>{
     private final CityRepository cityRepository;
 
     @Autowired
@@ -34,15 +35,6 @@ public class CityServiceImpl implements ObjectService<City>{
     @Override
     public List<City> getAll() throws NotFoundException {
         return (List<City>) cityRepository.findAll();
-
-//        List<Object> allObjects = (List<Object>) objectRepository.findAll();
-//
-//        // Create a new List<City> by casting each element to City
-//        List<City> cityList = allObjects.stream()
-//                .map(obj -> (City) obj)
-//                .collect(Collectors.toList());
-//
-//        return cityList;
     }
 
     @Override
@@ -63,7 +55,7 @@ public class CityServiceImpl implements ObjectService<City>{
     }
 
     @Override
-    public String delete(Long id) throws NotFoundException {
+    public void delete(Long id) throws NotFoundException {
 
         Optional<City> optionalCity = cityRepository.findById(id);
 
@@ -72,6 +64,5 @@ public class CityServiceImpl implements ObjectService<City>{
         }
 
         cityRepository.delete(optionalCity.get());
-        return "City with id "+ id +" removed successfully";
     }
 }

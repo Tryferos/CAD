@@ -1,6 +1,7 @@
 package io.github.mixaniki.controller;
 
 import io.github.mixaniki.domain.model.service.ObjectService;
+import io.github.mixaniki.domain.model.service.TeamService;
 import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.exception.model.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class TeamController {
 
 
-    private final ObjectService<Team> teamService;
+    private final TeamService teamService;
 
     @Autowired
-    public TeamController(ObjectService<Team> teamService) {
+    public TeamController(TeamService teamService) {
         this.teamService = teamService;
     }
 

@@ -1,6 +1,7 @@
 package io.github.mixaniki.domain.model.service;
 
 import io.github.mixaniki.entity.Player;
+import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import io.github.mixaniki.exception.model.NotFoundException;
 import jakarta.validation.Valid;
@@ -10,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
-public interface PlayerService {
+public interface PlayerService extends ObjectService<Player, Long> {
 
     /**
      * Creates player with provided values.
@@ -31,6 +32,15 @@ public interface PlayerService {
     Player getById(Long id) throws NotFoundException;
 
     /**
+     * Retrieves all players from one team
+     *
+     * @param team
+     * @return A list of players
+     * @throws NotFoundException
+     */
+    List<Player> getByTeam(Team team) throws NotFoundException;
+
+    /**
      * Retrieves all players.
      *
      * @return  A list of all players.
@@ -47,11 +57,11 @@ public interface PlayerService {
     Player update(@Valid @NotNull Player player) throws NotFoundException;
 
     /**
-     * Deleted a player
+     * Deletes a player
      *
      * @param id     The id of the player to delete permanently
      * @throws NotFoundException  In case a player with the provided id does not exist
      */
-    void  delete(Long id) throws NotFoundException;
+    void delete(Long id) throws NotFoundException;
 
 }

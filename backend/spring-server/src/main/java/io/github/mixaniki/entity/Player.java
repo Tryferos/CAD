@@ -15,13 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "players")
+@Table(name = "Players")
 public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Null(groups = ValidationGroups.Create.class)
-    @Column(name = "id")
+    @Column(name = "player_id")
     private Long id;
     @NotNull
     @Column(name = "first_name", length = 30)
@@ -44,7 +44,7 @@ public class Player {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "team_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false)
     private Team team;
 
 

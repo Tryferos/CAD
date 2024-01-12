@@ -23,24 +23,24 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Null(groups = ValidationGroups.Create.class)
-    @Column(name = "id")
+    @Column(name = "team_id")
     private Long id;
     @NotNull
     @Column(name = "team_name", length = 30)
-    private String team_name;
+    private String teamName;
     @NotNull
     @Column(name = "short_name", length = 30)
-    private String short_name;
+    private String shortName;
     @Column(name = "stadium_name")
-    private String stadium_name;
+    private String stadiumName;
     @Column(name = "logo_path")
-    private String logo_path;
+    private String logoPath;
     @Column(name = "coach_name")
-    private String coach_name;
+    private String coachName;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "city_id", referencedColumnName = "city_id", nullable = false)
     private City city;
 
 }
