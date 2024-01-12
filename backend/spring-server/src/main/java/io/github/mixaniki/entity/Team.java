@@ -36,7 +36,7 @@ public class Team {
     @Convert(converter = LowercaseConverter.class)
     @Column(name = "stadium_name")
     private String stadiumName;
-    @Column(name = "logo_path", length = 1024, nullable = true)
+    @Column(name = "logo_path", length = 1024)
     private String logo;
     @Convert(converter = LowercaseConverter.class)
     @Column(name = "coach_name")
