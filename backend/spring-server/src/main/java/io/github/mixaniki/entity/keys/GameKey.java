@@ -1,8 +1,6 @@
 package io.github.mixaniki.entity.keys;
 
 
-import io.github.mixaniki.entity.Championship;
-import io.github.mixaniki.entity.Round;
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

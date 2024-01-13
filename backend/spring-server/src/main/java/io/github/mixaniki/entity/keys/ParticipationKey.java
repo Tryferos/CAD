@@ -1,8 +1,10 @@
-package io.github.mixaniki.entity;
+package io.github.mixaniki.entity.keys;
 
 //import io.github.mixaniki.entity.Championship;
 //import io.github.mixaniki.entity.Team;
 
+import io.github.mixaniki.entity.Championship;
+import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;

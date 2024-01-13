@@ -5,7 +5,7 @@ import io.github.mixaniki.Repository.ParticipationRepository;
 import io.github.mixaniki.Repository.TeamRepository;
 import io.github.mixaniki.entity.Championship;
 import io.github.mixaniki.entity.Participation;
-import io.github.mixaniki.entity.ParticipationKey;
+import io.github.mixaniki.entity.keys.ParticipationKey;
 import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import io.github.mixaniki.exception.model.NotFoundException;

@@ -1,5 +1,6 @@
 package io.github.mixaniki.entity;
 
+import io.github.mixaniki.entity.keys.ParticipationKey;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

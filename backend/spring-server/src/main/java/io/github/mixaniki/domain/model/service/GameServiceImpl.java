@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.groups.Default;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class GameServiceImpl implements GameService{
     private final GameRepository gameRepository;
 
+    @Autowired
     public GameServiceImpl(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
     }
@@ -48,6 +50,7 @@ public class GameServiceImpl implements GameService{
 
     @Override
     @Transactional
+    @Validated(value = {ValidationGroups.Update.class, Default.class})
     public Game update(@Valid @NotNull Game game) throws NotFoundException {
         if(!gameRepository.existsById(game.getId())){
             throw new NotFoundException("Game with such id does not exist");

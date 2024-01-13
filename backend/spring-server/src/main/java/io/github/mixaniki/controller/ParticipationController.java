@@ -5,7 +5,7 @@ import io.github.mixaniki.domain.model.service.ParticipationService;
 import io.github.mixaniki.domain.model.service.TeamService;
 import io.github.mixaniki.entity.Championship;
 import io.github.mixaniki.entity.Participation;
-import io.github.mixaniki.entity.ParticipationKey;
+import io.github.mixaniki.entity.keys.ParticipationKey;
 import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.exception.model.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
