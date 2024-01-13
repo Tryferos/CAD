@@ -43,7 +43,6 @@ public class PlayerController {
         return ResponseEntity.ok(playerService.getById(id));
     }
 
-
     @GetMapping(value = "/players/team/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Player>> getPlayersByTeam(@PathVariable("teamId") Long teamId) throws NotFoundException {
         Team team = teamService.getById(teamId);

@@ -1,6 +1,7 @@
 package io.github.mixaniki.domain.model.service;
 
 import io.github.mixaniki.Repository.TeamRepository;
+import io.github.mixaniki.entity.Championship;
 import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import io.github.mixaniki.exception.model.NotFoundException;
@@ -36,6 +37,11 @@ public class TeamServiceImpl implements TeamService{
     @Override
     public List<Team> getAll() throws NotFoundException {
         return (List<Team>) teamRepository.findAll();
+    }
+
+    @Override
+    public List<Team> getByChampionship(Championship championship) {
+        return  teamRepository.findByChampionship(championship);
     }
 
     @Override
