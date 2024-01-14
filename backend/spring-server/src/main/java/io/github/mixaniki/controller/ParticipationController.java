@@ -31,7 +31,7 @@ public class ParticipationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(participationService.create(participation));
     }
 
-    @GetMapping(value = "/participations/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/participations/participation", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Participation> getParticipation(@RequestParam("team") Team team, @RequestParam("championship") Championship championship) throws NotFoundException {
 
         ParticipationKey participationKey = new ParticipationKey();
@@ -55,9 +55,9 @@ public class ParticipationController {
         return ResponseEntity.ok(participationService.update(participation));
     }
 
-// The down bellow update operation is a way better than the above
+// The bellow update operation is a way better than the above
 
-    @PutMapping(value = "/participations/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/participations/participation", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Participation> updateParticipationBetterWay(@RequestParam("team") Team team, @RequestParam("championship") Championship championship, @RequestBody Participation participation) throws NotFoundException {
 
         return ResponseEntity.ok(participationService.update(team,championship,participation));

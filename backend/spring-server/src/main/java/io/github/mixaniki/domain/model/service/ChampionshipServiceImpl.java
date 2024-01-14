@@ -5,7 +5,7 @@ import io.github.mixaniki.Repository.ParticipationRepository;
 import io.github.mixaniki.Repository.TeamRepository;
 import io.github.mixaniki.entity.Championship;
 import io.github.mixaniki.entity.Participation;
-import io.github.mixaniki.entity.ParticipationKey;
+import io.github.mixaniki.entity.keys.ParticipationKey;
 import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import io.github.mixaniki.exception.model.NotFoundException;
@@ -58,29 +58,29 @@ public class ChampionshipServiceImpl implements ChampionshipService {
             }
         }
 
-    int numberOfParticipations = teams.size();
+        int numberOfParticipations = teams.size();
 
-//        In the final operation should be; if(numberOfParticipations < 4 || numberOfParticipations > 18)
-    if (numberOfParticipations < 1 || numberOfParticipations > 18) {
-        throw new ValidationException("The number of teams must be at least 1 or max 18");
-    }
+    //        In the final operation should be; if(numberOfParticipations < 4 || numberOfParticipations > 18)
+        if (numberOfParticipations < 1 || numberOfParticipations > 18) {
+            throw new ValidationException("The number of teams must be at least 1 or max 18");
+        }
 
-    championship.setName(championship.getName());
-    create(championship);
+        championship.setName(championship.getName());
+        create(championship);
 
-    Participation participation;
+        Participation participation;
 
-    for (Team team : teams) {
+        for (Team team : teams) {
 
-        ParticipationKey participationKey = new ParticipationKey();
-        participationKey.setChampionship(championship);
-        participationKey.setTeam(team);
+            ParticipationKey participationKey = new ParticipationKey();
+            participationKey.setChampionship(championship);
+            participationKey.setTeam(team);
 
-        participation = new Participation(participationKey);
-        participationRepository.save(participation);
-    }
+            participation = new Participation(participationKey);
+            participationRepository.save(participation);
+        }
 
-        return championship;
+            return championship;
     }
 
     @Override

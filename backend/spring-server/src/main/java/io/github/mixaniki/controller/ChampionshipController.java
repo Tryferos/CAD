@@ -44,13 +44,13 @@ public class ChampionshipController {
         return ResponseEntity.ok(championshipService.getById(id));
     }
 
-    @GetMapping(value = "/championships/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/championships/championship/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Championship> getChampionshipByName(@PathVariable("name") String name) throws NotFoundException {
 
         return ResponseEntity.ok(championshipService.getByName(name));
     }
 
-    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/championships", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Championship>> getAllChampionship() {
 
         return ResponseEntity.ok(championshipService.getAll());
