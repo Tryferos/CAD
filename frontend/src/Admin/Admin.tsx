@@ -28,6 +28,7 @@ type ItemHeaderProps = {
     title: string;
     btnText: string;
     backgroundImageClass: string;
+    onClick: () => void;
 }
 
 export function ItemHeader(props: ItemHeaderProps) {
@@ -36,7 +37,7 @@ export function ItemHeader(props: ItemHeaderProps) {
             <div className={`absolute rounded-md z-[100] left-[0.5%] top-[1%] h-[98%] w-[99%] ${props.backgroundImageClass} bg-fixed bg-center blur-[2px] brightness-[0.45]`}></div>
             <div className={`absolute rounded-md z-[90] left-0 top-0 size-full ${props.backgroundImageClass} bg-center brightness-50`}></div>
             <p className='font-medium z-[100] text-white text-lg text-center'>{props.title} ({props.length})</p>
-            <div
+            <div onClick={props.onClick}
                 className='items-center z-[100] gap-x-2 font-medium flex outline outline-1 outline-green-400 px-4 py-2 rounded text-green-400 hover:bg-green-500 hover:text-white cursor-pointer'>
                 <p>{props.btnText}</p>
                 <AddIcon />

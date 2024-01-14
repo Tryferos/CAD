@@ -13,12 +13,13 @@ export type UserCredentials = {
 
 export enum PopupType {
     login = 'login',
+    team = 'team',
 }
 
 const UserContext = createContext({ user: null, handleLogIn: () => { }, handleLogOut: () => false }) as
     React.Context<{ user: User | null; handleLogIn: (user: UserCredentials, callback: (success: boolean, error?: string) => void) => void; handleLogOut: () => boolean }>;
 
-const PopupContext = createContext({ popup: null, handlePopup: (popup: ReactNode, data: unknown) => { }, title: '' }) as
+const PopupContext = createContext({ popup: null, handlePopup: (popup: ReactNode, title?: string, data?: unknown) => { }, title: '' }) as
     React.Context<{ popup: PopupType | null; handlePopup: (popup: ReactNode, data?: unknown) => void, title: string }>;
 
 export function Wrapper({ children }: { children: ReactNode }) {

@@ -7,6 +7,7 @@ import { PopupType, Wrapper, usePopup, useUser } from "./Wrapper";
 import PopupElement from "../Popup/PopupElement";
 import { PopupItem } from "../Popup/PopupItem";
 import { Login } from "../Popup/Login";
+import Team from "../Popup/Team";
 
 export default function Layout() {
     return (
@@ -18,6 +19,7 @@ export default function Layout() {
                 </main>
                 <PopupElement>
                     <PopupItem popup={PopupType.login} element={<Login />} />
+                    <PopupItem popup={PopupType.team} element={<Team />} />
                 </PopupElement>
             </div>
         </Wrapper>

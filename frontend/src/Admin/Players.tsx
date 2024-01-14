@@ -22,6 +22,7 @@ const Players: FC = (props) => {
     return (
         <section className='w-full flex flex-col items-center'>
             <ItemHeader
+                onClick={() => { }}
                 btnText='Προσθήκη'
                 length={players.length}
                 title='Παίκτες που συμμετέχουν στα Τουρνουά: '

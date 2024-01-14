@@ -6,6 +6,7 @@ const Leagues: FC = (props) => {
     return (
         <section className='w-full items-center flex flex-col'>
             <ItemHeader
+                onClick={() => { }}
                 btnText='Προσθήκη'
                 length={leagues.length}
                 title='Συνολικά Τουρνουά: '
