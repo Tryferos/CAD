@@ -1,6 +1,8 @@
 package io.github.mixaniki.controller;
 
+import io.github.mixaniki.domain.model.service.ChampionshipService;
 import io.github.mixaniki.domain.model.service.TeamService;
+import io.github.mixaniki.entity.Championship;
 import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.exception.model.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,12 @@ import java.util.List;
 @RequestMapping(value = "/api")
 public class TeamController {
     private final TeamService teamService;
+    private final ChampionshipService championshipService;
 
     @Autowired
-    public TeamController(TeamService teamService) {
+    public TeamController(TeamService teamService, ChampionshipService championshipService) {
         this.teamService = teamService;
+        this.championshipService = championshipService;
     }
 
     @PostMapping(value = "/teams/add", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,6 +40,12 @@ public class TeamController {
     @GetMapping(value = "/teams", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Team>> getAllTeams() throws NotFoundException {
         return ResponseEntity.ok(teamService.getAll());
+    }
+
+    @GetMapping(value = "/teams/championship/{championshipId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Team>> getTeamsByChampionship(@PathVariable("championshipId") Long championshipId) throws NotFoundException {
+        Championship championship = championshipService.getById(championshipId);
+        return ResponseEntity.ok(teamService.getByChampionship(championship));
     }
 
     @PutMapping(value = "/teams/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -5,4 +5,8 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ChampionshipRepository extends CrudRepository<Championship, Long> {
 
+    boolean existsChampionshipByName(String name);
+
+    Championship findChampionshipByName(String name);
+
 }

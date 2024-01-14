@@ -1,8 +1,6 @@
 package io.github.mixaniki.controller;
 
-import io.github.mixaniki.domain.model.service.ChampionshipService;
 import io.github.mixaniki.domain.model.service.ParticipationService;
-import io.github.mixaniki.domain.model.service.TeamService;
 import io.github.mixaniki.entity.Championship;
 import io.github.mixaniki.entity.Participation;
 import io.github.mixaniki.entity.keys.ParticipationKey;
@@ -21,14 +19,10 @@ import java.util.List;
 public class ParticipationController {
 
     private final ParticipationService participationService;
-    private final TeamService teamService;
-    private final ChampionshipService championshipService;
 
     @Autowired
-    public ParticipationController(ParticipationService participationService, TeamService teamService, ChampionshipService championshipService) {
+    public ParticipationController(ParticipationService participationService) {
         this.participationService = participationService;
-        this.teamService = teamService;
-        this.championshipService = championshipService;
     }
 
     @PostMapping(value = "/participations/add", produces = MediaType.APPLICATION_JSON_VALUE)
