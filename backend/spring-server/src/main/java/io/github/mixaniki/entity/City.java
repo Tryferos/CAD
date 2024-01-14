@@ -21,6 +21,7 @@ public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Null(groups = ValidationGroups.Create.class)
+    @NotNull(groups = ValidationGroups.Update.class)
     @Column(name = "city_id")
     @NotNull(groups = ValidationGroups.Update.class)
     private Long id;

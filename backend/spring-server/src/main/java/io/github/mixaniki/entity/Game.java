@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 
@@ -23,11 +25,13 @@ public class Game {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "home_team_id", referencedColumnName = "team_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Team homeTeam;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "away_team_id", referencedColumnName = "team_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Team awayTeam;
 
     @Column(name = "match_date")

@@ -1,12 +1,18 @@
 package io.github.mixaniki.entity.keys;
 
 
+import io.github.mixaniki.entity.Round;
 import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
+import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.io.Serializable;
 
+@Data
 @Embeddable
 public class GameKey implements Serializable {
 
@@ -15,38 +21,26 @@ public class GameKey implements Serializable {
     @Column(name = "game_id")
     private Long id;
 
-    @Embedded
-    private RoundKey roundKey;
+//    @Embedded
+//    private RoundKey roundKey;
 
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "round_id", referencedColumnName = "round_id"),
+            @JoinColumn(name = "championship_id", referencedColumnName = "championship_id")
+    })
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Round round;
 
-    public RoundKey getRoundKey() {
-        return roundKey;
-    }
-
-    public void setRoundKey(RoundKey roundKey) {
-        this.roundKey = roundKey;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public void setCompositeId(Long id, Long roundId, Long championshipId){
         setId(id);
+
         RoundKey roundKey= new RoundKey();
         roundKey.setCompositeId(roundId, championshipId);
-        setRoundKey(roundKey);
+
+        Round round1 = new Round(roundKey);
+        setRound(round1);
     }
 
-    @Override
-    public String toString() {
-        return "GameKey{" +
-                "id=" + id +
-                ", roundKey=" + roundKey +
-                '}';
-    }
 }

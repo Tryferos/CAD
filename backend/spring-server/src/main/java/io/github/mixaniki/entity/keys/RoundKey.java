@@ -5,9 +5,13 @@ import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
+import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 
+@Data
 @Embeddable
 public class RoundKey implements Serializable {
 
@@ -17,36 +21,13 @@ public class RoundKey implements Serializable {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "championship_id", referencedColumnName = "championship_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Championship championship;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Championship getChampionship() {
-        return championship;
-    }
-
-    public void setChampionship(Championship championship) {
-        this.championship = championship;
-    }
 
     public void setCompositeId(Long id, Long championshipId){
         setId(id);
         Championship championship = new Championship();
         championship.setId(championshipId);
         setChampionship(championship);
-    }
-
-    @Override
-    public String toString() {
-        return "RoundKey{" +
-                "id=" + id +
-                ", championship=" + championship +
-                '}';
     }
 }

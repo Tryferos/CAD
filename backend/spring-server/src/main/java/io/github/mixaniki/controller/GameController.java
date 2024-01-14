@@ -54,8 +54,11 @@ public class GameController {
         return ResponseEntity.ok(gameService.update(gameToUpdate));
     }
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteGame(@PathVariable("id") GameKey id) throws NotFoundException{
-        gameService.delete(id);
+    public ResponseEntity<String> deleteGame(@RequestParam("gameId") Long gameId, @RequestParam("roundId") Long roundId, @RequestParam("championshipId") Long championshipId, @RequestBody Game gameToUpdate) throws NotFoundException{
+        GameKey gameKey = new GameKey();
+        gameKey.setCompositeId(gameId, roundId, championshipId);
+
+        gameService.delete(gameKey);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

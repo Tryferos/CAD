@@ -47,9 +47,12 @@ public class RoundController {
     public ResponseEntity<Round> updateRound(@RequestParam("roundId") Long roundId, @RequestParam("championshipId") Long championshipId, @RequestBody Round roundToUpdate) throws NotFoundException{
         return ResponseEntity.ok(roundService.update(roundId, championshipId, roundToUpdate));
     }
-    @DeleteMapping(value = "/rounds/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteRound(@PathVariable("id") RoundKey id) throws NotFoundException{
-        roundService.delete(id);
+    @DeleteMapping(value = "/rounds/round", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> deleteRound(@RequestParam("roundId") Long roundId, @RequestParam("championshipId") Long championshipId) throws NotFoundException{
+        RoundKey roundKey = new RoundKey();
+        roundKey.setCompositeId(roundId, championshipId);
+
+        roundService.delete(roundKey);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

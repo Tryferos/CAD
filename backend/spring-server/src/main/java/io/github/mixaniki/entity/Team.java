@@ -10,6 +10,8 @@ import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Data
 @AllArgsConstructor
@@ -22,6 +24,7 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Null(groups = ValidationGroups.Create.class)
+    @NotNull(groups = ValidationGroups.Update.class)
     @Column(name = "team_id")
     private Long id;
     @NotBlank
@@ -41,9 +44,9 @@ public class Team {
     @Column(name = "coach_name")
     private String coachName;
 
-    @NotNull
     @ManyToOne
-    @JoinColumn(name = "city_id", referencedColumnName = "city_id", nullable = false)
+    @JoinColumn(name = "city_id", referencedColumnName = "city_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private City city;
 
 }

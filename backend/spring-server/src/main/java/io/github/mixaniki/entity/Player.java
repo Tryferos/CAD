@@ -22,6 +22,7 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Null(groups = ValidationGroups.Create.class)
+    @NotNull(groups = ValidationGroups.Update.class)
     @Column(name = "player_id")
     private Long id;
     @NotNull
@@ -47,7 +48,7 @@ public class Player {
     private PlayerPositionType positionType;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false)
     private Team team;
 
