@@ -8,21 +8,35 @@ import PopupElement from "../Popup/PopupElement";
 import { PopupItem } from "../Popup/PopupItem";
 import { Login } from "../Popup/Login";
 import Team from "../Popup/Team";
+import Player from "../Popup/Players";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Layout() {
     return (
-        <Wrapper>
-            <div className="w-[100vw] h-[100vh] flex z-[999]">
-                <NavigationBar />
-                <main className="ml-[clamp(200px,15%,250px)] mobile:ml-[0%] mobile:w-[100%]  w-[85%] overflow-y-auto scrollbar">
-                    <Outlet />
-                </main>
-                <PopupElement>
-                    <PopupItem popup={PopupType.login} element={<Login />} />
-                    <PopupItem popup={PopupType.team} element={<Team />} />
-                </PopupElement>
-            </div>
-        </Wrapper>
+        <Fragment>
+            <Wrapper>
+                <div className="w-[100vw] h-[100vh] flex z-[999]">
+                    <div className="z-[9999999999999999999]">
+                        <ToastContainer
+                            position='top-center'
+                            autoClose={5000}
+                            newestOnTop={true}
+                            limit={2}
+                        />
+                    </div>
+                    <NavigationBar />
+                    <main className="ml-[clamp(200px,15%,250px)] mobile:ml-[0%] mobile:w-[100%]  w-[85%] overflow-y-auto scrollbar">
+                        <Outlet />
+                    </main>
+                    <PopupElement>
+                        <PopupItem popup={PopupType.login} element={<Login />} />
+                        <PopupItem popup={PopupType.team} element={<Team />} />
+                        <PopupItem popup={PopupType.player} element={<Player />} />
+                    </PopupElement>
+                </div>
+            </Wrapper>
+        </Fragment>
     );
 }
 

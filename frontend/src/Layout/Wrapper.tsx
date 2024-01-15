@@ -14,6 +14,7 @@ export type UserCredentials = {
 export enum PopupType {
     login = 'login',
     team = 'team',
+    player = 'player',
 }
 
 const UserContext = createContext({ user: null, handleLogIn: () => { }, handleLogOut: () => false }) as
