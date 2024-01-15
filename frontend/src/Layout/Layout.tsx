@@ -12,6 +12,7 @@ import Player from "../Popup/Players";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Championship from "../Popup/Championship";
+import Score from "../Popup/Score";
 
 export default function Layout() {
     return (
@@ -35,6 +36,7 @@ export default function Layout() {
                         <PopupItem popup={PopupType.team} element={<Team />} />
                         <PopupItem popup={PopupType.player} element={<Player />} />
                         <PopupItem popup={PopupType.championship} element={<Championship />} />
+                        <PopupItem popup={PopupType.score} element={<Score />} />
                     </PopupElement>
                 </div>
             </Wrapper>
@@ -44,7 +46,7 @@ export default function Layout() {
 
 function NavigationBar() {
     return (
-        <nav className="w-[15%] mobile:hidden min-w-[200px] max-w-[250px] bg-gradient-to-r from-slate-300 to-slate-100 flex fixed flex-col gap-y-10 h-full text-slate-800 font-wotfard">
+        <nav className="w-[15%] z-[20000] mobile:hidden min-w-[200px] max-w-[250px] bg-gradient-to-r from-slate-300 to-slate-100 flex fixed flex-col gap-y-10 h-full text-slate-800 font-wotfard">
             <section className="px-4 z-[200000]">
                 <div className="h-[75px] flex items-center justify-center">
                     <p className="font-cubano text-2xl  text-sec">BasketStats</p>

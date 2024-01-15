@@ -18,7 +18,7 @@ export type StandingsTeam = {
     points?: number;
 }
 
-type Game = {
+export type Game = {
     game_id: string;
     quarter: Array<Quarter>
     win?: boolean;
@@ -145,7 +145,7 @@ export default function Standings() {
                     })
                 }
             </ul>
-            <section className="h-[1500px] basis-[30%] flex flex-col gap-y-5">
+            <div className="h-[1500px] basis-[30%] flex flex-col gap-y-5">
                 <div className="flex justify-center items-center gap-x-2 mt-2">
                     <div className="size-4 bg-yellow-400 rounded-full"></div>
                     <p className="font-medium">Ανερχόμενα παιχνίδια</p>
@@ -155,19 +155,8 @@ export default function Standings() {
                     <UpcomingMatch away_team={{ logo_path: '/paok.png', team_id: '1', team_name: 'Olympiacos' }}
                         home_team={{ logo_path: '/paok.png', team_id: '2', team_name: 'Paok' }} date="7/1/2024 - 18:08" round={11} tournament_name="Τουρνουά Ευρώπης"
                     />
-                    <UpcomingMatch away_team={{ logo_path: '/paok.png', team_id: '1', team_name: 'Olympiacos' }}
-                        home_team={{ logo_path: '/paok.png', team_id: '2', team_name: 'Paok' }} date="7/1/2024 - 18:08" round={11} tournament_name="Τουρνουά Ευρώπης"
-                    />
-                    <UpcomingMatch away_team={{ logo_path: '/paok.png', team_id: '1', team_name: 'Olympiacos' }}
-                        home_team={{ logo_path: '/paok.png', team_id: '2', team_name: 'Paok' }} date="7/1/2024 - 18:08" round={11} tournament_name="Τουρνουά Ευρώπης"
-                    />
-                    <UpcomingMatch away_team={{ logo_path: '/paok.png', team_id: '1', team_name: 'Olympiacos' }}
-                        home_team={{ logo_path: '/paok.png', team_id: '2', team_name: 'Paok' }} date="7/1/2024 - 18:08" round={11} tournament_name="Τουρνουά Ευρώπης"
-                    />
-
-
                 </ul>
-            </section>
+            </div>
         </section>
     )
 }

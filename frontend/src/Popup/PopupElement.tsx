@@ -22,8 +22,8 @@ export default function PopupElement({ children }: { children: ReactNode }) {
                 {
                     popup ? (
                         <motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.2 }} exit={{ opacity: 0, scale: 0.6 }}
-                            ref={ref} className={`bg-white shadow-[0px_0px_20px_4px_rgba(0,0,0,0.2)] w-[40%] min-w-[350px] font-sans 
-                            rounded-md relative max-w-[750px] max-h-[70%] min-h-[200px] mt-[75px]`}>
+                            ref={ref} className={`bg-white shadow-[0px_0px_20px_4px_rgba(0,0,0,0.2)] w-[50%] min-w-[400px] font-sans 
+                            rounded-md relative max-w-[850px] max-h-[70%] min-h-[200px] mt-[75px]`}>
                             <div className="w-full h-[10%] border-b-gray-300 border-b-[1px] items-center flex justify-center px-6 relative">
                                 <p className="text-lg font-medium">{title}</p>
                                 <div className="absolute right-6"><CloseIcon onClick={() => handlePopup(null)} /></div>

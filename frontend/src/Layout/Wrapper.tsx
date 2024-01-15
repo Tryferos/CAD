@@ -16,13 +16,14 @@ export enum PopupType {
     team = 'team',
     player = 'player',
     championship = 'championship',
+    score = 'score',
 }
 
 const UserContext = createContext({ user: null, handleLogIn: () => { }, handleLogOut: () => false }) as
     React.Context<{ user: User | null; handleLogIn: (user: UserCredentials, callback: (success: boolean, error?: string) => void) => void; handleLogOut: () => boolean }>;
 
-const PopupContext = createContext({ popup: null, handlePopup: (popup: ReactNode, title?: string, data?: unknown) => { }, title: '' }) as
-    React.Context<{ popup: PopupType | null; handlePopup: (popup: ReactNode, data?: unknown) => void, title: string }>;
+const PopupContext = createContext({ popup: null, handlePopup: (popup: ReactNode, title?: string, data?: unknown) => { }, title: '', data: null }) as
+    React.Context<{ popup: PopupType | null; handlePopup: (popup: ReactNode, title?: string, data?: unknown) => void, title: string, data: unknown }>;
 
 export function Wrapper({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>({ user_id: '1', username: 'iee2020085', role: 'admin' });
@@ -55,7 +56,7 @@ export function Wrapper({ children }: { children: ReactNode }) {
 
     return (
         <UserContext.Provider value={{ user: user, handleLogIn: handleLogIn, handleLogOut: handleLogOut }}>
-            <PopupContext.Provider value={{ popup: popup, handlePopup: handlePopup, title: title }}>
+            <PopupContext.Provider value={{ popup: popup, handlePopup: handlePopup, title: title, data: popupData }}>
                 {children}
             </PopupContext.Provider>
         </UserContext.Provider>
