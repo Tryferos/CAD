@@ -54,6 +54,12 @@ public class PlayerController {
         return ResponseEntity.ok(playerService.getAll());
     }
 
+    @GetMapping(value = "/players/team/{teamId}/teamsize", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> getNumberOfPlayersOfTeam(@PathVariable("teamId") Long teamId) throws NotFoundException {
+        Team team = teamService.getById(teamId);
+        return ResponseEntity.ok(playerService.getCountOfPlayersOfTeam(team));
+    }
+
     @PutMapping(value = "/players/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Player> updatePlayer(@PathVariable("id") Long id, @RequestBody Player playerToUpdate) throws NotFoundException{
         playerToUpdate.setId(id);

@@ -49,6 +49,14 @@ public interface PlayerService extends ObjectService<Player, Long> {
     List<Player> getAll();
 
     /**
+     * Retrieves the number of players of the team
+     *
+     * @param team The team that contains the number of players to retrieve
+     * @return     The number of players of team
+     */
+    long getCountOfPlayersOfTeam(@Valid @NotNull Team team);
+
+    /**
      * Updates a player
      *
      * @param player The player to update

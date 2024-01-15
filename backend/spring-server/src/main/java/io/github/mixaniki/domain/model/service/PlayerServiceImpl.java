@@ -51,6 +51,11 @@ public class PlayerServiceImpl implements PlayerService{
     }
 
     @Override
+    public long getCountOfPlayersOfTeam(@Valid @NotNull Team team) {
+       return playerRepository.countPlayersByTeam(team);
+    }
+
+    @Override
     @Transactional
     @Validated(value = {ValidationGroups.Create.class, Default.class} )
     public Player create(@Valid @NotNull Player player) throws NotFoundException{
