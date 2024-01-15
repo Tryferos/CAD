@@ -12,10 +12,10 @@ type Player = {
     nationality: string;
     position_type: Position;
     logo_path: string;
-    team: TeamType;
+    team: ShortTeam;
 }
 
-type TeamType = Pick<Team, 'city_name' | 'team_name'> & { team_id: string };
+export type ShortTeam = Pick<Team, 'city_name' | 'team_name'> & { team_id: string };
 const teams = [
     { team_name: 'Paok', city_name: 'Saloniki', team_id: '1' },
     { team_name: 'Aek', city_name: 'Athens', team_id: '2' },
@@ -53,16 +53,16 @@ const Player: FC = (props) => {
     const findMappedTeam = (text: string) => {
         const name = text.split(',')[0];
         const city = text.split(',')[1].trim();
-        return teams.find(item => item.team_name === name && item.city_name === city) as TeamType;
+        return teams.find(item => item.team_name === name && item.city_name === city) as ShortTeam;
     }
-    const mapTeam = (team: TeamType) => (team.city_name.length == 0 && team.team_name.length == 0) ? null : `${team.team_name}, ${team.city_name}`;
+    const mapTeam = (team: ShortTeam) => (team.city_name.length == 0 && team.team_name.length == 0) ? null : `${team.team_name}, ${team.city_name}`;
     return (
         <FormField onSubmit={onSubmit}>
             <Field label='Όνομα παίκτη' placeholder='Όνομα' name='player_firstname' value={player.player_firstname} onChange={handleChange} />
             <Field label='Επώνυμο παίκτη' placeholder='Επώνυμο' name='player_lastname' value={player.player_lastname} onChange={handleChange} />
             <Field label='Εθνικότητα παίκτη' placeholder='Εθνικότητα' name='nationality' value={player.nationality} onChange={handleChange} />
             <Field type='number' label='Ύψος παίκτη' placeholder='Ύψος' name='height' value={player.height} onChange={handleChange} />
-            <div className='w-[60%]'>
+            <div className='w-[60%] wireless:w-[90%]'>
                 <SimpleDropdown
                     items={Object.values(Position)}
                     shadow={false}

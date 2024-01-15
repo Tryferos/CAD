@@ -11,6 +11,7 @@ import Team from "../Popup/Team";
 import Player from "../Popup/Players";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Championship from "../Popup/Championship";
 
 export default function Layout() {
     return (
@@ -33,6 +34,7 @@ export default function Layout() {
                         <PopupItem popup={PopupType.login} element={<Login />} />
                         <PopupItem popup={PopupType.team} element={<Team />} />
                         <PopupItem popup={PopupType.player} element={<Player />} />
+                        <PopupItem popup={PopupType.championship} element={<Championship />} />
                     </PopupElement>
                 </div>
             </Wrapper>

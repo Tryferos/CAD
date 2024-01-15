@@ -99,7 +99,7 @@ export function Field(props: FieldProps) {
     const placeholderText = placeholder ?? label;
 
     return (
-        <fieldset className={`flex flex-col w-[60%] gap-y-0 relative`}>
+        <fieldset className={`flex flex-col w-[60%] gap-y-0 relative wireless:w-[90%]`}>
             <label className="text-sm font-medium text-slate-700" htmlFor={name}>{label}{required ? <span className='text-slate-800'>*</span> : ''}
             </label>
             <div className='relative'>

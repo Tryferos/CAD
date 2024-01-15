@@ -50,7 +50,7 @@ const Team: FC = (props) => {
             <Field label='Αναγνωριστικό ομάδας' placeholder='π.χ. PAO' name='short_name' value={team.short_name} onChange={handleChange} />
             <Field label='Στάδιο' name='stadium_name' value={team.stadium_name} onChange={handleChange} />
             <Field label='Προπονητής' name='coach_name' value={team.coach_name} onChange={handleChange} />
-            <div className='w-[60%]'>
+            <div className='w-[60%] wireless:w-[90%]'>
                 <SimpleDropdown
                     items={cities}
                     shadow={false}
