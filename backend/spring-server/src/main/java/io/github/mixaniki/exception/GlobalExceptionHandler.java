@@ -6,6 +6,8 @@ import jakarta.validation.Path;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -57,6 +59,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 })
                 .collect(Collectors.joining(", "));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorBody(errorMessage));
+    }
+
+    @ExceptionHandler(value = { AccessDeniedException.class })
+    protected ResponseEntity<Object> handle(AccessDeniedException ex, WebRequest request, Authentication Authentication) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
     public record ErrorBody(String message){}

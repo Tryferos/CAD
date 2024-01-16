@@ -6,6 +6,7 @@ import io.github.mixaniki.entity.ChampionshipContainer;
 import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.exception.model.NotFoundException;
 import io.github.mixaniki.exception.model.ValidationException;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/championships")
 public class ChampionshipController {
 
     private final ChampionshipService championshipService;
@@ -25,12 +26,14 @@ public class ChampionshipController {
         this.championshipService = championshipService;
     }
 
-    @PostMapping(value = "/championships/add", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RolesAllowed({"ADMIN"})
+    @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Championship> createChampionship(@RequestBody Championship championship) {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(championshipService.create(championship));
     }
 
+    @RolesAllowed({"ADMIN"})
     @PostMapping(value = "/championshipswithparticipations/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Championship> createChampionshipWithParticipations(@RequestBody ChampionshipContainer championshipContainer) throws NotFoundException, ValidationException {
         Championship championship = championshipContainer.getChampionship();
@@ -46,32 +49,34 @@ public class ChampionshipController {
         return ResponseEntity.ok("League created successfully");
     }
 
-    @GetMapping(value = "/championships/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Championship> getChampionshipById(@PathVariable("id") Long id) throws NotFoundException {
 
         return ResponseEntity.ok(championshipService.getById(id));
     }
 
-    @GetMapping(value = "/championships/championship/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/championship/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Championship> getChampionshipByName(@PathVariable("name") String name) throws NotFoundException {
 
         return ResponseEntity.ok(championshipService.getByName(name));
     }
 
-    @GetMapping(value = "/championships", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Championship>> getAllChampionship() {
 
         return ResponseEntity.ok(championshipService.getAll());
     }
 
-    @PutMapping(value = "/championships/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RolesAllowed({"ADMIN"})
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Championship> updateChampionship(@PathVariable("id") Long id, @RequestBody Championship championship) throws NotFoundException {
         championship.setId(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(championshipService.update(championship));
     }
 
-    @DeleteMapping(value = "/championships/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RolesAllowed({"ADMIN"})
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> deleteChampionship(@PathVariable("id") Long id) throws NotFoundException {
         championshipService.delete(id);
 

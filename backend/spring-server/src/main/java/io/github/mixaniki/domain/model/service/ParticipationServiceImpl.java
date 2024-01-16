@@ -71,6 +71,12 @@ public class ParticipationServiceImpl implements ParticipationService{
         return participationOpt.get();
     }
 
+    @Override
+    public boolean existsDrawById(Championship championship) {
+
+        return participationRepository.existsDrawById(championship.getId());
+    }
+
 
 // The update operation isn't useful for the table participation as in 12/01/2024 status
     @Override

@@ -12,6 +12,9 @@ import java.util.List;
 
 public interface ParticipationRepository extends CrudRepository<Participation, ParticipationKey> {
 
+    @Query("SELECT EXISTS (SELECT r.id from Round r where r.id.championship.id = :id) ")
+    boolean existsDrawById(Long  id);
+
     @Query("SELECT COUNT(p) FROM Participation p WHERE p.participationKey.championship.id = :championshipId")
     int countParticipationsBy(@Param("championshipId") Long championshipId);
 

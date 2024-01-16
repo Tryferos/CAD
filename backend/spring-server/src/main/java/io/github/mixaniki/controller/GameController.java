@@ -1,11 +1,10 @@
 package io.github.mixaniki.controller;
 
 import io.github.mixaniki.domain.model.service.GameService;
-import io.github.mixaniki.entity.Championship;
 import io.github.mixaniki.entity.Game;
 import io.github.mixaniki.entity.keys.GameKey;
-import io.github.mixaniki.entity.keys.RoundKey;
 import io.github.mixaniki.exception.model.NotFoundException;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +28,7 @@ public class GameController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(gameService.create(game));
     }
+
     @GetMapping(value = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Game> getGameById(@RequestParam("gameId") Long gameId, @RequestParam("roundId") Long roundId, @RequestParam("championshipId") Long championshipId) throws NotFoundException {
 
@@ -43,6 +43,7 @@ public class GameController {
         return ResponseEntity.ok(gameService.getAll());
     }
 
+    @RolesAllowed({"ADMIN", "SECRETARY"})
     @PutMapping(value = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Game> updateGame(@RequestParam("gameId") Long gameId, @RequestParam("roundId") Long roundId, @RequestParam("championshipId") Long championshipId, @RequestBody Game gameToUpdate) throws NotFoundException{
 
@@ -53,6 +54,8 @@ public class GameController {
 
         return ResponseEntity.ok(gameService.update(gameToUpdate));
     }
+
+    @RolesAllowed({"ADMIN"})
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteGame(@RequestParam("gameId") Long gameId, @RequestParam("roundId") Long roundId, @RequestParam("championshipId") Long championshipId, @RequestBody Game gameToUpdate) throws NotFoundException{
         GameKey gameKey = new GameKey();

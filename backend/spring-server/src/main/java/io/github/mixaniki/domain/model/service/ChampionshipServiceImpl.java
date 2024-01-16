@@ -19,8 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.lang.reflect.InvocationTargetException;
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -34,12 +36,14 @@ public class ChampionshipServiceImpl implements ChampionshipService {
     private final TeamRepository teamRepository;
     private final ParticipationRepository participationRepository;
     private final GameRepository gameRepository;
+    private final PlayerRepository playerRepository;
 
     @Autowired
-    public ChampionshipServiceImpl(RoundRepository roundRepository, ChampionshipRepository championshipRepository, TeamRepository teamRepository, ParticipationRepository participationRepository, GameRepository gameRepository) {
+    public ChampionshipServiceImpl(RoundRepository roundRepository, ChampionshipRepository championshipRepository, TeamRepository teamRepository, ParticipationRepository participationRepository, GameRepository gameRepository, PlayerRepository playerRepository) {
         this.roundRepository = roundRepository;
         this.championshipRepository = championshipRepository;
         this.teamRepository = teamRepository;
+        this.playerRepository = playerRepository;
         this.participationRepository = participationRepository;
         this.gameRepository = gameRepository;
     }
@@ -63,31 +67,36 @@ public class ChampionshipServiceImpl implements ChampionshipService {
             if (!teamRepository.existsById(team.getId())) {
                 throw new NotFoundException("The team with id " + team.getId() + " does not exist");
             }
+
+            if(playerRepository.countPlayersByTeam(team) <= 1 ){
+
+                // In the final operation, the number of players of each team must be at least 5
+                throw new ValidationException("The number of players of the team with id " + team.getId() + " is not at least 1");
+            }
         }
 
-        int numberOfParticipations = teams.size();
+    int numberOfParticipations = teams.size();
 
-    //        In the final operation should be; if(numberOfParticipations < 4 || numberOfParticipations > 18)
-        if (numberOfParticipations < 1 || numberOfParticipations > 18) {
-            throw new ValidationException("The number of teams must be at least 1 or max 18");
-        }
+//        In the final operation should be; if(numberOfParticipations < 4 || numberOfParticipations > 18)
+    if (numberOfParticipations < 1 || numberOfParticipations > 18) {
+        throw new ValidationException("The number of teams must be at least 1 or max 18");
+    }
 
-        championship.setName(championship.getName());
-        create(championship);
+    create(championship);
 
-        Participation participation;
+    Participation participation;
 
-        for (Team team : teams) {
+    for (Team team : teams) {
 
-            ParticipationKey participationKey = new ParticipationKey();
-            participationKey.setChampionship(championship);
-            participationKey.setTeam(team);
+        ParticipationKey participationKey = new ParticipationKey();
+        participationKey.setChampionship(championship);
+        participationKey.setTeam(team);
 
-            participation = new Participation(participationKey);
-            participationRepository.save(participation);
-        }
+        participation = new Participation(participationKey);
+        participationRepository.save(participation);
+    }
 
-            return championship;
+        return championship;
     }
 
     @Override
@@ -136,9 +145,6 @@ public class ChampionshipServiceImpl implements ChampionshipService {
 
         championshipRepository.delete(championshipOpt.get());
     }
-
-
-
 
     public void generateRoundRobinSchedule(Long championshipId, LocalDate date) {
 
@@ -206,8 +212,6 @@ public class ChampionshipServiceImpl implements ChampionshipService {
         //gameRepository.saveAll(schedule);
         //return schedule;
     }
-
-
 
     public void generateSchedule(Long championshipId, LocalDate date){
 

@@ -1,7 +1,5 @@
-package io.github.mixaniki.entity;
+package io.github.mixaniki.security.entity;
 
-import io.github.mixaniki.entity.annotation.LowercaseConverter;
-import io.github.mixaniki.entity.type.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,11 +25,10 @@ public class User {
     @Column(name = "user_id", nullable = false)
     private Long id;
     @NotBlank
-    @Convert(converter = LowercaseConverter.class)
+//    @Convert(converter = LowercaseConverter.class)
     @Column(name = "username", nullable = false)
     private String username;
     @NotBlank
-//    @Convert(converter = LowercaseConverter.class)
     @Column(name = "password", nullable = false)
     private String password;
     @NotNull
