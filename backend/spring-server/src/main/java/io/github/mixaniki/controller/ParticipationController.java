@@ -1,6 +1,5 @@
 package io.github.mixaniki.controller;
 
-import io.github.mixaniki.Repository.RoundRepository;
 import io.github.mixaniki.domain.model.service.ParticipationService;
 import io.github.mixaniki.entity.Championship;
 import io.github.mixaniki.entity.Participation;
@@ -22,17 +21,11 @@ import java.util.List;
 public class ParticipationController {
 
     private final ParticipationService participationService;
-    private final RoundRepository roundRepository;
 
     @Autowired
-    public ParticipationController(ParticipationService participationService, RoundRepository roundRepository) {
+    public ParticipationController(ParticipationService participationService) {
         this.participationService = participationService;
-        this.roundRepository = roundRepository;
     }
-
-//    public ParticipationController(ParticipationService participationService) {
-//        this.participationService = participationService;
-//    }
 
     @RolesAllowed({"ADMIN", "SECRETARY"})
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)

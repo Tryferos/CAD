@@ -1,6 +1,5 @@
 package io.github.mixaniki.Repository;
 
-import io.github.mixaniki.entity.Championship;
 import io.github.mixaniki.entity.Participation;
 import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.entity.keys.ParticipationKey;
