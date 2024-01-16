@@ -1,16 +1,15 @@
 package io.github.mixaniki.entity;
 
 import io.github.mixaniki.entity.keys.GameKey;
-import io.github.mixaniki.entity.validation.groups.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -35,7 +34,7 @@ public class Game {
     private Team awayTeam;
 
     @Column(name = "match_date")
-    private Date matchDate;
+    private LocalDateTime matchDate;
 
 
 }

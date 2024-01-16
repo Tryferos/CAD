@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.groups.Default;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ChampionshipService extends ObjectService<Championship, Long>{
@@ -75,5 +76,8 @@ public interface ChampionshipService extends ObjectService<Championship, Long>{
      * @throws NotFoundException In case the championship with the provided id does not exist
      */
     void delete(Long id) throws NotFoundException;
+
+
+    void generateRoundRobinSchedule(Long championshipId, LocalDate date);
 
 }
