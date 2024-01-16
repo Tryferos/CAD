@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -36,6 +37,13 @@ public class ChampionshipController {
         List<Team> teams = championshipContainer.getTeams();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(championshipService.createChampionshipWithParticipations(championship , teams));
+    }
+
+    @PostMapping("/championships/createLeague/{championshipId}")
+    public ResponseEntity<String> createLeague(@PathVariable("championshipId") Long championshipId, @RequestParam("date") LocalDate date) {
+
+        championshipService.generateRoundRobinSchedule(championshipId, date);
+        return ResponseEntity.ok("League created successfully");
     }
 
     @GetMapping(value = "/championships/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -39,8 +39,8 @@ public class GameKey implements Serializable {
         RoundKey roundKey= new RoundKey();
         roundKey.setCompositeId(roundId, championshipId);
 
-        Round round1 = new Round(roundKey);
-        setRound(round1);
+        Round round = new Round(roundKey, null);
+        setRound(round);
     }
 
 }
