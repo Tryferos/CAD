@@ -38,6 +38,11 @@ public class GameController {
         return ResponseEntity.ok(gameService.getById(gameKey));
     }
 
+    @GetMapping(value = "/games", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Game>> getGameByRoundChampionshipId(@RequestParam("roundId") Long roundId, @RequestParam("championshipId") Long championshipId) throws NotFoundException {
+        return ResponseEntity.ok(gameService.getByRoundChampionshipId(roundId, championshipId));
+    }
+
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Game>> getAllGames() throws NotFoundException {
         return ResponseEntity.ok(gameService.getAll());

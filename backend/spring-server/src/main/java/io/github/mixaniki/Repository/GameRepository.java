@@ -1,6 +1,7 @@
 package io.github.mixaniki.Repository;
 
 
+import io.github.mixaniki.entity.Championship;
 import io.github.mixaniki.entity.Game;
 import io.github.mixaniki.entity.Round;
 import io.github.mixaniki.entity.Team;
@@ -15,6 +16,9 @@ import java.util.List;
 public interface GameRepository extends CrudRepository<Game, GameKey> {
 
     List<Game> findGamesById_Round(Round round);
+
+    @Query("SELECT g FROM Game g WHERE g.id.round.id.id = :roundId AND g.id.round.id.championship.id = :championshipId")
+    List<Game> findGamesByRoundChampionshipID(@Param("roundId") Long roundId, @Param("championshipId")Long championshipId);
 
 //    List<Game> findGamesById_Round_Id(RoundKey roundKey);
 

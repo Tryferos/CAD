@@ -44,6 +44,17 @@ public class GameServiceImpl implements GameService{
     }
 
     @Override
+    public List<Game> getByRoundChampionshipId(Long roundId, Long champioshipId) throws NotFoundException {
+        List<Game> games = gameRepository.findGamesByRoundChampionshipID(roundId, champioshipId);
+        if (games.isEmpty()){
+            throw new NotFoundException("Games with round id: "+ roundId +" and championship id " + champioshipId +" does not exist");
+        }
+
+        return games;
+    }
+
+
+    @Override
     public List<Game> getAll() throws NotFoundException {
         return (List<Game>) gameRepository.findAll();
     }

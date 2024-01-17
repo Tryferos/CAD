@@ -63,6 +63,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "api/rounds").permitAll()
                                 .requestMatchers(HttpMethod.POST, "api/rounds/add").denyAll()
                                 .requestMatchers(HttpMethod.GET, "api/games/game").permitAll()
+                                .requestMatchers(HttpMethod.GET, "api/games/games").permitAll()
                                 .requestMatchers(HttpMethod.GET, "api/games/").permitAll()
                                 .requestMatchers(HttpMethod.POST, "api/games/add").denyAll()
                                 .requestMatchers(HttpMethod.GET, "api/games/").permitAll()

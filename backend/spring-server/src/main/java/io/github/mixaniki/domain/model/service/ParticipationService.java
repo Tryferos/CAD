@@ -45,6 +45,6 @@ public interface ParticipationService extends ObjectService<Participation, Parti
     Participation update(@Valid @NotNull Team team, @Valid @NotNull Championship championship,
                          @Valid @NotNull Participation participation) throws NotFoundException;
 
-    boolean existsDrawById(@Valid @NotNull Championship championship);
+    boolean existsDrawById(@NotNull Championship championship);
 
 }
