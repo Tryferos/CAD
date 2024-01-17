@@ -72,7 +72,7 @@ public class ParticipationServiceImpl implements ParticipationService{
     }
 
     @Override
-    public boolean existsDrawById(Championship championship) {
+    public boolean existsDrawById(@NotNull Championship championship) {
 
         return participationRepository.existsDrawById(championship.getId());
     }
