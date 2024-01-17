@@ -11,6 +11,8 @@ import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Data
 @AllArgsConstructor
@@ -47,11 +49,10 @@ public class Player {
     @Column(name = "position_type")
     private PlayerPositionType positionType;
 
-    @NotNull
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Team team;
-
 
 
 }

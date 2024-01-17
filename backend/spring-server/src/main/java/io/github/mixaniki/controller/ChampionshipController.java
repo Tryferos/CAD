@@ -42,8 +42,9 @@ public class ChampionshipController {
         return ResponseEntity.status(HttpStatus.CREATED).body(championshipService.createChampionshipWithParticipations(championship , teams));
     }
 
-    @PostMapping("/championships/createLeague/{championshipId}")
-    public ResponseEntity<String> createLeague(@PathVariable("championshipId") Long championshipId, @RequestParam("date") LocalDate date) {
+    @RolesAllowed({"ADMIN", "SECRETARY"})
+    @PostMapping("/createLeague/{championshipId}")
+    public ResponseEntity<String> createLeague(@PathVariable("championshipId") Long championshipId, @RequestParam("date") LocalDate date) throws NotFoundException, ValidationException {
 
         championshipService.generateRoundRobinSchedule(championshipId, date);
         return ResponseEntity.ok("League created successfully");

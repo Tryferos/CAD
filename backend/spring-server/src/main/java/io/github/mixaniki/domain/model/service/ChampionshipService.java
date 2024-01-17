@@ -71,6 +71,7 @@ public interface ChampionshipService extends ObjectService<Championship, Long>{
     Championship update(@Valid @NotNull Championship championship) throws NotFoundException;
 
     /**
+     * Deletes a championship
      *
      * @param id  The id of the championship to delete permanently
      * @throws NotFoundException In case the championship with the provided id does not exist
@@ -78,6 +79,14 @@ public interface ChampionshipService extends ObjectService<Championship, Long>{
     void delete(Long id) throws NotFoundException;
 
 
-    void generateRoundRobinSchedule(Long championshipId, LocalDate date);
+    /**
+     * Creates the draw for the championship
+     *
+     * @param championshipId The championship to create the draw
+     * @param date           The date to start the first round of championship
+     * @throws NotFoundException In case the championship with the provided id does not exist
+     * @throws ValidationException In case the championship with the provided id does not obey in the existing validations
+     */
+    void generateRoundRobinSchedule(Long championshipId, LocalDate date) throws NotFoundException, ValidationException;
 
 }

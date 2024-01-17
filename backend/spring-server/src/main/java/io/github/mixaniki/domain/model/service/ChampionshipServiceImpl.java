@@ -75,13 +75,7 @@ public class ChampionshipServiceImpl implements ChampionshipService {
             }
         }
 
-    int numberOfParticipations = teams.size();
-
-//        In the final operation should be; if(numberOfParticipations < 4 || numberOfParticipations > 18)
-    if (numberOfParticipations < 1 || numberOfParticipations > 18) {
-        throw new ValidationException("The number of teams must be at least 1 or max 18");
-    }
-
+    numberOfParticipationsValidation(teams.size());
     create(championship);
 
     Participation participation;
@@ -146,9 +140,17 @@ public class ChampionshipServiceImpl implements ChampionshipService {
         championshipRepository.delete(championshipOpt.get());
     }
 
-    public void generateRoundRobinSchedule(Long championshipId, LocalDate date) {
+    @Override
+    public void generateRoundRobinSchedule(Long championshipId, LocalDate date) throws NotFoundException, ValidationException {
+
+        Optional<Championship> championshipOptional = championshipRepository.findById(championshipId);
+        if(championshipOptional.isEmpty()){
+            throw new NotFoundException("The championship with id "+ championshipId +" does not exist");
+        }
 
         List<Team> teams = participationRepository.findTeamsByChampionshipId(championshipId);
+        numberOfParticipationsValidation(teams.size());
+
         Collections.shuffle(teams);
         List<Game> schedule = new ArrayList<>();
 
@@ -211,6 +213,12 @@ public class ChampionshipServiceImpl implements ChampionshipService {
 
         //gameRepository.saveAll(schedule);
         //return schedule;
+    }
+
+    private void numberOfParticipationsValidation(long numberOfParticipations) throws ValidationException {
+        if (numberOfParticipations < 1 || numberOfParticipations > 18) {
+            throw new ValidationException("The number of teams must be at least 1 or max 18");
+        }
     }
 
     public void generateSchedule(Long championshipId, LocalDate date){
