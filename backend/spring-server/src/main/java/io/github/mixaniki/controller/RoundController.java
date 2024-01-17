@@ -51,7 +51,7 @@ public class RoundController {
 
     @RolesAllowed({"ADMIN"})
     @DeleteMapping(value = "/round", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteRound(@RequestParam("roundId") Long roundId, @RequestParam("championshipId") Long championshipId) throws NotFoundException{
+    public ResponseEntity<Void> deleteRound(@RequestParam("roundId") Long roundId, @RequestParam("championshipId") Long championshipId) throws NotFoundException{
         RoundKey roundKey = new RoundKey();
         roundKey.setCompositeId(roundId, championshipId);
 

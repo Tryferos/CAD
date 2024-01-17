@@ -62,7 +62,7 @@ public class GameController {
 
     @RolesAllowed({"ADMIN"})
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteGame(@RequestParam("gameId") Long gameId, @RequestParam("roundId") Long roundId, @RequestParam("championshipId") Long championshipId, @RequestBody Game gameToUpdate) throws NotFoundException{
+    public ResponseEntity<Void> deleteGame(@RequestParam("gameId") Long gameId, @RequestParam("roundId") Long roundId, @RequestParam("championshipId") Long championshipId) throws NotFoundException{
         GameKey gameKey = new GameKey();
         gameKey.setCompositeId(gameId, roundId, championshipId);
 

@@ -58,7 +58,7 @@ public class TeamController {
     }
     @RolesAllowed({"ADMIN", "SECRETARY"})
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteTeam(@PathVariable("id") Long id) throws NotFoundException{
+    public ResponseEntity<Void> deleteTeam(@PathVariable("id") Long id) throws NotFoundException{
         teamService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

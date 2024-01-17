@@ -39,14 +39,14 @@ public class CityController {
 
     @RolesAllowed({"ADMIN", "SECRETARY"})
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> updateCity(@PathVariable("id") Long id, @RequestBody City cityToUpdate) throws NotFoundException{
+    public ResponseEntity<City> updateCity(@PathVariable("id") Long id, @RequestBody City cityToUpdate) throws NotFoundException{
         cityToUpdate.setId(id);
         return ResponseEntity.ok(cityService.update(cityToUpdate));
     }
 
     @RolesAllowed({"ADMIN", "SECRETARY"})
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteCity(@PathVariable("id") Long id) throws NotFoundException{
+    public ResponseEntity<Void> deleteCity(@PathVariable("id") Long id) throws NotFoundException{
         cityService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
