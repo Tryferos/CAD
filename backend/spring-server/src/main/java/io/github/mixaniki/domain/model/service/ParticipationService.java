@@ -42,9 +42,10 @@ public interface ParticipationService extends ObjectService<Participation, Parti
      * @throws NotFoundException In case team or championship do not exist or participation already exists
      */
     @Validated(value = {ValidationGroups.Update.class, Default.class} )
-    Participation update(@Valid @NotNull Team team, @Valid @NotNull Championship championship,
+    Participation update(@Valid @NotNull Team team,
+                         @Valid @NotNull Championship championship,
                          @Valid @NotNull Participation participation) throws NotFoundException;
 
-    boolean existsDrawById(@Valid @NotNull Championship championship);
+    boolean existsDrawById(@NotNull Championship championship);
 
 }
