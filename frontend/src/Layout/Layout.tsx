@@ -75,21 +75,15 @@ function NavigationBar() {
                 </div>
                 <SearchElement
                     shadow={false}
+                    openInNewTab={false}
+                    showRecent={true}
                     sections={[
                         {
-                            items: [{
-                                content: 'Super League, ΝΒΑ',
-                                title: 'PAOK',
-                                href: ''
-                            }],
+                            items: [...teams.map(item => ({ content: item.teamName, title: item.teamName, href: `/teams/${item.id}` }))],
                             title: 'Ομάδες',
                         },
                         {
-                            items: [{
-                                content: '',
-                                title: 'Διοργάνωση 1',
-                                href: ''
-                            }],
+                            items: [...championships.map(c => ({ content: c.name, title: c.name, href: `/tournaments/${c.id}/` }))],
                             title: 'Διοργανώσεις',
                         },
                     ]}
