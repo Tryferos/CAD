@@ -25,9 +25,9 @@ const Leagues: FC<Props> = (props) => {
                 {
                     leagues.map((item, i) => {
                         return (
-                            <Link to={`/tournaments/${item.id}/`} className='w-[25%] h-[120px] flex-grow outline hover:scale-[1.02] transition-transform hover:shadow-box outline-1 outline-slate-300 
+                            <Link key={item.id} to={`/tournaments/${item.id}/`} className='w-[25%] h-[120px] flex-grow outline hover:scale-[1.02] transition-transform hover:shadow-box outline-1 outline-slate-300 
                             rounded-md py-2 px-4 text-center shadow-box-sm relative cursor-pointer'>
-                                <motion.li key={item.id}
+                                <motion.li
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     transition={{ duration: 0.5, delay: i * 0.25 + 0.25 }}>

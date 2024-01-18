@@ -5,6 +5,7 @@ import { DropdownSize, SimpleDropdown } from '@tryferos/dropdown';
 import Team, { City } from './Team';
 import { toast } from 'react-toastify';
 import { usePopup, useUser } from '../Layout/Wrapper';
+import { uploadImage } from '../lib';
 
 type Player = {
     firstName: string;
@@ -62,6 +63,9 @@ const Player: FC = (props) => {
         (async () => {
             const promise = new Promise(async (resolve, reject) => {
                 const p = { ...player, logoPath: '', team: { id: player.team.id }, positionType: player.positionType.replaceAll(" ", "_") };
+
+                const res = await uploadImage(player.logoPath)
+                console.log(res)
 
                 try {
                     await fetch('http://localhost:3309/api/players/add', authRequest('POST', p));
