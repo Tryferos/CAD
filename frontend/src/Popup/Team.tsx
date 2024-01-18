@@ -3,6 +3,7 @@ import { usePopup, useUser } from '../Layout/Wrapper'
 import { DropdownSize, SimpleDropdown } from '@tryferos/dropdown';
 import { Field, FormField, ImageFieldRef, SubmitBtn } from './FormElements';
 import { toast } from 'react-toastify';
+import { uploadImage } from '../lib';
 
 type Team = {
     teamName: string;
@@ -24,6 +25,7 @@ const Team: FC = (props) => {
     const { user, handleLogIn, handleLogOut, authRequest } = useUser();
     const [team, setTeam] = useState<Team>({ teamName: '', shortName: '', city: { cityName: '', id: 0 }, stadiumName: '', logoPath: '', coachName: '' });
     const [cities, setCities] = useState<City[]>([])
+    const [file, setFile] = useState<File>(null);
     useEffect(() => {
 
         (async () => {
@@ -53,7 +55,8 @@ const Team: FC = (props) => {
         (async () => {
             const promise = new Promise(async (resolve, reject) => {
                 try {
-                    await fetch('http://localhost:3309/api/teams/add', authRequest('POST', { ...team, logoPath: '' }));
+                    const res = await uploadImage(file, 'teams' + team.teamName + team.coachName + + ".png");
+                    await fetch('http://localhost:3309/api/teams/add', authRequest('POST', { ...team, logoPath: res }));
                     resolve(null)
                     handlePopup(null);
                 } catch (err) {
@@ -72,8 +75,9 @@ const Team: FC = (props) => {
     const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
         setTeam({ ...team, [ev.target.name]: ev.target.value });
     }
-    const handleFileChange = (logoPath: string) => {
+    const handleFileChange = (logoPath: string, file: File) => {
         setTeam({ ...team, logoPath });
+        setFile(file)
     }
     const getTeamId = (cityName: string) => {
         const city = cities.find(item => item.cityName == cityName);

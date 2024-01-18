@@ -32,7 +32,7 @@ export function SubmitBtn() {
 }
 
 type ImageFieldProps = {
-    onChange: (newPath: string) => void;
+    onChange: (newPath: string, file: File) => void;
     handleRemove: () => void;
     logoPath?: string;
     title?: string;
@@ -51,7 +51,7 @@ export function ImageFieldRef(props: ImageFieldProps) {
         const reader = new FileReader();
         reader.onload = (ev) => {
             if (!ev.target) return;
-            onChange(ev.target.result as string);
+            onChange(ev.target.result as string, file);
         }
         reader.readAsDataURL(file);
     }

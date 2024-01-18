@@ -23,6 +23,7 @@ const initTeam = { teamName: '', city: { cityName: '', id: -1 } as City, id: '' 
 const Player: FC = (props) => {
     const { handlePopup } = usePopup();
     const { authRequest } = useUser();
+    const [file, setFile] = useState<File>(null);
     const [player, setPlayer] = useState<Player>(
         {
             firstName: '', lastName: '', height: 180, logoPath: '', nationality: '', positionType: '' as Position,
@@ -52,7 +53,8 @@ const Player: FC = (props) => {
             toast.error('Παρακαλώ επιλέξτε εικόνα');
             return;
         }
-        if (!Object.values(Position).includes(player.positionType.replaceAll(" ", "_") as Position)) {
+        if (!Object.values(Position).includes(player.positionType.trimStart().replaceAll(" ", "_") as Position)) {
+            console.log(Object.values(Position))
             toast.error('Παρακαλώ επιλέξτε σωστή θέση για τον παίκτη');
             return;
         }
@@ -62,11 +64,8 @@ const Player: FC = (props) => {
         }
         (async () => {
             const promise = new Promise(async (resolve, reject) => {
-                const p = { ...player, logoPath: '', team: { id: player.team.id }, positionType: player.positionType.replaceAll(" ", "_") };
-
-                const res = await uploadImage(player.logoPath)
-                console.log(res)
-
+                const res = await uploadImage(file, `${player.firstName}_${player.lastName}_team_${player.team.id}.png`)
+                const p = { ...player, logoPath: res, team: { id: player.team.id }, positionType: player.positionType.replaceAll(" ", "_") };
                 try {
                     await fetch('http://localhost:3309/api/players/add', authRequest('POST', p));
                     resolve(null)
@@ -82,7 +81,8 @@ const Player: FC = (props) => {
             })
         })();
     }
-    const handleFileChange = (logoPath: string) => {
+    const handleFileChange = (logoPath: string, file: File) => {
+        setFile(file)
         setPlayer(prev => ({ ...prev, logoPath }))
     }
     const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {

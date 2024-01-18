@@ -1,21 +1,36 @@
+import { initializeApp } from "firebase/app";
+import { getStorage, uploadBytesResumable, ref, getDownloadURL } from 'firebase/storage'
 
-import { UploadApiResponse, v2 as cloudinary } from 'cloudinary';
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: process.env.apiKey,
+    authDomain: process.env.authDomain,
+    projectId: process.env.projectId,
+    storageBucket: process.env.storageBucket,
+    messagingSenderId: process.env.messagingSenderId,
+    appId: process.env.appId
+};
 
-// cloudinary.config({
-//     cloud_name: process.env.CLOUDINARY_cloud_name,
-//     api_key: process.env.CLOUDINARY_api_key,
-//     api_secret: process.env.CLOUDINARY_api_secret
-// });
 
-export function uploadImage(imageUploaded: string): Promise<UploadApiResponse> {
-    return new Promise((resolve, reject) => {
-        cloudinary.uploader.upload(
-            imageUploaded,
-            { width: 400, height: 300, crop: "fill" },
-            (err, res) => {
-                if (err) reject(err);
-                resolve(res!);
+const app = initializeApp(firebaseConfig);
+const db = getStorage(app);
+
+export async function uploadImage(url: Blob | Uint8Array | ArrayBuffer, name: string) {
+    const storageRef = ref(db, 'images/' + name);
+    const uploadTask = uploadBytesResumable(storageRef, url)
+    const path: string = await new Promise(async (res, rej) => {
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                const percentUploaded = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+            },
+            (err) => (rej(err)),
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((url: string) => {
+                    res(url)
+                })
             }
-        );
-    });
+        )
+    })
+    return path;
 }
