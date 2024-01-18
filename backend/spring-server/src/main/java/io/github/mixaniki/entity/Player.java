@@ -54,5 +54,4 @@ public class Player {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Team team;
 
-
 }

@@ -1,5 +1,6 @@
 package io.github.mixaniki.Repository;
 
+import io.github.mixaniki.entity.Championship;
 import io.github.mixaniki.entity.Participation;
 import io.github.mixaniki.entity.Team;
 import io.github.mixaniki.entity.keys.ParticipationKey;
@@ -19,5 +20,8 @@ public interface ParticipationRepository extends CrudRepository<Participation, P
 
     @Query("SELECT p.participationKey.team FROM Participation p WHERE p.participationKey.championship.id = :championshipId")
     List<Team> findTeamsByChampionshipId(@Param("championshipId") Long championshipId);
+
+    @Query("SELECT p.participationKey.championship FROM Participation p WHERE p.participationKey.team.id = :teamId ")
+    List<Championship> findChampionshipsByTeamId(@Param("teamId") Long teamId);
 
 }

@@ -114,6 +114,16 @@ public class ChampionshipServiceImpl implements ChampionshipService {
     }
 
     @Override
+    public List<Championship> getByTeamId(@NotNull Long teamId) throws NotFoundException {
+
+        if (!teamRepository.existsById(teamId)) {
+            throw new NotFoundException("The team with id " + teamId + " does not exist");
+        }
+
+        return participationRepository.findChampionshipsByTeamId(teamId);
+    }
+
+    @Override
     public List<Championship> getAll() {
 
         return (List<Championship>) championshipRepository.findAll();

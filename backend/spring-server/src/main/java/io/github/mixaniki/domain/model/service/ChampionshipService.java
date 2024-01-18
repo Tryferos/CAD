@@ -46,13 +46,22 @@ public interface ChampionshipService extends ObjectService<Championship, Long>{
     Championship getById(Long id) throws NotFoundException;
 
     /**
-     * Retrieves championship by name.
+     * Retrieves championship by name
      *
      * @param name   The name of the championship to retrieve
      * @return       The championship with the provided name
      * @throws NotFoundException  In case a championship with the provided name does not exist
      */
     Championship getByName(String name) throws NotFoundException;
+
+    /**
+     * Retrieves the championships of a team
+     *
+     * @param teamId  The id of team we want to retrieve the championships
+     * @return        The list of championships
+     * @throws NotFoundException  In case a team with the provided id does not exist
+     */
+    List<Championship> getByTeamId(@NotNull Long teamId) throws NotFoundException;
 
     /**
      * Retrieves all championships.

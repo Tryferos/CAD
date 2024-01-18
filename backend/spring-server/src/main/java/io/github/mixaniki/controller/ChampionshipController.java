@@ -62,6 +62,12 @@ public class ChampionshipController {
         return ResponseEntity.ok(championshipService.getByName(name));
     }
 
+    @GetMapping(value = "/team/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Championship>> getChampionshipsByTeamId(@PathVariable("teamId") Long teamId) throws NotFoundException {
+
+        return ResponseEntity.ok(championshipService.getByTeamId(teamId));
+    }
+
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Championship>> getAllChampionship() {
 
