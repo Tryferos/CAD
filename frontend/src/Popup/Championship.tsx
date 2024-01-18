@@ -1,9 +1,10 @@
-import React, { FC, Fragment, useMemo, useState } from 'react'
+import React, { FC, Fragment, ReactNode, useEffect, useMemo, useState } from 'react'
 import { Field, FormField, SubmitBtn } from './FormElements'
 import { ShortTeam } from './Players';
 import Team from './Team';
 import { SearchIcon } from '../icons';
 import { toast } from 'react-toastify';
+import { usePopup, useUser } from '../Layout/Wrapper';
 
 type Championship = {
     name: string;
@@ -11,27 +12,24 @@ type Championship = {
 }
 
 type LogoTeam = {
-    logo_path: string;
+    logoPath: string;
 } & ShortTeam;
-
-const teams = [
-    { team_name: 'Paok', city_name: 'Saloniki', team_id: '1', logo_path: '/paok.png' },
-    { team_name: 'Aek', city_name: 'Athens', team_id: '2', logo_path: '/paok.png' },
-    { team_name: 'Olympiacos', city_name: 'Piraeus', team_id: '3', logo_path: '/paok.png' },
-    { team_name: 'Panathinaikos', city_name: 'Athens', team_id: '4', logo_path: 'data:image/png;base64,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' },
-    { team_name: 'Panionios', city_name: 'Saloniki', team_id: '5', logo_path: '/paok.png' },
-    { team_name: 'Panaitolikos', city_name: 'Saloniki', team_id: '6', logo_path: '/paok.png' },
-    { team_name: 'Pas Giannina', city_name: 'Saloniki', team_id: '7', logo_path: '/paok.png' },
-    { team_name: 'OFI', city_name: 'Saloniki', team_id: '8', logo_path: '/paok.png' },
-    { team_name: 'Atromitos', city_name: 'Saloniki', team_id: '9', logo_path: '/paok.png' },
-    { team_name: 'Panserraikos', city_name: 'Saloniki', team_id: '10', logo_path: '/paok.png' },
-    { team_name: 'Asteras Tripolis', city_name: 'Saloniki', team_id: '11', logo_path: '/paok.png' },
-]
 
 
 const Championship: FC = (props) => {
     const [championship, setChampionship] = useState<Championship>({ name: '', teams: [] })
+    const [teams, setTeams] = useState<LogoTeam[]>([]);
     const [query, setQuery] = useState('')
+    const { handlePopup } = usePopup();
+    const { authRequest } = useUser();
+    useEffect(() => {
+        (async () => {
+            const res = await fetch('http://localhost:3309/api/teams/')
+            const data = await res.json();
+
+            setTeams(data.map(item => ({ ...item, logoPath: '/paok.png' })));
+        })()
+    }, [])
     const onSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
         const length = championship.teams.length;
         if (length < 4) {
@@ -43,21 +41,45 @@ const Championship: FC = (props) => {
             return;
         }
         //TODO: API CALL
+        (async () => {
+            const promise = new Promise(async (resolve, reject) => {
+                const champ = {
+                    "championship": { name: championship.name },
+                    "teams": [...championship.teams.map(item => ({ id: item.id }))]
+                }
+                try {
+                    const res = await fetch('http://localhost:3309/api/championships/championshipswithparticipations/add', authRequest('POST',
+                        champ
+                    ));
+                    if (!res.ok) reject((await res.json()).message)
+                    resolve(null);
+                    handlePopup(null);
+                    return;
+                } catch (err) {
+                    reject(err);
+                }
+            })
+            toast.promise(promise, {
+                success: 'Το τουρνουά δημιουργήθηκε επιτυχώς',
+                error: { render: (err) => err.data as ReactNode },
+                pending: 'Δημιουργία τουρνουά...',
+            })
+        })()
 
     }
     const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
         setChampionship({ ...championship, [ev.target.name]: ev.target.value })
     }
     const onSelect = (team: LogoTeam) => {
-        if (championship.teams.some(item => item.team_id == team.team_id)) {
-            setChampionship({ ...championship, teams: championship.teams.filter(item => item.team_id != team.team_id) })
+        if (championship.teams.some(item => item.id == team.id)) {
+            setChampionship({ ...championship, teams: championship.teams.filter(item => item.id != team.id) })
             return;
         }
         setChampionship({ ...championship, teams: [...championship.teams, team] })
     }
     const filteredTeams = useMemo(() => {
-        return teams.filter(team => team.team_name.toLowerCase().includes(query.toLowerCase()) || team.city_name.toLowerCase().includes(query.toLowerCase())).slice(0, 9)
-    }, [query])
+        return teams.filter(team => team.teamName.toLowerCase().includes(query.toLowerCase()) || team.city.cityName.toLowerCase().includes(query.toLowerCase())).slice(0, 9)
+    }, [query, teams])
     return (
         <FormField onSubmit={onSubmit}>
             <Field label='Όνομα Τουρνουά' placeholder='Τουρνουά' name='name' value={championship.name} onChange={handleChange} />
@@ -71,13 +93,13 @@ const Championship: FC = (props) => {
                     {
                         filteredTeams.map(team => {
                             return (
-                                <TeamItem onSelect={onSelect} key={team.team_id} {...team} checked={championship.teams.some(item => item.team_id == team.team_id)} />
+                                <TeamItem city={team.city} onSelect={onSelect} key={team.id} {...team} checked={championship.teams.some(item => item.id == team.id)} />
                             )
                         })
                     }
                 </ul>
-                <p className='absolute right-[10%] -bottom-7 text-slate-500 text-sm'>+ {teams.length - filteredTeams.length} ομάδες ακόμη...</p>
-                <p className='absolute left-[calc(10%+8px)] -bottom-7 text-slate-500 text-sm wireless:hidden'>{championship.teams.length} επιλεγμένες ομάδες</p>
+                {(teams.length - filteredTeams.length) > 0 && <p className='absolute right-[10%] -bottom-7 text-slate-500 text-sm'>+ {teams.length - filteredTeams.length} ομάδες ακόμη...</p>}
+                {championship.teams.length > 0 && <p className='absolute left-[calc(10%+8px)] -bottom-7 text-slate-500 text-sm wireless:hidden'>{championship.teams.length} επιλεγμένες ομάδες</p>}
             </fieldset>
             <SubmitBtn />
         </FormField>
@@ -85,7 +107,7 @@ const Championship: FC = (props) => {
 }
 export default Championship
 
-function TeamItem(props: ShortTeam & Pick<Team, 'logo_path'> & { checked: boolean; onSelect: (team: LogoTeam) => void }) {
+function TeamItem(props: ShortTeam & Pick<Team, 'logoPath'> & { checked: boolean; onSelect: (team: LogoTeam) => void }) {
     return (
         <li onClick={() => props.onSelect(props)}
             className='min-w-[150px] [&:has(input:checked)]:hover:after:content-["Αναίρεση_επιλογής"]
@@ -93,10 +115,10 @@ function TeamItem(props: ShortTeam & Pick<Team, 'logo_path'> & { checked: boolea
             after:text-white after:text-center after:font-semibold after:cursor-pointer after:text-lg after:rounded-md after:z-10 after:flex after:items-center after:justify-center
             after:hover:bg-opacity-90 hover:after:content-center hover:after:content-["Επιλογή"] after:h-[1px] after:w-full after:top-0 after:left-0 
             hover:after:h-full after:transition-all'>
-            <img src={props.logo_path} className='object-cover w-full h-full blur-[2px] brightness-[0.6]' />
+            <img src={props.logoPath} className='object-cover w-full h-full blur-[2px] brightness-[0.6]' />
             <div className='absolute gap-y-1 top-0 left-0 w-full font-wotfard-md h-full flex justify-center items-center flex-col group-hover:hidden'>
-                <p className='text-white text-xl font-semibold -mt-2'>{props.team_name}</p>
-                <p className='text-sm text-slate-200'>{props.city_name}</p>
+                <p className='text-white text-xl font-semibold -mt-2 first-letter:uppercase'>{props.teamName}</p>
+                <p className='text-sm text-slate-200 first-letter:uppercase'>{props.city.cityName}</p>
             </div>
             <input type="checkbox" readOnly checked={props.checked}
                 className={`absolute size-4 rounded accent-sec  bottom-0 right-0 ${!props.checked && 'hidden'}`} />

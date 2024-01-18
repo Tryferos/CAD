@@ -1,6 +1,7 @@
-import React from "react";
-import { UpcomingMatch } from "./Matches";
+import React, { useEffect, useState } from "react";
+import { Match, UpcomingMatch, formatDateHour } from "./Matches";
 import { Team } from "../Teams";
+import { useParams } from "react-router-dom";
 
 type Standings = {
     teams: Array<StandingsTeam>;
@@ -8,9 +9,9 @@ type Standings = {
 }
 
 export type StandingsTeam = {
-    team_id: string;
-    team_name: string;
-    logo_path: string;
+    id: string;
+    teamName: string;
+    logoPath: string;
     games: Array<Game>
     gamesWon?: number;
     gamesLost?: number;
@@ -22,9 +23,10 @@ export type Game = {
     game_id: string;
     quarter: Array<Quarter>
     win?: boolean;
+    gamePlayed?: boolean;
 }
 
-type Quarter = {
+export type Quarter = {
     quarter: number;
     quarter_score: number;
     quarter_score_against: number;
@@ -56,40 +58,102 @@ export function calculateGame(team: Team) {
 }
 
 export default function Standings() {
-    const standings: Standings = {
-        name: 'Τουρνουά Ευρώπης',
-        teams: [
-            ...['PAOK', 'ARIS', 'AEK', 'PROMITHEAS', 'OLYMPIACOS', 'PANATHINAIKOS', 'LARISA', 'MAROUSI', 'LAVRIO', 'APOLLON P.', 'KOLOSSOS RODOU',
-                'PERISTERI'].map((item, i) => (
-                    {
-                        games: [...new Array(10).fill(1).map(item => getRandomGame())],
-                        team_name: item,
-                        team_id: `${i + 1}`,
-                        logo_path: '/paok.png'
-                    })).map((team, i) => {
-                        const gamesWon = team.games.filter((game, i) =>
-                            game.quarter.reduce((p, c, i) => p + c.quarter_score, 0) > game.quarter.reduce((p, c, i) => p + c.quarter_score_against, 0)).length;
-                        const totalGames = team.games.length;
-                        const gamesLost = totalGames - gamesWon;
-                        const points = (gamesWon * 2) + (gamesLost * 1);
-                        return (
-                            {
-                                ...team,
-                                gamesWon: gamesWon,
-                                gamesLost: gamesLost,
-                                totalGames: totalGames,
-                                points: points,
-                                games: team.games.map((game, i) => {
-                                    const gameWon = game.quarter.reduce((p, c, i) => p + c.quarter_score, 0) > game.quarter.reduce((p, c, i) => p + c.quarter_score_against, 0);
-                                    return {
-                                        ...game,
-                                        win: gameWon
-                                    }
+    const [standings, setStandings] = useState<Standings>({ name: '', teams: [] });
+    const { tourid } = useParams();
+    useEffect(() => {
+        (async () => {
+            const res = await fetch(`http://localhost:3309/api/teams/championship/${tourid}`)
+            const teamsData = await res.json();
+            const teams: StandingsTeam[] = await Promise.all(
+                teamsData.map(async (item: Team, i) => {
+                    //* FOR EVERY TEAM
+                    let games: Game[] = [];
+                    for (let i = 0; i < (teamsData.length - 1); i++) {
+                        //* FOR EVERY ROUND
+                        const res2 = await fetch(`http://localhost:3309/api/games/games?roundId=${i}&championshipId=${tourid}`)
+                        const data = await res2.json();
+                        if (!data || data.length == 0 || res2.status > 399) continue;
+                        const isTeamRound = data.some(vitem => vitem.awayTeam.id == item.id || vitem.homeTeam.id == item.id);
+                        if (!isTeamRound) continue;
+                        for (let j = 0; j < data.length; j++) {
+                            //* FOR EVERY GAME
+                            const element = data[j];
+                            const opponentId = element.homeTeam.id == item.id ? element.awayTeam.id : element.homeTeam.id;
+                            let quarters: Quarter[] = [];
+                            for (let q = 0; q < 5; q++) {
+                                const quarterType = q == 0 ? 'FIRST' : q == 1 ? 'SECOND' : q == 2 ? 'THIRD' : q == 3 ? 'FOURTH' : 'OVERTIME';
+                                const quarterRes = await fetch(
+                                    `http://localhost:3309/api/teamScorePerQuarters/teamScorePerQuarter?quarter=${quarterType}&gameId=${element.id.id}&roundId=${i}&championshipId=${tourid}&teamId=${item.id}`)
+                                const quarterResAgainst = await fetch(
+                                    `http://localhost:3309/api/teamScorePerQuarters/teamScorePerQuarter?quarter=${quarterType}&gameId=${element.id.id}&roundId=${i}&championshipId=${tourid}&teamId=${opponentId}`)
+                                const quarterData = await quarterRes.json();
+                                const quarterDataAgainst = await quarterResAgainst.json();
+                                if (quarterRes.status > 399 || quarterResAgainst.status > 399) continue;
+                                quarters.push({
+                                    quarter: q + 1,
+                                    quarter_score: quarterData.quarter_score,
+                                    quarter_score_against: quarterDataAgainst.quarter_score
                                 })
+
                             }
-                        )
-                    })
-        ]
+                            games = [...games, { game_id: element.id.id, quarter: quarters }];
+                        }
+                    }
+                    return {
+                        ...item,
+                        games: [...games],
+                        id: item.id,
+                        logoPath: '/paok.png',
+                    }
+                })
+            )
+            setStandings({
+                name: '',
+                teams: mapStandings(teams).teams
+            })
+        })()
+    }, [tourid])
+    function filterGamesPlayed(team: StandingsTeam) {
+
+        const games = team.games.filter(item => {
+            const gamePlayed = item.quarter.reduce((p, c, i) => p + c.quarter_score, 0) > 0 || item.quarter.reduce((p, c, i) => p + c.quarter_score_against, 0) > 0
+            return gamePlayed
+        })
+
+        return {
+            ...team,
+            games: games
+        }
+
+    }
+    function mapStandings(teams: StandingsTeam[]) {
+        return {
+            teams: teams.map((team, i) => {
+                const gamesWon = filterGamesPlayed(team).games.filter((game, i) => {
+                    return game.quarter.reduce((p, c, i) => p + c.quarter_score, 0) > game.quarter.reduce((p, c, i) => p + c.quarter_score_against, 0)
+                }).length;
+                const totalGames = filterGamesPlayed(team).games.filter(item => item).length;
+                const gamesLost = totalGames - gamesWon;
+                const points = (gamesWon * 2) + (gamesLost * 1);
+                return (
+                    {
+                        ...team,
+                        gamesWon: gamesWon,
+                        gamesLost: gamesLost,
+                        totalGames: totalGames,
+                        points: points,
+                        games: team.games.map((game, i) => {
+                            const gameWon = game.quarter.reduce((p, c, i) => p + c.quarter_score, 0) > game.quarter.reduce((p, c, i) => p + c.quarter_score_against, 0);
+                            return {
+                                ...game,
+                                win: gameWon,
+                                gamePlayed: game.quarter.reduce((p, c, i) => p + c.quarter_score, 0) > 0 || game.quarter.reduce((p, c, i) => p + c.quarter_score_against, 0) > 0,
+                            }
+                        })
+                    }
+                )
+            })
+        }
     }
     return (
         <section className="flex w-full h-full flex-1 justify-between flex-col pc:flex-row gap-y-10">
@@ -111,15 +175,15 @@ export default function Standings() {
 
                 </li>
                 {
-                    standings.teams.sort((a, b) => b.points - a.points).map((team, i) => {
+                    standings.teams.length > 0 && standings.teams.sort((a, b) => b.points - a.points).map((team, i) => {
                         return (
                             <li key={i} className="flex justify-between duration-[50ms] transition-[transform] cursor-pointer hover:scale-[1.01] hover:shadow-[0px_4px_8px_0px_rgba(0,0,0,0.2)] last:pb-4 last:border-b-[1px] last:border-b-slate-300">
                                 <div className="flex gap-x-4 items-center">
                                     <div className={`size-6 shrink-0 rounded-md flex items-center justify-center ${i >= 6 ? 'bg-sec' : 'bg-amber-500'} text-white`}>
                                         <p>{i + 1}</p>
                                     </div>
-                                    <img src={team.logo_path} className="size-8" style={{ objectFit: 'contain' }} />
-                                    <p className="-ml-2">{team.team_name}</p>
+                                    <img src={team.logoPath} className="size-8" style={{ objectFit: 'contain' }} />
+                                    <p className="-ml-2 first-letter:uppercase">{team.teamName}</p>
                                 </div>
                                 <div className="flex w-[40%] min-w-[300px] wireless:min-w-[150px]">
                                     <ul className="flex w-[75%] *:w-[25%] *:text-center">
@@ -129,9 +193,9 @@ export default function Standings() {
                                         <p>{team.points}</p>
                                     </ul>
                                     <ul className="flex w-[25%]  group [&>*:nth-child(n+4)]:wireless:hidden [&>*:nth-child(n+3)]:wireless:rounded-r">
-                                        {team.games.slice(0, 5).map((item, index) => {
+                                        {team.games.filter(item => item.gamePlayed != false).slice(0, 5).map((item, index) => {
                                             return (
-                                                <li key={index} className={`text-white font-wotfard-md px-1 first:rounded-l last:rounded-r 
+                                                <li key={index} className={`text-white font-wotfard-md text-center w-5 first:rounded-l last:rounded-r 
                                                 ${item.win ? 'bg-green-600' : 'bg-red-600'}`}>
                                                     {item.win ? 'N' : 'H'}
                                                 </li>
@@ -145,18 +209,44 @@ export default function Standings() {
                     })
                 }
             </ul>
-            <div className="h-[1500px] basis-[30%] flex flex-col gap-y-5">
-                <div className="flex justify-center items-center gap-x-2 mt-2">
-                    <div className="size-4 bg-yellow-400 rounded-full"></div>
-                    <p className="font-medium">Ανερχόμενα παιχνίδια</p>
-                    <div className="size-4 bg-yellow-400 rounded-full"></div>
-                </div>
-                <ul className="justify-center grid pc:grid-cols-1 mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-4">
-                    <UpcomingMatch away_team={{ logo_path: '/paok.png', team_id: '1', team_name: 'Olympiacos' }}
-                        home_team={{ logo_path: '/paok.png', team_id: '2', team_name: 'Paok' }} date="7/1/2024 - 18:08" round={11} tournament_name="Τουρνουά Ευρώπης"
-                    />
-                </ul>
-            </div>
+            <UpcomingMatches tourid={tourid} />
         </section>
+    )
+}
+
+function UpcomingMatches({ tourid }: { tourid: string }) {
+    const [matches, setMatches] = useState<Match[]>([])
+    useEffect(() => {
+        (async () => {
+
+            const res = await fetch(`http://localhost:3309/api/teams/championship/${tourid}`)
+            const teams = await res.json();
+
+            for (let i = 0; i < Math.min(teams.length - 1, 3); i++) {
+                const res2 = await fetch(`http://localhost:3309/api/games/games?roundId=${i}&championshipId=${tourid}`)
+                const data = await res2.json();
+                if (!res2.ok) continue;
+                setMatches(prev => [...prev, ...data])
+            }
+        })()
+    }, [])
+
+    return (
+        <div className="h-[1500px] basis-[30%] flex flex-col gap-y-5">
+            <div className="flex justify-center items-center gap-x-2 mt-2">
+                <div className="size-4 bg-yellow-400 rounded-full"></div>
+                <p className="font-medium">Ανερχόμενα παιχνίδια</p>
+                <div className="size-4 bg-yellow-400 rounded-full"></div>
+            </div>
+            <ul className="justify-center grid pc:grid-cols-1 mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-4">
+                {
+                    matches.slice(0, 3).map((item, i) => {
+                        return (
+                            <UpcomingMatch key={item.id + "-" + i} match={item} tourid={parseInt(tourid)} />
+                        )
+                    })
+                }
+            </ul>
+        </div>
     )
 }

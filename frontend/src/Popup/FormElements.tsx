@@ -34,13 +34,13 @@ export function SubmitBtn() {
 type ImageFieldProps = {
     onChange: (newPath: string) => void;
     handleRemove: () => void;
-    logo_path?: string;
+    logoPath?: string;
     title?: string;
 }
 
 
 export function ImageFieldRef(props: ImageFieldProps) {
-    const { logo_path, handleRemove, onChange } = props;
+    const { logoPath, handleRemove, onChange } = props;
     const ref = React.useRef<HTMLInputElement>(null);
 
     const title = props.title ?? 'Προσθήκη Logo';
@@ -68,9 +68,9 @@ export function ImageFieldRef(props: ImageFieldProps) {
                     className='file:px-2 hidden file:py-2 file:rounded-md file:text-hi file:border-slate-700 file:border-[1px] file:bg-transparent file:hover:bg-slate-700 file:hover:text-white cursor-pointer file:cursor-pointer'
                 />
             </fieldset>
-            {logo_path &&
+            {logoPath &&
                 <figure className='w-[60%] relative'>
-                    <img src={logo_path} className='object-contain w-full h-[200px]' />
+                    <img src={logoPath} className='object-contain w-full h-[200px]' />
                     <div className='absolute top-2 -right-4'>
                         <CloseIcon onClick={handleRemove} />
                     </div>

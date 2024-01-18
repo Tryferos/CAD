@@ -10,10 +10,10 @@ module.exports = {
                 display: ["fantasy"],
                 ptsans: ["PTSans"],
                 cubano: ["Cubano", "sans-serif"],
-                wotfard: ["Wotfard"],
+                wotfard: ["Wotfard", "sans-serif"],
                 sans: ["open sans", "sans-serif"],
                 "wotfard-sb": ["WotfardSB"],
-                "wotfard-md": ["WotfardMD"],
+                "wotfard-md": ["WotfardMD", "sans-serif"],
             },
             boxShadow: {
                 shadowSec:
@@ -25,6 +25,8 @@ module.exports = {
                 shadowRedHover:
                     "inset 0 0 0 rgba(220,38,38,0.4), 0 0 1.5em rgba(220,38,38,0.7);",
                 box: "-0.2em 0.2em 1em rgba(0,0,0,0.2)",
+                "box-sm": "-0.2em 0.2em 0.5em rgba(0,0,0,0.2)",
+                "box-square": "0.15em 0.15em rgba(0,0,0,0.8),0.2em 0.2em 0em 0em rgba(0,0,0,0.8),0.25em 0.25em 0em 0em rgba(0,0,0,0.8),0.3em 0.3em 0em 0em rgba(0,0,0,0.8),0.35em 0.35em 0em 0em rgba(0,0,0,0.8),0.4em 0.4em 0em 0em rgba(0,0,0,0.8),0.45em 0.45em 0em 0em rgba(0,0,0,0.8)",
             },
             screens: {
                 tablet: { min: "768px", max: "1024px" },
@@ -38,6 +40,7 @@ module.exports = {
                 "basketball-player": "url('./../public/basketball-player-bg.jpg')",
                 "basketball-team": "url('./../public/basketball-team-bg.jpg')",
                 "basketball-league": "url('./../public/basketball-league-bg.jpg')",
+                "basketball-landing": "url('./../public/landing-bg.svg')",
             },
         },
     },
