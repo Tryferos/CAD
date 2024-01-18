@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BratsasApplication {
+public class EsakeBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BratsasApplication.class, args);
+		SpringApplication.run(EsakeBackendApplication.class, args);
 	}
 
 }
