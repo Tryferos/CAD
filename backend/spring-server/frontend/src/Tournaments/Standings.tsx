@@ -104,7 +104,6 @@ export default function Standings() {
                         ...item,
                         games: [...games],
                         id: item.id,
-                        logoPath: '/paok.png',
                     }
                 })
             )
@@ -183,7 +182,7 @@ export default function Standings() {
                                     <div className={`size-6 shrink-0 rounded-md flex items-center justify-center ${i >= 6 ? 'bg-sec' : 'bg-amber-500'} text-white`}>
                                         <p>{i + 1}</p>
                                     </div>
-                                    <img src={team.logoPath} className="size-8" style={{ objectFit: 'contain' }} />
+                                    <img src={(!team.logoPath || team.logoPath.length == 0) ? '/paok.png' : team.logoPath} className="size-8" style={{ objectFit: 'contain' }} />
                                     <p className="-ml-2 first-letter:uppercase">{team.teamName}</p>
                                 </div>
                                 <div className="flex w-[40%] min-w-[300px] wireless:min-w-[150px]">

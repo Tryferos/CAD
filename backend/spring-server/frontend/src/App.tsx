@@ -84,7 +84,7 @@ function App() {
                   <Link key={team.id} to={`/teams/${team.id}`}
                     className='flex grow h-[130px] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-box-square cursor-pointer hover:scale-[1.01] transition-all relative *:text-white p-4 min-w-[250px] justify-center bg-slate-700 rounded-md'>
                     <div className='flex flex-col items-center'>
-                      <img src={team.logoPath ?? '/paok.png'} className='object-contain size-16 brightness-90' />
+                      <img src={(!team.logoPath || team.logoPath.length == 0) ? '/paok.png' : team.logoPath} className='object-contain size-16 brightness-90' />
                       <p className='z-50 first-letter:uppercase text-xl text-center'>{team.teamName}</p>
                     </div>
                     <div className='flex absolute bottom-2 left-4 w-[calc(100%-32px)] justify-between text-sm'>

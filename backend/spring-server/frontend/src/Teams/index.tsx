@@ -42,7 +42,7 @@ export default function TeamsIndex() {
 
             const res = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teams/championship/${tourid}`)
             const data = await res.json();
-            const teamsData = data.map((team) => ({ ...team, logoPath: team.logoPath ?? '/paok.png', players: [] }));
+            const teamsData = data.map((team) => ({ ...team, logoPath: (!team.logoPath || team.logoPath.length == 0) ? '/paok.png' : team.logoPath, players: [] }));
             const newTeams = await Promise.all(
                 teamsData.map(async (team) => {
                     const res2 = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/players/team/${team.id}`)
@@ -88,7 +88,7 @@ export default function TeamsIndex() {
                         ...item,
                         games: [...games],
                         id: team.id,
-                        logoPath: '/paok.png',
+                        logoPath: (!team.logoPath || team.logoPath.length == 0) ? '/paok.png' : team.logoPath,
                     }
                     if (item.teamName == 'paok') {
 
@@ -97,7 +97,7 @@ export default function TeamsIndex() {
                         ...item,
                         games: [...games],
                         id: team.id,
-                        logoPath: '/paok.png',
+                        logoPath: (!team.logoPath || team.logoPath.length == 0) ? '/paok.png' : team.logoPath,
                     });
 
                     return {
@@ -121,7 +121,7 @@ export default function TeamsIndex() {
                                 <div className="w-full h-[50%] max-h-[400px] min-h-[400px] bg-white relative rounded-md">
                                     <div className="size-[98%] brightness-50 z-[150] absolute top-[1%] left-[1%] bg-basketball bg-cover bg-no-repeat blur-[2px] bg-center rounded-md"></div>
                                     <div className="w-full z-[100] h-full absolute top-0 left-0 bg-basketball bg-cover bg-no-repeat blur-[0px] bg-center rounded-md"></div>
-                                    <img src={team.logoPath} className="w-[200px] scale-[0.8] z-[200] h-[200px] absolute top-[calc(50%-175px)] left-[calc(50%-100px)] object-contain" />
+                                    <img src={(!team.logoPath || team.logoPath.length == 0) ? '/paok.png' : team.logoPath} className="w-[200px] scale-[0.8] z-[200] h-[200px] absolute top-[calc(50%-175px)] left-[calc(50%-100px)] object-contain" />
                                     <div className="flex flex-col w-full items-center top-[60%] absolute text-white font-semibold gap-y-1 z-[200]">
                                         <p className="text-xl">{team.teamName}</p>
                                         <p className="text-lg text-gray-200">{team.coachName.length > 0 ? team.coachName : 'Δεν υπάρχει προπονητής'}</p>
@@ -147,7 +147,7 @@ export default function TeamsIndex() {
                                         team.players.slice(0, 6).map((player, index) => (
                                             <li key={index} className="w-full last:rounded-b-md flex items-center justify-between p-2 border-b-[1px] border-b-slate-300">
                                                 <div className="flex items-center gap-x-2">
-                                                    <img src={player.logoPath ?? '/lebron.jpg'} className="size-14 object-contain" />
+                                                    <img src={(!player.logoPath || player.logoPath.length == 0) ? '/lbron.jpg' : player.logoPath} className="size-14 object-contain" />
                                                     <div className="text-slate-200 flex flex-col">
                                                         <p className="text-sec text-base truncate">{player.firstName} {player.lastName}</p>
                                                         <div className="flex gap-x-4 text-sm text-slate-300">

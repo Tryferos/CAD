@@ -30,7 +30,7 @@ const Teams: FC<Props> = (props) => {
                                 transition={{ duration: 0.5, delay: i * 0.25 + 0.25 }}
                                 className='w-[25%] h-[150px] outline hover:scale-[1.02] transition-transform hover:shadow-box outline-1 outline-slate-300 
                                 rounded-md py-2 px-4 flex-grow text-center shadow-box-sm relative cursor-pointer text-white'>
-                                <img src={item.logoPath ?? '/paok.png'} alt={item.teamName}
+                                <img src={(!item.logoPath || item.logoPath.length == 0) ? '/paok.png' : item.logoPath} alt={item.teamName}
                                     className='w-full h-full absolute top-0 left-0 object-cover blur-[2px] brightness-[0.65]' />
                                 <div className='absolute flex items-center flex-col top-5 left-0 justify-center w-full'>
                                     <p className='font-semibold first-letter:uppercase py-1 rounded text-lg'>{item.teamName}</p>

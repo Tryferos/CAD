@@ -10,7 +10,7 @@ export default function Team() {
             let vTeam: TeamProps = {} as TeamProps;
             const teamResponse = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teams/${teamid}`)
             const teamData = await teamResponse.json();
-            vTeam = { ...teamData, logoPath: teamData.logoPath ?? '/paok.png' };
+            vTeam = { ...teamData, logoPath: (!teamData.logoPath || teamData.logoPath.length == 0) ? '/paok.png' : teamData.logoPath };
             const playersResponse = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/players/team/${teamid}`)
             const playersData = await playersResponse.json();
             vTeam = { ...vTeam, players: [...playersData], cityName: teamData.city.cityName };
@@ -33,7 +33,7 @@ export default function Team() {
                                 <li key={player.id}
                                     className="flex justify-between flex-grow outline outline-1 hover:shadow-box cursor-pointer shadow-box-sm hover:outline-slate-300 hover:scale-[1.02] transition-[transform,shadow]
                                  outline-slate-200 rounded items-center px-2 gap-x-2">
-                                    <img src={(player.logoPath && player.logoPath.length > 0) ? player.logoPath : '/messi.png'} alt="" className="size-12 object-cover rounded-full" />
+                                    <img src={(player.logoPath && player.logoPath.length > 0) ? player.logoPath : '/lebron.jpg'} alt="" className="size-12 object-cover rounded-full" />
                                     <div className="flex gap-x-4 items-center pr-2 w-full">
                                         <div className="flex flex-col gap-y-1 py-2">
                                             <div className="flex gap-x-1 *:first-letter:uppercase font-semibold">
@@ -76,7 +76,7 @@ export default function Team() {
                 </div>
             </div>
             <div className="basis-[50%] flex items-center flex-col gap-y-4">
-                <img src={team.logoPath} alt="" className="w-40 h-40 object-contain" />
+                <img src={(!team.logoPath || team.logoPath.length == 0) ? '/paok.png' : team.logoPath} alt="" className="w-40 h-40 object-contain" />
                 <p className="first-letter:uppercase text-2xl font-semibold">{team.teamName} {team.cityName}</p>
                 <div className="text-center flex flex-col gap-y-2 *:first-letter:uppercase">
                     <div className="mb-2">Στάδιο: <p className="first-letter:uppercase font-semibold text-lg">{team.stadiumName}</p></div>

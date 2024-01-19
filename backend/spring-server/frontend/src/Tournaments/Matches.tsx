@@ -158,7 +158,8 @@ export function UpcomingMatch({ match, className, tourid }: { match: Match; clas
             <p className="absolute text-xs left-[calc(50%-25px)] w-[50px] top-2">Γύρος {match.round_id}</p>
             <div className="basis-[50%] h-full flex items-center justify-center gap-x-10">
                 <div className="flex flex-col items-center">
-                    <img src={match.homeTeam.logoPath} style={{ objectFit: 'contain' }} className="size-10" />
+                    <img src={(!match.homeTeam.logoPath || match.homeTeam.logoPath.length == 0) ? '/paok.png' : match.homeTeam.logoPath}
+                        style={{ objectFit: 'contain' }} className="size-10" />
                     <p className="first-letter:uppercase text-lg text-gray-600">{match.homeTeam.teamName}</p>
                 </div>
                 <p className="-mt-4 text-2xl font-semibold font-ptsans">{havePlayed && score.home}</p>
@@ -167,7 +168,7 @@ export function UpcomingMatch({ match, className, tourid }: { match: Match; clas
             <div className="basis-[50%] h-full flex items-center justify-center gap-x-10">
                 <p className="-mt-4 text-2xl font-semibold font-ptsans">{havePlayed && score.away}</p>
                 <div className="flex flex-col items-center">
-                    <img src={match.awayTeam.logoPath} style={{ objectFit: 'contain' }} className="size-10" />
+                    <img src={(!match.awayTeam.logoPath || match.awayTeam.logoPath.length == 0) ? '/paok.png' : match.awayTeam.logoPath} style={{ objectFit: 'contain' }} className="size-10" />
                     <p className="first-letter:uppercase text-lg text-gray-600">{match.awayTeam.teamName}</p>
                 </div>
             </div>

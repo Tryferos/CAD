@@ -70,7 +70,7 @@ export function ImageFieldRef(props: ImageFieldProps) {
             </fieldset>
             {logoPath &&
                 <figure className='w-[60%] relative'>
-                    <img src={logoPath} className='object-contain w-full h-[200px]' />
+                    <img src={(!logoPath || logoPath.length == 0) ? '/paok.png' : logoPath} className='object-contain w-full h-[200px]' />
                     <div className='absolute top-2 -right-4'>
                         <CloseIcon onClick={handleRemove} />
                     </div>

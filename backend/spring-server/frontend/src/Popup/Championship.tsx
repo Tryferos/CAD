@@ -27,7 +27,7 @@ const Championship: FC = (props) => {
             const res = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teams/`)
             const data = await res.json();
 
-            setTeams(data.map(item => ({ ...item, logoPath: '/paok.png' })));
+            setTeams(data.map(item => ({ ...item })));
         })()
     }, [])
     const onSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
@@ -115,7 +115,7 @@ function TeamItem(props: ShortTeam & Pick<Team, 'logoPath'> & { checked: boolean
             after:text-white after:text-center after:font-semibold after:cursor-pointer after:text-lg after:rounded-md after:z-10 after:flex after:items-center after:justify-center
             after:hover:bg-opacity-90 hover:after:content-center hover:after:content-["Επιλογή"] after:h-[1px] after:w-full after:top-0 after:left-0 
             hover:after:h-full after:transition-all'>
-            <img src={props.logoPath} className='object-cover w-full h-full blur-[2px] brightness-[0.6]' />
+            <img src={(!props.logoPath || props.logoPath.length == 0) ? '/paok.png' : props.logoPath} className='object-cover w-full h-full blur-[2px] brightness-[0.6]' />
             <div className='absolute gap-y-1 top-0 left-0 w-full font-wotfard-md h-full flex justify-center items-center flex-col group-hover:hidden'>
                 <p className='text-white text-xl font-semibold -mt-2 first-letter:uppercase'>{props.teamName}</p>
                 <p className='text-sm text-slate-200 first-letter:uppercase'>{props.city.cityName}</p>
