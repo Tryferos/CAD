@@ -58,7 +58,7 @@ export function Wrapper({ children }: { children: ReactNode }) {
                     return;
                 }
                 try {
-                    const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/token`, {
+                    const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/token`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

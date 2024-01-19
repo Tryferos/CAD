@@ -29,7 +29,7 @@ public class AuthController {
         this.userDetailsService = userDetailsService;
     }
 
-    @PostMapping("/token")
+    @PostMapping("/api/token")
     public ResponseEntity<AuthResponseDto> token(Authentication authentication){
         Instant now = Instant.now();
         long expiry = 36000L; // 10 hours
