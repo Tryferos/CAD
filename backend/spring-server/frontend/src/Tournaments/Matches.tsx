@@ -29,7 +29,7 @@ export default function Matches() {
     }, [])
     const handleDraw = () => {
         (async () => {
-            const res = await fetch(`/api/championships/createDraw/${tourid}?date=${formatDate()}`, authRequest('POST'))
+            const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/championships/createDraw/${tourid}?date=${formatDate()}`, authRequest('POST'))
             const draw = await res.text();
             setHasDrawn(res.ok);
             if (res.ok) {
@@ -38,11 +38,11 @@ export default function Matches() {
         })()
     }
     async function fetchData() {
-        const res = await fetch(`/api/teams/championship/${tourid}`)
+        const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teams/championship/${tourid}`)
         const teams = await res.json();
         setRounds(teams.length - 1);
         for (let i = 0; i < teams.length - 1; i++) {
-            const res2 = await fetch(`/api/games/games?roundId=${i}&championshipId=${tourid}`)
+            const res2 = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/games/games?roundId=${i}&championshipId=${tourid}`)
             const data = await res2.json();
 
             if (i == 0) {
@@ -139,7 +139,7 @@ export function UpcomingMatch({ match, className, tourid }: { match: Match; clas
             try {
                 const quarterType = i == 0 ? 'FIRST' : i == 1 ? 'SECOND' : i == 2 ? 'THIRD' : i == 3 ? 'FOURTH' : 'OVERTIME'
                 const quarterRes = await fetch(
-                    `/api/teamScorePerQuarters/teamScorePerQuarter?quarter=${quarterType}&gameId=${match.id}&roundId=${match.round_id}&championshipId=${tourid}&teamId=${team.id}`)
+                    `${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teamScorePerQuarters/teamScorePerQuarter?quarter=${quarterType}&gameId=${match.id}&roundId=${match.round_id}&championshipId=${tourid}&teamId=${team.id}`)
                 if (!quarterRes.ok) continue;
                 const quarter = await quarterRes.json();
 

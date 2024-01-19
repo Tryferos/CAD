@@ -40,12 +40,12 @@ export default function TeamsIndex() {
 
         (async () => {
 
-            const res = await fetch(`/api/teams/championship/${tourid}`)
+            const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teams/championship/${tourid}`)
             const data = await res.json();
             const teamsData = data.map((team) => ({ ...team, logoPath: team.logoPath ?? '/paok.png', players: [] }));
             const newTeams = await Promise.all(
                 teamsData.map(async (team) => {
-                    const res2 = await fetch(`/api/players/team/${team.id}`)
+                    const res2 = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/players/team/${team.id}`)
                     const data2 = await res2.json();
 
                     const item = team;
@@ -53,7 +53,7 @@ export default function TeamsIndex() {
                     let games: Game[] = [];
                     for (let i = 0; i < (teamsData.length - 1); i++) {
                         //* FOR EVERY ROUND
-                        const res2 = await fetch(`/api/games/games?roundId=${i}&championshipId=${tourid}`)
+                        const res2 = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/games/games?roundId=${i}&championshipId=${tourid}`)
                         const data = await res2.json();
                         if (!data || data.length == 0 || res2.status > 399) continue;
                         const isTeamRound = data.some(vitem => vitem.awayTeam.id == item.id || vitem.homeTeam.id == item.id);
@@ -66,9 +66,9 @@ export default function TeamsIndex() {
                             for (let q = 0; q < 5; q++) {
                                 const quarterType = q == 0 ? 'FIRST' : q == 1 ? 'SECOND' : q == 2 ? 'THIRD' : q == 3 ? 'FOURTH' : 'OVERTIME';
                                 const quarterRes = await fetch(
-                                    `/api/teamScorePerQuarters/teamScorePerQuarter?quarter=${quarterType}&gameId=${element.id.id}&roundId=${i}&championshipId=${tourid}&teamId=${item.id}`)
+                                    `${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teamScorePerQuarters/teamScorePerQuarter?quarter=${quarterType}&gameId=${element.id.id}&roundId=${i}&championshipId=${tourid}&teamId=${item.id}`)
                                 const quarterResAgainst = await fetch(
-                                    `/api/teamScorePerQuarters/teamScorePerQuarter?quarter=${quarterType}&gameId=${element.id.id}&roundId=${i}&championshipId=${tourid}&teamId=${opponentId}`)
+                                    `${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teamScorePerQuarters/teamScorePerQuarter?quarter=${quarterType}&gameId=${element.id.id}&roundId=${i}&championshipId=${tourid}&teamId=${opponentId}`)
                                 const quarterData = await quarterRes.json();
                                 const quarterDataAgainst = await quarterResAgainst.json();
                                 if (quarterRes.status > 399 || quarterResAgainst.status > 399) continue;

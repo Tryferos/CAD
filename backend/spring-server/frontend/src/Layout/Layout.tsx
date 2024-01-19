@@ -57,10 +57,10 @@ function NavigationBar() {
     const [teams, setTeams] = useState<TeamType[]>([])
     useEffect(() => {
         (async () => {
-            const res = await fetch('/api/championships/');
+            const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/championships/`);
             const championships = await res.json();
             setChampionships(championships);
-            const res2 = await fetch('/api/teams/');
+            const res2 = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teams/`);
             const teams = await res2.json();
             setTeams(teams);
         })()

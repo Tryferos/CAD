@@ -31,17 +31,17 @@ const Admin: FC = (props) => {
         if (leagues.length > 0) return;
 
         (async () => {
-            const res = await fetch('/api/championships/')
+            const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/championships/`)
             const champData = await res.json() as AdminLeague[];
             const lengthedChampData = await Promise.all(
                 champData.map(async vChampionship => {
-                    const teamResponse = await fetch(`/api/teams/championship/${vChampionship.id}`)
+                    const teamResponse = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teams/championship/${vChampionship.id}`)
                     const teamData = await teamResponse.json() as AdminTeam[];
 
                     const lengthedTeamData = await Promise.all
                         (
                             teamData.map(async vTeam => {
-                                const playersResponse = await fetch(`/api/players/team/${vTeam.id}`)
+                                const playersResponse = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/players/team/${vTeam.id}`)
                                 const playersData = await playersResponse.json();
 
                                 setPlayers(prev => [...prev, ...playersData.filter(v => !prev.map(p => p.id).includes(v.id))]);

@@ -104,11 +104,11 @@ const Score: FC = (props) => {
             })
             let allOK = true;
             quartersHome.forEach(async (quarterScore) => {
-                const res = await fetch(`/api/teamScorePerQuarters/add`, authRequest('POST', quarterScore));
+                const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teamScorePerQuarters/add`, authRequest('POST', quarterScore));
                 if (!res.ok) allOK = false;
             })
             quartersAway.forEach(async (quarterScore) => {
-                const res = await fetch(`/api/teamScorePerQuarters/add`, authRequest('POST', quarterScore));
+                const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teamScorePerQuarters/add`, authRequest('POST', quarterScore));
                 if (!res.ok) allOK = false;
             })
 
