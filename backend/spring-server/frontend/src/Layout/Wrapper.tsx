@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useContext, createContext, ReactNode } from "react";
+import React, { useState, useEffect, useContext, createContext, ReactNode, FC } from "react";
 import PopupElement from "../Popup/PopupElement";
 import { encode } from 'base-64'
 import { toast } from 'react-toastify';
+import { Navigate, useLocation } from 'react-router-dom'
+
 export type User = {
     username: string;
     role: 'ADMIN' | 'SECRETARY';
@@ -29,7 +31,8 @@ const UserContext = createContext({ user: null, handleLogIn: () => { }, handleLo
 const PopupContext = createContext({ popup: null, handlePopup: (popup: ReactNode, title?: string, data?: unknown) => { }, title: '', data: null }) as
     React.Context<{ popup: PopupType | null; handlePopup: (popup: ReactNode, title?: string, data?: unknown) => void, title: string, data: unknown }>;
 
-export function Wrapper({ children }: { children: ReactNode }) {
+export const Wrapper: FC<{ children: ReactNode }> = (props) => {
+    const { children } = props;
     const [user, setUser] = useState<User | null>(null);
     const [popup, setPopup] = useState<PopupType | null>(null);
     const [popupData, setPopupData] = useState<unknown | null>(null);
@@ -37,6 +40,9 @@ export function Wrapper({ children }: { children: ReactNode }) {
     const [token, setToken] = useState<string>();
 
     const handlePopup = (popup: PopupType, title?: string, data?: unknown) => {
+        if (popup == null) {
+            window.location.reload();
+        }
         setPopup(popup);
         setPopupData(data);
         setTitle(title);
