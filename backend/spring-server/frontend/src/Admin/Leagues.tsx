@@ -14,7 +14,7 @@ const Leagues: FC<Props> = (props) => {
     const { leagues } = props;
     const { user } = useUser()
     const handeClick = () => {
-        if (user.role == 'admin') {
+        if (user.role == 'ADMIN') {
             handlePopup(PopupType.championship, 'Δημιουργία Τουρνουά')
             return;
         }

@@ -52,7 +52,7 @@ function Footer() {
                 <p className="font-cubano text-white text-8xl tracking-wider wireless:text-5xl">ESAKE</p>
             </div>
             <div className="w-full h-[70%] gap-y-5 bg-slate-700 flex p-10 text-gray-200 font-wotfard-md justify-evenly flex-wrap relative">
-                <div className="flex justify-between absolute w-[calc(100%-32px)] bottom-4 left-4">
+                <div className="flex justify-between absolute w-[calc(100%-80px)] pb-4 bottom-10 left-10 border-b-gray-300 border-b-[2px]">
                     <p>
                         All rights reserved &copy; CAD Team
                     </p>

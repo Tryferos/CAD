@@ -4,7 +4,7 @@ import { encode } from 'base-64'
 import { toast } from 'react-toastify';
 export type User = {
     username: string;
-    role: 'admin' | 'secretary';
+    role: 'ADMIN' | 'SECRETARY';
 }
 
 export type UserCredentials = {
