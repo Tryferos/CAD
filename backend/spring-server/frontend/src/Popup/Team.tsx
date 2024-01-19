@@ -45,18 +45,21 @@ const Team: FC = (props) => {
             toast.error('Παρακαλώ επιλέξτε εικόνα');
             return;
         }
+        let city = team.city;
         if (!cities.map(item => item.cityName).includes(team.city.cityName)) {
             (async () => {
                 const res = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/cities/add`, authRequest('POST', { cityName: team.city.cityName }));
-                const city = await res.json();
-                setTeam(prev => ({ ...prev, city: { cityName: city.cityName, id: city.id } }))
+                const vcity = await res.json();
+                city = vcity
+                setTeam((prev) => ({ ...prev, city: { cityName: vcity.cityName, id: vcity.id } }))
             })()
         }
         (async () => {
             const promise = new Promise(async (resolve, reject) => {
                 try {
                     const res = await uploadImage(file, 'teams' + team.teamName + team.coachName + + ".png");
-                    await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teams/add`, authRequest('POST', { ...team, logoPath: res }));
+                    await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teams/add`,
+                        authRequest('POST', { ...team, logoPath: res, city: city }));
                     resolve(null)
                     handlePopup(null);
                 } catch (err) {
@@ -93,7 +96,7 @@ const Team: FC = (props) => {
             <div className='w-[60%] wireless:w-[90%]'>
                 {
                     <SimpleDropdown
-                        items={cities.length == 0 ? ['Θεσσαλονίκη', 'Αθήνα'] : cities.map((item) => item.cityName)}
+                        items={cities.length == 0 ? [] : cities.map((item) => item.cityName)}
                         shadow={false}
                         search={true}
                         onSelect={(item) => setTeam((prev) => ({ ...prev, city: { cityName: item, id: getTeamId(item) } }))}

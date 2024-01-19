@@ -157,7 +157,7 @@ export default function Standings() {
         }
     }
     return (
-        <section className="flex w-full h-full flex-1 justify-between flex-col pc:flex-row gap-y-10">
+        <section className="flex w-full min-h-[40vh] flex-1 justify-between flex-col pc:flex-row gap-y-10">
             <ul className="flex basis-[66%] laptop:basis-[100%] flex-col *:px-4 *:py-2 *:items-center group [&>*:nth-child(even)]:bg-slate-100">
                 <li className="flex justify-between border-b-[1px] pt-0 mb-4 font-medium text-slate-500 border-b-slate-300 pb-2">
                     <div className="flex gap-x-4">
@@ -233,7 +233,7 @@ function UpcomingMatches({ tourid }: { tourid: string }) {
     }, [])
 
     return (
-        <div className="h-[1500px] basis-[30%] flex flex-col gap-y-5">
+        <div className="basis-[30%] flex flex-col gap-y-5">
             <div className="flex justify-center items-center gap-x-2 mt-2">
                 <div className="size-4 bg-yellow-400 rounded-full"></div>
                 <p className="font-medium">Ανερχόμενα παιχνίδια</p>

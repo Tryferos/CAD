@@ -18,7 +18,7 @@ export default function Layout() {
     return (
         <Fragment>
             <Wrapper>
-                <div className="w-[100vw] h-[100vh] flex z-[999]">
+                <div className="w-[100vw] h-[100vh] flex z-[999] flex-col">
                     <div className="z-[9999999999999999999]">
                         <ToastContainer
                             position='top-center'
@@ -30,6 +30,7 @@ export default function Layout() {
                     <NavigationBar />
                     <main className="ml-[clamp(200px,15%,250px)] mobile:ml-[0%] mobile:w-[100%]  w-[85%] overflow-y-auto scrollbar">
                         <Outlet />
+                        <Footer />
                     </main>
                     <PopupElement>
                         <PopupItem popup={PopupType.login} element={<Login />} />
@@ -42,6 +43,52 @@ export default function Layout() {
             </Wrapper>
         </Fragment>
     );
+}
+function Footer() {
+    return (
+        <footer className="w-full h-[70vh] flex flex-col">
+            <div className="w-full flex justify-evenly h-[30%] bg-black items-center px-[10%]">
+                <img src={'/logo.png'} className="object-contain h-[65%] wireless:max-h-[70px]" />
+                <p className="font-cubano text-white text-8xl tracking-wider wireless:text-5xl">ESAKE</p>
+            </div>
+            <div className="w-full h-[70%] bg-slate-700 flex p-10 text-gray-200 font-wotfard-md justify-evenly flex-wrap">
+                {
+                    [
+                        { title: 'Made By', contents: [{ content: 'Ανδρέας Καραγιάννης', href: '#' }, { content: 'Γιώργος Καραγιάννης', href: '#' }] },
+                        {
+                            title: 'Technologies', contents: [{ content: 'Java Spring Boot', href: '#' },
+                            { content: 'React', href: '#' }, { content: 'MySQL', href: '#' }]
+                        },
+                    ].map((item, i) => {
+                        const { title, contents } = item as { title: string; contents: Array<{ content: string; href: string }> };
+                        return (
+                            <div key={i} className="gap-y-2 flex flex-col">
+                                <p className="border-b-slate-300 border-b-[1px] font-wotfard-md font-bold text-lg">
+                                    {title}
+                                </p>
+                                <ul>
+                                    {
+                                        contents.map((content, j) => {
+                                            const { content: c, href } = content;
+                                            return (
+                                                <li key={j} className="flex gap-x-2 items-center hover:underline font-semibold text-sm">
+                                                    <a href={href}>
+                                                        <p>{c}</p>
+                                                    </a>
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                            </div>
+                        )
+                    })
+                }
+
+            </div>
+
+        </footer>
+    )
 }
 type ChampionshipType = {
     id: number,

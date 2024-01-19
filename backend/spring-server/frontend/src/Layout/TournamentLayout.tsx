@@ -17,7 +17,7 @@ export default function TournamentLayout() {
     return (
         <div>
             <Layout section={section} tourid={tourid} />
-            <main className="mt-[75px] min-h-[calc(100vh-75px)] p-5">
+            <main className="mt-[75px] min-h-[calc(80vh-75px)] p-5">
                 <Outlet />
             </main>
         </div>
