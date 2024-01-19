@@ -231,7 +231,6 @@ function UpcomingMatches({ tourid }: { tourid: string }) {
             }
         })()
     }, [])
-
     return (
         <div className="basis-[30%] flex flex-col gap-y-5">
             <div className="flex justify-center items-center gap-x-2 mt-2">

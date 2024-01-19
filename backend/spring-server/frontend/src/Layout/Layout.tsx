@@ -46,12 +46,12 @@ export default function Layout() {
 }
 function Footer() {
     return (
-        <footer className="w-full h-[70vh] flex flex-col">
-            <div className="w-full flex justify-evenly h-[30%] bg-black items-center px-[10%]">
+        <footer className="w-full min-h-[30vh] flex flex-col">
+            <div className="w-full flex justify-evenly h-[25vh] bg-black items-center px-[10%]">
                 <img src={'/logo.png'} className="object-contain h-[65%] wireless:max-h-[70px]" />
                 <p className="font-cubano text-white text-8xl tracking-wider wireless:text-5xl">ESAKE</p>
             </div>
-            <div className="w-full h-[70%] gap-y-5 bg-slate-700 flex p-10 text-gray-200 font-wotfard-md justify-evenly flex-wrap relative">
+            <div className="w-full min-h-[200px] pt-14 pb-32 wireless:pb-[150px] gap-y-5 bg-slate-700 flex px-10 text-gray-200 font-wotfard-md justify-evenly flex-wrap relative">
                 <div className="flex justify-between absolute w-[calc(100%-80px)] pb-4 bottom-10 left-10 border-b-gray-300 border-b-[2px]">
                     <p>
                         All rights reserved &copy; CAD Team
@@ -75,6 +75,9 @@ function Footer() {
                             title: 'Technologies Used', contents: [{ content: 'Java Spring Boot', href: '#' },
                             { content: 'React', href: '#' }, { content: 'MySQL', href: '#' }]
                         },
+                        {
+                            title: 'Clone Project', contents: [{ content: 'Github', href: 'https://github.com/Tryferos/CAD' }],
+                        },
                     ].map((item, i) => {
                         const { title, contents } = item as { title: string; contents: Array<{ content: string; href: string }> };
                         return (
@@ -88,7 +91,7 @@ function Footer() {
                                             const { content: c, href } = content;
                                             return (
                                                 <li key={j} className="flex gap-x-2 items-center hover:underline font-semibold text-sm">
-                                                    <a href={href}>
+                                                    <a target={i == 2 && "_blank"} href={href}>
                                                         <p>{c}</p>
                                                     </a>
                                                 </li>

@@ -23,8 +23,9 @@ export type City = {
 const Team: FC = (props) => {
     const { handlePopup } = usePopup();
     const { user, handleLogIn, handleLogOut, authRequest } = useUser();
-    const [team, setTeam] = useState<Team>({ teamName: '', shortName: '', city: { cityName: '', id: 0 }, stadiumName: '', logoPath: '', coachName: '' });
-    const [cities, setCities] = useState<City[]>([{ cityName: 'θεσσαλονίκη', id: -1 }, { cityName: 'Αθήνα', id: -1 }])
+    const [team, setTeam] = useState<Team>(
+        { teamName: '', shortName: '', city: { cityName: '', id: 0 }, stadiumName: '', logoPath: '', coachName: '' });
+    const [cities, setCities] = useState<City[]>([])
     const [file, setFile] = useState<File>(null);
     useEffect(() => {
 
@@ -32,7 +33,10 @@ const Team: FC = (props) => {
 
             const response = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/cities/`, authRequest('GET'));
             const data = await response.json();
-            if (data.length == 0) return;
+            if (data.length == 0) {
+                setCities([{ cityName: 'θεσσαλονίκη', id: -1 }, { cityName: 'Αθήνα', id: -1 }])
+                return;
+            }
             setCities(data);
         })()
 

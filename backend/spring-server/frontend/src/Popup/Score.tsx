@@ -66,7 +66,7 @@ const Score: FC = (props) => {
                                 id: match.id,
                                 round: {
                                     id: {
-                                        id: parseInt(match.round_id),
+                                        id: parseInt((match.id as any).round.id.id),
                                         championship: {
                                             id: tourid
                                         }
@@ -90,7 +90,7 @@ const Score: FC = (props) => {
                                 id: match.id,
                                 round: {
                                     id: {
-                                        id: parseInt(match.round_id),
+                                        id: parseInt((match.id as any).round.id.id),
                                         championship: {
                                             id: tourid
                                         }
