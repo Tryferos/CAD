@@ -152,7 +152,6 @@ export function UpcomingMatch({ match, className, tourid }: { match: Match; clas
     const havePlayed = useMemo(() => {
         return score.away != 0 || score.home != 0
     }, [score])
-    console.log(match)
     return (
         <li className={`h-[200px] min-w-[300px] hover:shadow-box hover:scale-[1.02] transition-[transform,shadow] items-center flex bg-slate-100 cursor-pointer outline outline-1 outline-slate-200 px-0 py-8 relative rounded-md ${className}`}>
             <p className="absolute text-xs left-[calc(50%-50px)] w-[100px] bottom-2 text-center">{match.matchDate}</p>

@@ -127,7 +127,7 @@ const Score: FC = (props) => {
                 {
                     new Array(5).fill(1).map((item, i) => {
                         return (
-                            <li className='w-[25%] min-w-[200px]'>
+                            <li key={i} className='w-[25%] min-w-[200px]'>
                                 <p className='border-b-[1px] border-b-slate-300 py-1'>
                                     {
                                         i == 4 ? `Παράταση`
