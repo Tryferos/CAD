@@ -27,7 +27,7 @@ public class City {
     private Long id;
     @NotBlank
     @Convert(converter = LowercaseConverter.class)
-    @Column(name = "city_name", length = 30, nullable = false)
+    @Column(name = "city_name", length = 30, nullable = false, unique = true)
     private String cityName;
 
 }
