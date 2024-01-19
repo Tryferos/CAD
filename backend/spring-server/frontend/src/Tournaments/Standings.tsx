@@ -63,7 +63,7 @@ export default function Standings() {
     useEffect(() => {
         (async () => {
             process.env.NODE_ENV == 'development' && console.log('fetching teams');
-            const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teams/championship/${tourid}`)
+            const res = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teams/championship/${tourid}`)
             const teamsData = await res.json();
             const teams: StandingsTeam[] = await Promise.all(
                 teamsData.map(async (item: Team, i) => {
@@ -71,7 +71,7 @@ export default function Standings() {
                     let games: Game[] = [];
                     for (let i = 0; i < (teamsData.length - 1); i++) {
                         //* FOR EVERY ROUND
-                        const res2 = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/games/games?roundId=${i}&championshipId=${tourid}`)
+                        const res2 = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/games/games?roundId=${i}&championshipId=${tourid}`)
                         const data = await res2.json();
                         if (!data || data.length == 0 || res2.status > 399) continue;
                         const isTeamRound = data.some(vitem => vitem.awayTeam.id == item.id || vitem.homeTeam.id == item.id);
@@ -84,9 +84,9 @@ export default function Standings() {
                             for (let q = 0; q < 5; q++) {
                                 const quarterType = q == 0 ? 'FIRST' : q == 1 ? 'SECOND' : q == 2 ? 'THIRD' : q == 3 ? 'FOURTH' : 'OVERTIME';
                                 const quarterRes = await fetch(
-                                    `${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teamScorePerQuarters/teamScorePerQuarter?quarter=${quarterType}&gameId=${element.id.id}&roundId=${i}&championshipId=${tourid}&teamId=${item.id}`)
+                                    `${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teamScorePerQuarters/teamScorePerQuarter?quarter=${quarterType}&gameId=${element.id.id}&roundId=${i}&championshipId=${tourid}&teamId=${item.id}`)
                                 const quarterResAgainst = await fetch(
-                                    `${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teamScorePerQuarters/teamScorePerQuarter?quarter=${quarterType}&gameId=${element.id.id}&roundId=${i}&championshipId=${tourid}&teamId=${opponentId}`)
+                                    `${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teamScorePerQuarters/teamScorePerQuarter?quarter=${quarterType}&gameId=${element.id.id}&roundId=${i}&championshipId=${tourid}&teamId=${opponentId}`)
                                 const quarterData = await quarterRes.json();
                                 const quarterDataAgainst = await quarterResAgainst.json();
                                 if (quarterRes.status > 399 || quarterResAgainst.status > 399) continue;
@@ -220,11 +220,11 @@ function UpcomingMatches({ tourid }: { tourid: string }) {
     useEffect(() => {
         (async () => {
 
-            const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teams/championship/${tourid}`)
+            const res = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teams/championship/${tourid}`)
             const teams = await res.json();
 
             for (let i = 0; i < Math.min(teams.length - 1, 3); i++) {
-                const res2 = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/games/games?roundId=${i}&championshipId=${tourid}`)
+                const res2 = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/games/games?roundId=${i}&championshipId=${tourid}`)
                 const data = await res2.json();
                 if (!res2.ok) continue;
                 setMatches(prev => [...prev, ...data])

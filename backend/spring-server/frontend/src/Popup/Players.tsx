@@ -34,7 +34,7 @@ const Player: FC = (props) => {
     useEffect(() => {
 
         (async () => {
-            const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teams/`)
+            const res = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teams/`)
             const data = await res.json();
             setTeams(data);
         })()
@@ -66,7 +66,7 @@ const Player: FC = (props) => {
                 const res = await uploadImage(file, `${player.firstName}_${player.lastName}_team_${player.team.id}.png`)
                 const p = { ...player, logoPath: res, team: { id: player.team.id }, positionType: player.positionType.replaceAll(" ", "_") };
                 try {
-                    await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/players/add`, authRequest('POST', p));
+                    await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/players/add`, authRequest('POST', p));
                     resolve(null)
                     handlePopup(null);
                 } catch (err) {

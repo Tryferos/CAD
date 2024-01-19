@@ -30,7 +30,7 @@ const Team: FC = (props) => {
 
         (async () => {
 
-            const response = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/cities/`, authRequest('GET'));
+            const response = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/cities/`, authRequest('GET'));
             const data = await response.json();
             setCities(data);
         })()
@@ -47,7 +47,7 @@ const Team: FC = (props) => {
         }
         if (!cities.map(item => item.cityName).includes(team.city.cityName)) {
             (async () => {
-                const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/cities/add`, authRequest('POST', { cityName: team.city.cityName }));
+                const res = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/cities/add`, authRequest('POST', { cityName: team.city.cityName }));
                 const city = await res.json();
                 setTeam(prev => ({ ...prev, city: { cityName: city.cityName, id: city.id } }))
             })()
@@ -56,7 +56,7 @@ const Team: FC = (props) => {
             const promise = new Promise(async (resolve, reject) => {
                 try {
                     const res = await uploadImage(file, 'teams' + team.teamName + team.coachName + + ".png");
-                    await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teams/add`, authRequest('POST', { ...team, logoPath: res }));
+                    await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teams/add`, authRequest('POST', { ...team, logoPath: res }));
                     resolve(null)
                     handlePopup(null);
                 } catch (err) {

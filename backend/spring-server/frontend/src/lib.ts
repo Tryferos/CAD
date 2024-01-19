@@ -14,6 +14,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getStorage(app);
 
+
 export async function uploadImage(url: Blob | Uint8Array | ArrayBuffer, name: string) {
     const storageRef = ref(db, 'images/' + name);
     const uploadTask = uploadBytesResumable(storageRef, url)

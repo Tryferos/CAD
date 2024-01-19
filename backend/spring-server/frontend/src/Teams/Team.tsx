@@ -8,14 +8,14 @@ export default function Team() {
     useEffect(() => {
         (async () => {
             let vTeam: TeamProps = {} as TeamProps;
-            const teamResponse = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teams/${teamid}`)
+            const teamResponse = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teams/${teamid}`)
             const teamData = await teamResponse.json();
             vTeam = { ...teamData, logoPath: teamData.logoPath ?? '/paok.png' };
-            const playersResponse = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/players/team/${teamid}`)
+            const playersResponse = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/players/team/${teamid}`)
             const playersData = await playersResponse.json();
             vTeam = { ...vTeam, players: [...playersData], cityName: teamData.city.cityName };
             setTeam(vTeam);
-            const championshipsRes = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/championships/team/${teamid}`)
+            const championshipsRes = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/championships/team/${teamid}`)
             const championshipsData = await championshipsRes.json();
             setLeagues(championshipsData)
 

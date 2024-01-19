@@ -24,7 +24,7 @@ const Championship: FC = (props) => {
     const { authRequest } = useUser();
     useEffect(() => {
         (async () => {
-            const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/teams/`)
+            const res = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teams/`)
             const data = await res.json();
 
             setTeams(data.map(item => ({ ...item, logoPath: '/paok.png' })));
@@ -48,7 +48,7 @@ const Championship: FC = (props) => {
                     "teams": [...championship.teams.map(item => ({ id: item.id }))]
                 }
                 try {
-                    const res = await fetch(`${process.env.NODE_ENV == 'development' ? 'http://localhost:3309' : ''}/api/championships/championshipswithparticipations/add`, authRequest('POST',
+                    const res = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/championships/championshipswithparticipations/add`, authRequest('POST',
                         champ
                     ));
                     if (!res.ok) reject((await res.json()).message)

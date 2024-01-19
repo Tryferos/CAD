@@ -1,8 +1,9 @@
 import { FC, Fragment, useEffect, useState } from 'react'
 import { AdminLeague, ItemHeader } from './Admin';
-import { PopupType, usePopup } from '../Layout/Wrapper';
+import { PopupType, usePopup, useUser } from '../Layout/Wrapper';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify'
 
 type Props = {
     leagues: AdminLeague[];
@@ -11,11 +12,19 @@ type Props = {
 const Leagues: FC<Props> = (props) => {
     const { handlePopup } = usePopup();
     const { leagues } = props;
+    const { user } = useUser()
+    const handeClick = () => {
+        if (user.role == 'admin') {
+            handlePopup(PopupType.championship, 'Δημιουργία Τουρνουά')
+            return;
+        }
+        toast.error('Μόνο οι διαχειριστές του συστήματος μπορούν να δημιουργήσουν τουρνουά!')
+    }
     return (
         <section
             className='w-[80%] items-center flex flex-col bg-slate-100 rounded-md px-1'>
             <ItemHeader
-                onClick={() => { handlePopup(PopupType.championship, 'Δημιουργία Τουρνουά') }}
+                onClick={handeClick}
                 btnText='Προσθήκη'
                 length={leagues.length}
                 title='Συνολικά Τουρνουά: '
