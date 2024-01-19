@@ -24,7 +24,7 @@ const Team: FC = (props) => {
     const { handlePopup } = usePopup();
     const { user, handleLogIn, handleLogOut, authRequest } = useUser();
     const [team, setTeam] = useState<Team>({ teamName: '', shortName: '', city: { cityName: '', id: 0 }, stadiumName: '', logoPath: '', coachName: '' });
-    const [cities, setCities] = useState<City[]>([])
+    const [cities, setCities] = useState<City[]>([{ cityName: 'θεσσαλονίκη', id: -1 }, { cityName: 'Αθήνα', id: -1 }])
     const [file, setFile] = useState<File>(null);
     useEffect(() => {
 
@@ -32,6 +32,7 @@ const Team: FC = (props) => {
 
             const response = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/cities/`, authRequest('GET'));
             const data = await response.json();
+            if (data.length == 0) return;
             setCities(data);
         })()
 
@@ -46,7 +47,7 @@ const Team: FC = (props) => {
             return;
         }
         let city = team.city;
-        if (!cities.map(item => item.cityName).includes(team.city.cityName)) {
+        if (!cities.map(item => item.cityName).includes(team.city.cityName) || team.city.id == -1) {
             (async () => {
                 const res = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/cities/add`, authRequest('POST', { cityName: team.city.cityName }));
                 const vcity = await res.json();
@@ -94,9 +95,9 @@ const Team: FC = (props) => {
             <Field label='Στάδιο' name='stadiumName' value={team.stadiumName} onChange={handleChange} />
             <Field label='Προπονητής' name='coachName' value={team.coachName} onChange={handleChange} />
             <div className='w-[60%] wireless:w-[90%]'>
-                {
+                {cities.length > 0 &&
                     <SimpleDropdown
-                        items={cities.length == 0 ? [] : cities.map((item) => item.cityName)}
+                        items={cities.map((item) => item.cityName)}
                         shadow={false}
                         search={true}
                         onSelect={(item) => setTeam((prev) => ({ ...prev, city: { cityName: item, id: getTeamId(item) } }))}

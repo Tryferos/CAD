@@ -51,12 +51,28 @@ function Footer() {
                 <img src={'/logo.png'} className="object-contain h-[65%] wireless:max-h-[70px]" />
                 <p className="font-cubano text-white text-8xl tracking-wider wireless:text-5xl">ESAKE</p>
             </div>
-            <div className="w-full h-[70%] bg-slate-700 flex p-10 text-gray-200 font-wotfard-md justify-evenly flex-wrap">
+            <div className="w-full h-[70%] gap-y-5 bg-slate-700 flex p-10 text-gray-200 font-wotfard-md justify-evenly flex-wrap relative">
+                <div className="flex justify-between absolute w-[calc(100%-32px)] bottom-4 left-4">
+                    <p>
+                        All rights reserved &copy; CAD Team
+                    </p>
+                    <p>
+                        Project was made in the context of a university project
+                    </p>
+                </div>
                 {
                     [
-                        { title: 'Made By', contents: [{ content: 'Ανδρέας Καραγιάννης', href: '#' }, { content: 'Γιώργος Καραγιάννης', href: '#' }] },
                         {
-                            title: 'Technologies', contents: [{ content: 'Java Spring Boot', href: '#' },
+                            title: 'Made By',
+                            contents: [{ content: 'Τρύφων Μαζαράκης', href: '#' },
+                            { content: 'Νικόλας Σαρακενίδης', href: '#' },
+                            { content: 'Βασίλης Θωμάς', href: '#' },
+                            { content: 'Αργύρης Αητός', href: '#' },
+                            { content: 'Ηλίας Παπαδόπουλος', href: '#' },
+                            ],
+                        },
+                        {
+                            title: 'Technologies Used', contents: [{ content: 'Java Spring Boot', href: '#' },
                             { content: 'React', href: '#' }, { content: 'MySQL', href: '#' }]
                         },
                     ].map((item, i) => {
@@ -66,7 +82,7 @@ function Footer() {
                                 <p className="border-b-slate-300 border-b-[1px] font-wotfard-md font-bold text-lg">
                                     {title}
                                 </p>
-                                <ul>
+                                <ul className="flex flex-col gap-y-1">
                                     {
                                         contents.map((content, j) => {
                                             const { content: c, href } = content;
