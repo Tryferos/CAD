@@ -61,10 +61,10 @@ const Admin: FC = (props) => {
 
     }, [])
 
-    if (!user) {
-        Navigate({ to: '/' })
-        return null;
-    }
+    // if (!user) {
+    //     Navigate({ to: '/' })
+    //     return null;
+    // }
     return (
         <main className='w-full min-h-[150vh] flex flex-col gap-y-10 pt-10 items-center mb-40'>
             <Players players={players} />

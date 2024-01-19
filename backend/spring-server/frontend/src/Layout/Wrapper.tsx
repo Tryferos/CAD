@@ -89,11 +89,32 @@ export function Wrapper({ children }: { children: ReactNode }) {
             })
         })()
     }
+    useEffect(() => {
+        getUser()
+    }, [])
+    useEffect(() => {
+        saveUser()
+    }, [user, token])
     const handleLogOut = () => {
         if (!user) return false;
         setUser(null);
         setToken(null);
         return true;
+    }
+
+    function saveUser() {
+        if (!user || !token) return;
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('token', JSON.stringify(token));
+    }
+
+    function getUser() {
+        const user = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
+        if (user && token) {
+            setUser(JSON.parse(user));
+            setToken(JSON.parse(token));
+        }
     }
 
     const authRequest = (method: 'GET' | 'POST' | 'PUT' | 'DELETE', body?: unknown) => {
