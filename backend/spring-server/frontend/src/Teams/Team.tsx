@@ -23,7 +23,7 @@ export default function Team() {
     }, [teamid])
     if (!team) return null;
     return (
-        <section className="flex justify-center gap-x-5 py-20 px-10 wireless:gap-y-10 wireless:flex-col-reverse">
+        <section className="flex min-h-[80vh] justify-center gap-x-5 py-20 px-10 wireless:gap-y-10 wireless:flex-col-reverse">
             <div className="basis-[120%] flex flex-col items-center gap-y-5">
                 <p className="text-xl w-full font-semibold border-b-gray-300 border-b-[1px] pb-2">Ρόστερ ομάδας</p>
                 <ul className="flex flex-wrap gap-5">
