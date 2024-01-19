@@ -81,8 +81,8 @@ function Footer() {
                     ].map((item, i) => {
                         const { title, contents } = item as { title: string; contents: Array<{ content: string; href: string }> };
                         return (
-                            <div key={i} className="gap-y-2 flex flex-col">
-                                <p className="border-b-slate-300 border-b-[1px] font-wotfard-md font-bold text-lg">
+                            <div key={i} className="gap-y-2 flex flex-col flex-grow">
+                                <p className="border-b-slate-300 border-b-[1px] font-wotfard-md font-bold text-lg w-[180px]">
                                     {title}
                                 </p>
                                 <ul className="flex flex-col gap-y-1">
@@ -143,6 +143,7 @@ function NavigationBar() {
                     shadow={false}
                     openInNewTab={false}
                     showRecent={true}
+                    keyNavigation={true}
                     sections={[
                         {
                             items: [...teams.map(item => ({ content: item.teamName, title: item.teamName, href: `/teams/${item.id}` }))],

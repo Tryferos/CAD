@@ -127,19 +127,6 @@ export default function TeamsIndex() {
                                         <p className="text-lg text-gray-200">{team.coachName.length > 0 ? team.coachName : 'Δεν υπάρχει προπονητής'}</p>
                                     </div>
                                     <div className="h-[20%] absolute -bottom-[2px] bg-opacity-90 w-full bg-slate-700 *:w-[25%] flex justify-evenly items-center *:-mt-2 z-[200]">
-                                        {
-                                            [
-                                                ['Αγώνες', team.totalGames ?? 0],
-                                                ['Νίκες', team.gamesWon ?? 0],
-                                                ['Ήττες', team.gamesLost ?? 0],
-                                                ['Πόντοι', team.points ?? 0]
-                                            ].map((item, i) => (
-                                                <div key={i}>
-                                                    <p className="font-semibold text-center text-xl text-sec">{item[1]}</p>
-                                                    <p className="text-slate-400 text-center">{item[0]}</p>
-                                                </div>
-                                            ))
-                                        }
                                     </div>
                                 </div>
                                 <ul className="w-full flex flex-col bg-slate-800 rounded-b-md">
