@@ -159,7 +159,7 @@ function NavigationBar() {
                 </SearchElement>
             </section>
             <section className="flex flex-col gap-y-4 pb-2">
-                <HeaderText text={'Διοργανώσεις'} href={'/tournaments'} />
+                <HeaderText text={'Διοργανώσεις'} href={'/'} />
                 <ul className=" flex flex-col gap-y-4 *:py-3 px-2">
                     {
                         championships.slice(0, 4).map((item, i) => {
