@@ -92,9 +92,8 @@ const Team: FC = (props) => {
             <Field label='Προπονητής' name='coachName' value={team.coachName} onChange={handleChange} />
             <div className='w-[60%] wireless:w-[90%]'>
                 {
-                    cities.length > 0 &&
                     <SimpleDropdown
-                        items={cities.map((item) => item.cityName)}
+                        items={cities.length == 0 ? ['Θεσσαλονίκη', 'Αθήνα'] : cities.map((item) => item.cityName)}
                         shadow={false}
                         search={true}
                         onSelect={(item) => setTeam((prev) => ({ ...prev, city: { cityName: item, id: getTeamId(item) } }))}
