@@ -239,13 +239,26 @@ function UpcomingMatches({ tourid }: { tourid: string }) {
             </div>
             <ul className="justify-center grid pc:grid-cols-1 mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-4">
                 {
-                    matches.slice(0, 3).map((item, i) => {
-                        return (
-                            <UpcomingMatch key={item.id + "-" + i} match={{ ...item, round_id: (item.id as any).round.id.id }} tourid={parseInt(tourid)} />
-                        )
-                    })
+                    matches
+                        .filter(item => Date.now() <= getMatchDateMS(item.matchDate)).sort((a, b) => getMatchDateMS(a.matchDate) - getMatchDateMS(b.matchDate))
+                        .slice(0, 3).map((item, i) => {
+                            return (
+                                <UpcomingMatch key={item.id + "-" + i} upcoming={true} match={{
+                                    ...item, round_id: (item.id as any).round.id.id,
+                                    matchDate: formatDateHour(new Date(item.matchDate))
+                                }} tourid={parseInt(tourid)} />
+                            )
+                        })
                 }
             </ul>
         </div>
     )
+}
+
+function getMatchDateMS(date: string) {
+    const dateSplit = date.split('T');
+    const dateSplit2 = dateSplit[0].split('-');
+    const timeSplit = dateSplit[1].split(':');
+    const dateMS = new Date(parseInt(dateSplit2[0]), parseInt(dateSplit2[1]) - 1, parseInt(dateSplit2[2]), parseInt(timeSplit[0]), parseInt(timeSplit[1])).getTime();
+    return dateMS;
 }

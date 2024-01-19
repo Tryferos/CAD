@@ -106,7 +106,7 @@ function RoundMatches({ round, matches, tourid }: { round: number, matches: Matc
             <ul className="flex flex-wrap gap-5 pb-10 pt-2 items-center justify-around">
                 {
                     matches.sort((a, b) => new Date(b.matchDate).getMilliseconds() - new Date(a.matchDate).getMilliseconds())
-                        .map((item, i) => <UpcomingMatch key={i} match={{ ...item, round: round }} className={"w-[45%]"} tourid={tourid} />)
+                        .map((item, i) => <UpcomingMatch upcoming={false} key={i} match={{ ...item, round: round }} className={"w-[45%]"} tourid={tourid} />)
                 }
             </ul>
         </li>
@@ -118,7 +118,7 @@ type Score = {
     home: number;
     away: number;
 }
-export function UpcomingMatch({ match, className, tourid }: { match: Match; className?: string; tourid: number }) {
+export function UpcomingMatch({ match, className, tourid, upcoming }: { match: Match; className?: string; tourid: number; upcoming: boolean }) {
     const { user } = useUser()
     const { handlePopup } = usePopup();
     const [score, setScore] = useState<Score>({ home: 0, away: 0 })
@@ -173,7 +173,7 @@ export function UpcomingMatch({ match, className, tourid }: { match: Match; clas
                 </div>
             </div>
             {
-                (user &&
+                (user && !upcoming &&
                     <div
                         onClick={() => handlePopup(PopupType.score, `${match.homeTeam.teamName} εναντίον ${match.awayTeam.teamName}, Γύρος ${match.round_id}`,
                             { match: match, tourid: tourid })}
