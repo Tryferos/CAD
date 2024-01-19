@@ -162,11 +162,11 @@ export function UpcomingMatch({ match, className, tourid, upcoming }: { match: M
                         style={{ objectFit: 'contain' }} className="size-10" />
                     <p className="first-letter:uppercase text-lg text-gray-600">{match.homeTeam.teamName}</p>
                 </div>
-                <p className="-mt-4 text-2xl font-semibold font-ptsans">{havePlayed && score.home}</p>
+                <p className="-mt-4 text-2xl font-semibold">{havePlayed && score.home}</p>
             </div>
             <p>{!havePlayed ? 'VS' : '-'}</p>
             <div className="basis-[50%] h-full flex items-center justify-center gap-x-10">
-                <p className="-mt-4 text-2xl font-semibold font-ptsans">{havePlayed && score.away}</p>
+                <p className="-mt-4 text-2xl font-semibold">{havePlayed && score.away}</p>
                 <div className="flex flex-col items-center">
                     <img src={(!match.awayTeam.logoPath || match.awayTeam.logoPath.length == 0) ? '/paok.png' : match.awayTeam.logoPath} style={{ objectFit: 'contain' }} className="size-10" />
                     <p className="first-letter:uppercase text-lg text-gray-600">{match.awayTeam.teamName}</p>
