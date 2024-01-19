@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 import { Game, Quarter, StandingsTeam, calculateGame, getRandomGame } from "../Tournaments/Standings";
+import { Link } from 'react-router-dom'
 
 export type Team = {
     stadiumName: string;
@@ -117,7 +118,7 @@ export default function TeamsIndex() {
                 {
                     teams.map((team, i) => {
                         return (
-                            <li key={i} className="relative min-w-[400px] min-h-[400px] rounded-md">
+                            <Link to={`/teams/${team.id}`} key={i} className="relative min-w-[400px] min-h-[400px] rounded-md">
                                 <div className="w-full h-[50%] max-h-[400px] min-h-[400px] bg-white relative rounded-md">
                                     <div className="size-[98%] brightness-50 z-[150] absolute top-[1%] left-[1%] bg-basketball bg-cover bg-no-repeat blur-[2px] bg-center rounded-md"></div>
                                     <div className="w-full z-[100] h-full absolute top-0 left-0 bg-basketball bg-cover bg-no-repeat blur-[0px] bg-center rounded-md"></div>
@@ -127,25 +128,13 @@ export default function TeamsIndex() {
                                         <p className="text-lg text-gray-200">{team.coachName.length > 0 ? team.coachName : 'Δεν υπάρχει προπονητής'}</p>
                                     </div>
                                     <div className="h-[20%] absolute -bottom-[2px] bg-opacity-90 w-full bg-slate-700 *:w-[25%] flex justify-evenly items-center *:-mt-2 z-[200]">
-                                        {
-                                            [
-                                                ['Αγώνες', team.totalGames ?? 0],
-                                                ['Νίκες', team.gamesWon ?? 0],
-                                                ['Ήττες', team.gamesLost ?? 0],
-                                                ['Πόντοι', team.points ?? 0]
-                                            ].map((item, i) => (
-                                                <div key={i}>
-                                                    <p className="font-semibold text-center text-xl text-sec">{item[1]}</p>
-                                                    <p className="text-slate-400 text-center">{item[0]}</p>
-                                                </div>
-                                            ))
-                                        }
                                     </div>
                                 </div>
                                 <ul className="w-full flex flex-col bg-slate-800 rounded-b-md">
                                     {
                                         team.players.slice(0, 6).map((player, index) => (
-                                            <li key={index} className="w-full last:rounded-b-md flex items-center justify-between p-2 border-b-[1px] border-b-slate-300">
+                                            <li
+                                                key={player.id} className="w-full last:rounded-b-md flex items-center justify-between p-2 border-b-[1px] border-b-slate-300">
                                                 <div className="flex items-center gap-x-2">
                                                     <img src={(!player.logoPath || player.logoPath.length == 0) ? '/lbron.jpg' : player.logoPath} className="size-14 object-contain" />
                                                     <div className="text-slate-200 flex flex-col">
@@ -164,7 +153,7 @@ export default function TeamsIndex() {
 
                                 </ul>
 
-                            </li>
+                            </Link>
                         )
                     })
 
