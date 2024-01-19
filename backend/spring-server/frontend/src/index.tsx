@@ -19,10 +19,12 @@ import Standings from "./Tournaments/Standings";
 import Matches from "./Tournaments/Matches";
 import { Wrapper } from "./Layout/Wrapper";
 import Admin from "./Admin/Admin";
+import NotFound from "./404";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<Layout />}>
+            <Route path="*" element={<NotFound />} />
             <Route index element={<App />} />
             <Route path="admin" element={<Admin />} />
             <Route path="/teams/:teamid" element={<Team />} />

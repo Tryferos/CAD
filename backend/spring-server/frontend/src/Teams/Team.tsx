@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { Team as TeamProps } from "./index";
+import { toast } from 'react-toastify';
 export default function Team() {
     const { teamid } = useParams();
     const [team, setTeam] = useState<TeamProps>()
@@ -10,6 +11,10 @@ export default function Team() {
             let vTeam: TeamProps = {} as TeamProps;
             const teamResponse = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/teams/${teamid}`)
             const teamData = await teamResponse.json();
+            if (!teamResponse.ok) {
+                window.location.href = "/404"
+                return;
+            }
             vTeam = { ...teamData, logoPath: (!teamData.logoPath || teamData.logoPath.length == 0) ? '/paok.png' : teamData.logoPath };
             const playersResponse = await fetch(`${process.env.NODE_ENV == 'development' ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}` : ''}/api/players/team/${teamid}`)
             const playersData = await playersResponse.json();
