@@ -68,6 +68,11 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "api/games/").permitAll()
                                 .requestMatchers(HttpMethod.POST, "api/games/add").denyAll()
                                 .requestMatchers(HttpMethod.GET, "api/games/").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/*").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/static/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/static/js/*").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/static/css/*").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
 
 
                                 .requestMatchers(HttpMethod.GET, "api/teamScorePerQuarters").permitAll()

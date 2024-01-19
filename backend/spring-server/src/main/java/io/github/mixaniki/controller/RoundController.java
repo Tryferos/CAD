@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600)
 @RequestMapping("/api/rounds")
 public class RoundController {
     private final RoundService roundService;
@@ -31,7 +32,7 @@ public class RoundController {
     }
     @GetMapping(value = "/round", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Round> getRoundById(@RequestParam("roundId") Long roundId, @RequestParam("championshipId") Long championshipId) throws NotFoundException {
-
+    //    /api/rounds/round?roundId=1&championshipId=2
         RoundKey roundKey = new RoundKey();
         roundKey.setCompositeId(roundId, championshipId);
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600)
 @RequestMapping(value = "/api/cities")
 public class CityController {
     private final ObjectService<City, Long> cityService;

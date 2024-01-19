@@ -38,4 +38,27 @@ Dockerfile
 src/resources/application.properties
 src/main/resources/application.properties
 
+### FRONT END ###
+# dependencies
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.js
+
+# testing
+frontend/coverage
+
+# production
+frontend/build
+frontend/node
+# misc
+frontend/.DS_Store
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+frontend/-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
 

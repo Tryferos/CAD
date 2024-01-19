@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: Wotfard,-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.scrollbar::-webkit-scrollbar {
+  height:4px;
+  width: 12px;
+  background-color: white;
+  z-index: 1000000000000;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgb(100, 116, 139);
+  border: 2px white solid;
+  border-radius: 4px;
+  z-index: 1000000000000;
+}
+
+@font-face {
+  font-family: Cubano;
+  src: url('../public/Cubano.ttf');
+}
+
+@font-face {
+  font-family: Wotfard;
+  src: url('../public/wotfard-regular-webfont.woff2');
+}
+@font-face {
+  font-family: WotfardMD;
+  src: url('../public/wotfard-medium-webfont.woff2');
+}
+
+@layer components{
+.highlight{
+  @apply underline underline-offset-4 decoration-2 decoration-sec text-sec;
+}
+}
+
+.fixgradient{
+background-size: auto 1.9ch;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+input, button, textarea, select {
+  font: inherit;
+}
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+#root, #__next {
+  isolation: isolate;
+}

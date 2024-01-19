@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600)
 @RequestMapping(value = "/api/championships")
 public class ChampionshipController {
 
@@ -43,7 +44,7 @@ public class ChampionshipController {
     }
 
     @RolesAllowed({"ADMIN", "SECRETARY"})
-    @PostMapping("/createLeague/{championshipId}")
+    @PostMapping("/createDraw/{championshipId}")
     public ResponseEntity<String> createLeague(@PathVariable("championshipId") Long championshipId, @RequestParam("date") LocalDate date) throws NotFoundException, ValidationException {
 
         championshipService.generateRoundRobinSchedule(championshipId, date);

@@ -43,7 +43,7 @@ public class Player {
     @Convert(converter = LowercaseConverter.class)
     private String nationality;
     @Column(name = "logo_path", length = 1024, nullable = true)
-    private String logo;
+    private String logoPath;
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "position_type")

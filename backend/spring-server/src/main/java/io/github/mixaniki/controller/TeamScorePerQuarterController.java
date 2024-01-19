@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600)
 @RequestMapping("/api/teamScorePerQuarters")
 public class TeamScorePerQuarterController {
     private final TeamScorePerQuarterService teamScorePerQuarterService;
@@ -32,7 +33,9 @@ public class TeamScorePerQuarterController {
     }
 
     @GetMapping(value = "/teamScorePerQuarter", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TeamScorePerQuarter> getTeamScorePerQuarterById(@RequestParam("quarter") QuarterType quarterType, @RequestParam("gameId") Long gameId, @RequestParam("roundId") Long roundId, @RequestParam("championshipId") Long championshipId, @RequestParam("teamId") Long teamId, @RequestBody TeamScorePerQuarter teamScorePerQuartergameToUpdate) throws NotFoundException {
+    public ResponseEntity<TeamScorePerQuarter> getTeamScorePerQuarterById(
+            @RequestParam("quarter") QuarterType quarterType, @RequestParam("gameId") Long gameId, @RequestParam("roundId") Long roundId,
+            @RequestParam("championshipId") Long championshipId, @RequestParam("teamId") Long teamId) throws NotFoundException {
 
         TeamScorePerQuarterKey teamScorePerQuarterKey = new TeamScorePerQuarterKey();
         teamScorePerQuarterKey.setCompositeId(quarterType, gameId, roundId, championshipId, teamId);
