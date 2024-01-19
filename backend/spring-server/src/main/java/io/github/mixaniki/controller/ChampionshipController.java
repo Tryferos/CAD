@@ -43,6 +43,7 @@ public class ChampionshipController {
         return ResponseEntity.status(HttpStatus.CREATED).body(championshipService.createChampionshipWithParticipations(championship , teams));
     }
 
+    // Creates draw
     @RolesAllowed({"ADMIN", "SECRETARY"})
     @PostMapping("/createDraw/{championshipId}")
     public ResponseEntity<String> createLeague(@PathVariable("championshipId") Long championshipId, @RequestParam("date") LocalDate date) throws NotFoundException, ValidationException {
