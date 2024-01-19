@@ -242,7 +242,7 @@ function UpcomingMatches({ tourid }: { tourid: string }) {
                 {
                     matches.slice(0, 3).map((item, i) => {
                         return (
-                            <UpcomingMatch key={item.id + "-" + i} match={item} tourid={parseInt(tourid)} />
+                            <UpcomingMatch key={item.id + "-" + i} match={{ ...item, round_id: (item.id as any).round.id.id }} tourid={parseInt(tourid)} />
                         )
                     })
                 }
