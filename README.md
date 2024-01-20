@@ -73,6 +73,7 @@ Create app.key.private and app.key.public files on `/backend/spring-server/src/m
 To use the openssl command, you need to have openssl installed on your system
 
 `openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365`
+
 `openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in key.pem -out pkcs8.key`
 
 ### Configure React: Change environment variables based on your Firebase settings.
