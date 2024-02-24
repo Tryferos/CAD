@@ -100,6 +100,13 @@ or
 
 Run ``./mvnw spring-boot:run`` command at `/backend/spring-server/` path
 
+## Screenshots
+![image](https://github.com/Tryferos/CAD/assets/101869298/2ac1983c-7063-4506-a656-c62217c4e1c7)
+![image](https://github.com/Tryferos/CAD/assets/101869298/aabd1533-cbba-4e18-baf8-610078268b8b)
+![image](https://github.com/Tryferos/CAD/assets/101869298/02e0b271-db60-4eeb-aadd-9f332e12d2a8)
+![image](https://github.com/Tryferos/CAD/assets/101869298/81bccf8f-3790-4e26-8e89-9b2e21bfa504)
+
+
 ## 👨‍💻 Authors
 
 - [@Trifon Mazarakis](https://www.github.com/Tryferos) (Frontend)
