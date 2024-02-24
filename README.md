@@ -118,7 +118,7 @@ Run ``./mvnw spring-boot:run`` command at `/backend/spring-server/` path
 - Make better planning for backend.
 - Design backend based on frontend's requirements.
 - Backend should contain more logic and deal with more operations.
-- Use React with a framework rather than standalone.
+- Use React with a Build tool rather than standalone.
 
 
 ## ℹ️ Acknowledgements
