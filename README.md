@@ -5,7 +5,7 @@
 
 This is a Basketball Management System.
 
-Responsible for storing and showing information about league tournaments.
+Responsible for storing and showing information about basketball tournaments.
 
 
 -   :white_check_mark: Authentication System.
